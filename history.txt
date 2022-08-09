@@ -1,0 +1,30 @@
+npm init // express 빌드
+server config // 서버설정값들
+
+
+// // // server 빌드 \\ \\ \\
+포스트맨으로 api 체크
+
+|||||||||||||||||||||||||
+
+// // // client 빌드 \\ \\ \\
+npx create-react-app 으로 빌드
+
+
+|||||||||||||||||||||||||
+
+
+// // // pakege \\ \\ \\
+dev 모드에서만 nodemon 사용
+
+|||||||||||||||||||||||||
+
+// // // user model \\ \\ \\
+받아오는 정보는 최소화 // id, password, role, token정보, token 유효기간 만 받아옴
+
+password bcrypt 로 암호화
+
+세션 대신 JWT 사용이유?
+현재 사용되는 웹표준 인증방식.
+
+|||||||||||||||||||||||||
