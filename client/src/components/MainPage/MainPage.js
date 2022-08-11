@@ -1,5 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -7,6 +8,21 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+
+import LandingPage from "./Sections/LandingPage";
+import RoutinePage from "./Sections/RoutinePage";
+import CalendarPage from "./Sections/CalendarPage";
+
+const StyledTabs = withStyles({
+  indicator: {
+    top: 0,
+  },
+})((props) => (
+  <Tabs
+    {...props}
+    TabIndicatorProps={{ sx: { height: 5 }, children: <span /> }}
+  />
+));
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -21,7 +37,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component="div">{children}</Typography>
         </Box>
       )}
     </div>
@@ -34,7 +50,7 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
+function getId(index) {
   return {
     id: `full-width-tab-${index}`,
     "aria-controls": `full-width-tabpanel-${index}`,
@@ -61,29 +77,32 @@ export default function MainPage() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Item One
+          <LandingPage />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Item Two
+          <RoutinePage />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Item Three
+          <CalendarPage />
         </TabPanel>
       </SwipeableViews>
-      <AppBar style={{ bottom: 0 }} position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="inherit"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-        >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-        </Tabs>
-      </AppBar>
+      <div style={{ position: "fixed", bottom: 0, width: "100%" }}>
+        <AppBar position="static">
+          <StyledTabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="secondary"
+            textColor="inherit"
+            variant="fullWidth"
+            aria-label="full width tabs example"
+            style={{ height: "4rem" }}
+          >
+            <Tab label="메인페이지" {...getId(0)} />
+            <Tab label="내 루틴" {...getId(1)} />
+            <Tab label="운동 기록" {...getId(2)} />
+          </StyledTabs>
+        </AppBar>
+      </div>
     </Box>
   );
 }
