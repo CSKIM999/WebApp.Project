@@ -18,7 +18,7 @@ import {
   FormControl,
 } from "@material-ui/core";
 import AddIcon from "@mui/icons-material/Add";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Alert, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Stack } from "@mui/system";
 
 // 트랜지션그룹 사용예정
@@ -32,6 +32,7 @@ export default function DetailPage(props) {
   const [Detail, setDetail] = React.useState([]);
 
   const handleClickOpen = () => {
+    setTitle("");
     setOpen(true);
   };
   const handleTypeTop = (event, newTypeTop) => {
@@ -45,7 +46,13 @@ export default function DetailPage(props) {
   };
   const handleSave = () => {
     props.setRoutine(Title);
-    setOpen(false);
+    if (Title && Title.split(" ").join("").length) {
+      console.log(Title.split(" ").join("").length, Title.split(" ").join(""));
+      setOpen(false);
+    } else {
+      setTitle(" ");
+      console.log("err");
+    }
   };
   return (
     <div>
@@ -61,6 +68,14 @@ export default function DetailPage(props) {
           </DialogContentText>
           <TextField
             autoFocus
+            error={Title !== "" && Title.split(" ").join("").length === 0}
+            helperText={
+              Title.split(" ").join("").length === 0
+                ? Title === ""
+                  ? ""
+                  : "최소 한 글자 이상 입력해주세요!!"
+                : ""
+            }
             margin="dense"
             label="운동이름"
             fullWidth
