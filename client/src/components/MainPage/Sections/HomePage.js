@@ -11,7 +11,7 @@ import Settingpage from "../../SettingPage/SettingPage";
 // 포함해야 할 내용 [ 루틴이름, 루틴 내 운동개수,
 //루틴 내 각각의 운동이름과 횟수]
 
-function LandingPage() {
+function HomePage() {
   return (
     <div>
       반갑습니다
@@ -20,4 +20,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default HomePage;

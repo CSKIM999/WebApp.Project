@@ -5,13 +5,18 @@ const jwt = require("jsonwebtoken");
 
 // schema => DB 의 detail
 const userSchema = mongoose.Schema({
-  id: {
+  email: {
     type: String,
-    maxlength: 20,
+    trim: true,
+    unique: 1,
   },
   password: {
     type: String,
-    minlength: 8,
+    minlength: 4,
+  },
+  nickname: {
+    type: String,
+    maxlength: 10,
   },
   role: {
     type: Number,
@@ -60,7 +65,6 @@ userSchema.methods.genToken = function (cb) {
 
 userSchema.statics.findByToken = function (token, cb) {
   let user = this;
-  console.log(user);
   jwt.verify(token, "secretToken", function (err, decoded) {
     user.findOne({ _id: decoded, token: token }, function (err, user) {
       if (err) return cb(err);

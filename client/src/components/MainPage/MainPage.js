@@ -1,6 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -9,9 +9,11 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
-import LandingPage from "./Sections/LandingPage";
+import HomePage from "./Sections/HomePage";
 import RoutinePage from "./Sections/RoutinePage";
 import CalendarPage from "./Sections/CalendarPage";
+import * as axios from "axios";
+import { Button } from "@material-ui/core";
 
 const StyledTabs = withStyles({
   indicator: {
@@ -58,8 +60,14 @@ function getId(index) {
 }
 
 export default function MainPage() {
+  const [Routines, setRoutines] = React.useState([]);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  React.useEffect(() => {
+    axios.post("/api/routine/routines").then((response) => {
+      setRoutines(response.data.info);
+    });
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -71,13 +79,20 @@ export default function MainPage() {
 
   return (
     <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
+      <Button
+        onClick={() => {
+          console.log(Routines);
+        }}
+      >
+        test
+      </Button>
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <LandingPage />
+          <HomePage />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <RoutinePage />
