@@ -14,6 +14,10 @@ import RoutinePage from "./Sections/RoutinePage";
 import CalendarPage from "./Sections/CalendarPage";
 import * as axios from "axios";
 import { Button } from "@material-ui/core";
+import Logout from "../utils/Logout";
+
+import { useDispatch } from "react-redux";
+import { getRoutine } from "../../_actions/routine_action";
 
 const StyledTabs = withStyles({
   indicator: {
@@ -63,9 +67,14 @@ export default function MainPage() {
   const [Routines, setRoutines] = React.useState([]);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    axios.post("/api/routine/routines").then((response) => {
-      setRoutines(response.data.info);
+    dispatch(getRoutine()).then((response) => {
+      if (response.payload.length !== 0) {
+        console.log("success", response.payload);
+      } else {
+        console.log("fail", response.payload);
+      }
     });
   }, []);
 
@@ -79,19 +88,14 @@ export default function MainPage() {
 
   return (
     <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
-      <Button
-        onClick={() => {
-          console.log(Routines);
-        }}
-      >
-        test
-      </Button>
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
+          <Button onClick={() => {}}>test</Button>
+          <Logout></Logout>
           <HomePage />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>

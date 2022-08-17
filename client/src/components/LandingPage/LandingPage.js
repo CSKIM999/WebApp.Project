@@ -1,4 +1,6 @@
 import React from "react";
+import Login from "../utils/Login";
+import Register from "../utils/Register";
 // what we use?
 // base : dialog [ x title save]
 // 박스에 담아야하나?
@@ -11,7 +13,13 @@ import React from "react";
 //루틴 내 각각의 운동이름과 횟수]
 
 function LandingPage() {
-  return <div>랜딩페이지입니다</div>;
+  return (
+    <div>
+      랜딩페이지입니다
+      <Login></Login>
+      <Register></Register>
+    </div>
+  );
 }
 
 export default LandingPage;
