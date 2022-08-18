@@ -1,43 +1,30 @@
 import * as React from "react";
-import Accordion from "@mui/material/Accordion";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import AccordionSummary from "@mui/material/AccordionSummary";
+import { useSelector } from "react-redux";
+
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
   Button,
   Collapse,
   CardActionArea,
   CardActions,
+  Grid,
 } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
 
-import { useSelector } from "react-redux";
-
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+import SettingPage from "../SettingPage/SettingPage";
 
 export default function MyRoutine() {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState("false");
   const myRoutine = useSelector((state) => state.routine.myRoutines);
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleExpandClick = (panel) => {
+    if (expanded !== panel) {
+      setExpanded(panel);
+    } else {
+      setExpanded("false");
+    }
   };
 
   return (
@@ -46,23 +33,41 @@ export default function MyRoutine() {
         myRoutine.map((item, index) => (
           <Card key={index} sx={{ minWidth: 275 }}>
             <CardActionArea
-              expanded={expanded === `panel${index + 1}`}
-              onClick={handleChange(`panel${index + 1}`)}
+              expanded={expanded === `panel${index + 1}` ? "true" : undefined}
+              onClick={() => handleExpandClick(`panel${index + 1}`)}
+              aria-expanded={expanded}
             >
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Lizard
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
+                <Grid container direction="row">
+                  <Typography variant="h5" component="div">
+                    {item.title}
+                  </Typography>
+                  <Typography variant="subtitle1" color="text.secondary">
+                    {item.detail.length} Workouts
+                  </Typography>
+                </Grid>
               </CardContent>
             </CardActionArea>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-              <CardContent>thank-you</CardContent>
+            <Collapse
+              in={expanded === `panel${index + 1}` ? true : undefined}
+              timeout="auto"
+              unmountOnExit
+            >
+              <CardContent>
+                {item.detail.map((workout, index) => (
+                  <Grid key={`workout${index}`}>
+                    <Typography>
+                      {workout.name} {workout.contents.length} set
+                    </Typography>
+                  </Grid>
+                ))}
+              </CardContent>
             </Collapse>
-            <Button size="small">Learn More</Button>
+            <Grid container direction="row" spacing={2}>
+              <Button size="small">삭제</Button>
+              <SettingPage data={item.detail} />
+              <Button size="small">실행</Button>
+            </Grid>
           </Card>
         ))}
     </Box>

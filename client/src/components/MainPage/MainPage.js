@@ -8,12 +8,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { Button } from "@material-ui/core";
 
 import HomePage from "./Sections/HomePage";
 import RoutinePage from "./Sections/RoutinePage";
 import CalendarPage from "./Sections/CalendarPage";
-import * as axios from "axios";
-import { Button } from "@material-ui/core";
 import Logout from "../utils/Logout";
 
 import { useDispatch } from "react-redux";

@@ -1,6 +1,7 @@
 import React from "react";
 import Settingpage from "../../SettingPage/SettingPage";
 import MyRoutine from "../../utils/MyRoutine";
+
 // what we use?
 // base : dialog [ x title save]
 // 박스에 담아야하나?
@@ -16,8 +17,8 @@ function HomePage() {
   return (
     <div>
       반갑습니다
-      <Settingpage />
-      <MyRoutine></MyRoutine>
+      <Settingpage state="C" />
+      <MyRoutine />
     </div>
   );
 }

@@ -14,6 +14,7 @@ import Slide from "@mui/material/Slide";
 import { Box, Fab, ListItemText } from "@material-ui/core";
 
 import DetailPage from "../DetailPage/DetailPage";
+import WorkoutCards from "./Sections/WorkoutCards";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -21,24 +22,27 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function SettingPage(props) {
   const [open, setOpen] = React.useState(false);
-  const [Routine, setRoutine] = React.useState("");
+  const [Routine, setRoutine] = React.useState(props.data ? props.data : []);
+  const IsAdjust = props.data ? true : false;
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const check = () => {
-    console.log(Routine);
+    console.log(Routine, IsAdjust);
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        루틴추가
+      <Button
+        variant={props.state === "C" ? "outlined" : ""}
+        size={props.state === "C" ? "" : "small"}
+        onClick={handleClickOpen}
+      >
+        {props.state === "C" ? "루틴추가" : "수정"}
       </Button>
       <Dialog
         fullScreen
@@ -70,12 +74,13 @@ export default function SettingPage(props) {
               <TextField label="입력해주세요" variant="outlined" />
             </ListItem>
             <ListItem>
-              <DetailPage setRoutine={setRoutine} />
+              <DetailPage data={Routine} setRoutine={setRoutine} />
             </ListItem>
             <ListItem>
               <Button onClick={check}>check</Button>
             </ListItem>
           </List>
+          <WorkoutCards detail={Routine}></WorkoutCards>
         </Box>
       </Dialog>
     </div>
