@@ -22,6 +22,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function SettingPage(props) {
   const [open, setOpen] = React.useState(false);
+  const [Title, setTitle] = React.useState(props.title ? props.title : "");
   const [Routine, setRoutine] = React.useState(props.data ? props.data : []);
   const IsAdjust = props.data ? true : false;
 
@@ -31,8 +32,30 @@ export default function SettingPage(props) {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleTitle = (newTitle) => {
+    setTitle(newTitle);
+  };
   const check = () => {
-    console.log(Routine, IsAdjust);
+    console.log(Routine, IsAdjust, props);
+  };
+  const handleSetroutine = (data, adjust) => {
+    if (adjust) {
+      // 수정
+    } else {
+      //생성
+      setRoutine([...Routine, data]);
+    }
+  };
+
+  const handleSave = () => {
+    const body = {
+      title: Title,
+      detail: [...Routine],
+    };
+    if (IsAdjust) {
+    } else {
+      console.log(Routine, "routine");
+    }
   };
 
   return (
@@ -64,17 +87,22 @@ export default function SettingPage(props) {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 루틴 상세
               </Typography>
-              <Button autoFocus color="inherit" onClick={handleClose}>
+              <Button autoFocus color="inherit" onClick={handleSave}>
                 save
               </Button>
             </Toolbar>
           </AppBar>
           <List>
             <ListItem>
-              <TextField label="입력해주세요" variant="outlined" />
+              <TextField
+                label="입력해주세요"
+                variant="outlined"
+                value={Title}
+                onChange={(event) => handleTitle(event.target.value)}
+              />
             </ListItem>
             <ListItem>
-              <DetailPage data={Routine} setRoutine={setRoutine} />
+              <DetailPage adj={false} setRoutine={handleSetroutine} />
             </ListItem>
             <ListItem>
               <Button onClick={check}>check</Button>

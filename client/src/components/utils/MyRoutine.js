@@ -65,7 +65,7 @@ export default function MyRoutine() {
             </Collapse>
             <Grid container direction="row" spacing={2}>
               <Button size="small">삭제</Button>
-              <SettingPage data={item.detail} />
+              <SettingPage title={item.title} data={item.detail} />
               <Button size="small">실행</Button>
             </Grid>
           </Card>

@@ -71,6 +71,7 @@ export default function MainPage() {
     dispatch(getRoutine()).then((response) => {
       if (response.payload.length !== 0) {
         console.log("success", response.payload);
+        setRoutines(response.payload);
       } else {
         console.log("fail", response.payload);
       }
@@ -93,7 +94,13 @@ export default function MainPage() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Button onClick={() => {}}>test</Button>
+          <Button
+            onClick={() => {
+              console.log(Routines);
+            }}
+          >
+            test
+          </Button>
           <Logout></Logout>
           <HomePage />
         </TabPanel>

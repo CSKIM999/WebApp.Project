@@ -20,27 +20,39 @@ import { display } from "@mui/system";
 
 export default function DetailPage(props) {
   const [open, setOpen] = React.useState(false);
-  const [Setcount, setSetcount] = React.useState(1);
-  const [TypeTop, setTypeTop] = React.useState("weight");
-  const [TypeBtm, setTypeBtm] = React.useState("only");
-  const [TimeUnit, setTimeUnit] = React.useState("초");
-  const [Weight, setWeight] = React.useState(20);
-  const [Title, setTitle] = React.useState("");
-  const [Detail, setDetail] = React.useState([20, 10]);
+  const [Setcount, setSetcount] = React.useState(
+    // props.data ? props.data.contents : 1
+    1
+  );
+  const [TypeTop, setTypeTop] = React.useState(
+    // props.data ? props.data.option.TypeTop : "weight"
+    "weight"
+  );
+  const [TypeBtm, setTypeBtm] = React.useState(
+    // props.data ? props.data.option.TypeBtm : "only"
+    "only"
+  );
+  const [TimeUnit, setTimeUnit] = React.useState(
+    // props.data ? props.data.option.TimeUnit : "초"
+    "초"
+  );
+  const [Title, setTitle] = React.useState(
+    // props.data ? props.data.name : ""
+    ""
+  );
+  const [Detail, setDetail] = React.useState(
+    // props.data ? props.data.contents : [[20, 10]]
+    [[20, 10]]
+  );
 
   // [...state,newValue]
 
   const handleSetcount = (event) => {
-    if (!Detail.length) {
-      setSetcount(event.target.value * 1);
-      setDetail(Array(event.target.value * 1).fill([Weight, 10]));
+    setSetcount(event.target.value * 1);
+    if (event.target.value * 1 < Setcount) {
+      setDetail(Detail.slice(0, -1));
     } else {
-      setSetcount(event.target.value * 1);
-      if (event.target.value * 1 < Setcount) {
-        setDetail(Detail.slice(0, -1));
-      } else {
-        setDetail([...Detail, Detail.at(-1)]);
-      }
+      setDetail([...Detail, [20, 10]]);
     }
   };
 
@@ -58,22 +70,50 @@ export default function DetailPage(props) {
       setTypeBtm(newTypeBtm);
     }
   };
+  const handleTimeUnit = (event, newTimeUnit) => {
+    if (newTimeUnit !== null) {
+      switch (newTimeUnit) {
+        case "sec":
+          setTimeUnit("초");
+          break;
+        case "min":
+          setTimeUnit("분");
+          break;
+        case "hour":
+          setTimeUnit("시간");
+          break;
+        default:
+          break;
+      }
+    }
+  };
+
+  const handleDetail = (event, index) => {
+    console.log(index);
+    var newDetail = [...Detail];
+    newDetail[index[0]][index[1]] = event * 1;
+    setDetail(newDetail);
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
+
   const handleSave = () => {
     const body = {
       name: Title,
-      option: [TypeTop, TypeBtm],
-      contents: [Setcount],
+      option: [TypeTop, TypeBtm, TimeUnit],
+      contents: Detail,
     };
     if (Title && Title.split(" ").join("").length) {
-      console.log(body);
+      // save
       setOpen(false);
     } else {
+      // save err
       setTitle(" ");
-      console.log("err");
     }
+
+    props.setRoutine(body, props.adj);
   };
 
   return (
@@ -139,6 +179,19 @@ export default function DetailPage(props) {
               <ToggleButton value="only">전체세트 동일</ToggleButton>
               <ToggleButton value="each">세트마다 다름</ToggleButton>
             </ToggleButtonGroup>
+            <ToggleButtonGroup
+              color="primary"
+              value={
+                TimeUnit === "초" ? "sec" : TimeUnit === "분" ? "min" : "hour"
+              }
+              exclusive
+              onChange={handleTimeUnit}
+              sx={{ display: TypeTop === "time" ? "" : "none" }}
+            >
+              <ToggleButton value="sec">초</ToggleButton>
+              <ToggleButton value="min">분</ToggleButton>
+              <ToggleButton value="hour">시간</ToggleButton>
+            </ToggleButtonGroup>
             <Grid container direction="column">
               {TypeBtm === "each" &&
                 Detail.map((item, index) => (
@@ -153,7 +206,12 @@ export default function DetailPage(props) {
                           <InputAdornment position="end">kg</InputAdornment>
                         ),
                         value: item[0],
+                        inputProps: { min: 1, max: 1000 },
                       }}
+                      type={"number"}
+                      onChange={(event) =>
+                        handleDetail(event.target.value, [index, 0])
+                      }
                     />
                     <TextField
                       sx={{ width: "5rem" }}
@@ -164,7 +222,12 @@ export default function DetailPage(props) {
                           </InputAdornment>
                         ),
                         value: item[1],
+                        inputProps: { min: 1, max: 500 },
                       }}
+                      type={"number"}
+                      onChange={(event) =>
+                        handleDetail(event.target.value, [index, 1])
+                      }
                     />
                   </Grid>
                 ))}
@@ -180,16 +243,28 @@ export default function DetailPage(props) {
                         <InputAdornment position="end">kg</InputAdornment>
                       ),
                       value: Detail[0][0],
+                      inputProps: { min: 0, max: 1000 },
                     }}
+                    type={"number"}
+                    onChange={(event) =>
+                      handleDetail(event.target.value, [0, 0])
+                    }
                   />
                   <TextField
                     sx={{ width: "5rem" }}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">개</InputAdornment>
+                        <InputAdornment position="end">
+                          {TypeTop !== "time" ? "개" : TimeUnit}
+                        </InputAdornment>
                       ),
                       value: Detail[0][1],
+                      inputProps: { min: 1, max: 500 },
                     }}
+                    type={"number"}
+                    onChange={(event) =>
+                      handleDetail(event.target.value, [0, 1])
+                    }
                   />
                 </Grid>
               )}
@@ -200,7 +275,7 @@ export default function DetailPage(props) {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
-          <Button onClick={() => console.log(Detail, Setcount)}>test</Button>
+          <Button onClick={() => console.log(Detail)}>test</Button>
         </DialogActions>
       </Dialog>
     </div>

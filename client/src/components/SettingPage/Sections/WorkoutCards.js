@@ -63,6 +63,7 @@ export default function WorkoutCards(props) {
               <Grid container direction="row" spacing={2}>
                 <Button size="small">삭제</Button>
                 <Button size="small">수정</Button>
+                {/* 여기 DetailPage 들어가야함 */}
               </Grid>
             </Collapse>
           </Card>
