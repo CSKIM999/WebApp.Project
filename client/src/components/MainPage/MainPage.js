@@ -90,6 +90,10 @@ export default function MainPage() {
   const handleChangeIndex = (index) => {
     setValue(index);
   };
+  const WorkoutEnd = () => {
+    console.log(Routines);
+    setValue(2);
+  };
 
   return (
     <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
@@ -99,15 +103,9 @@ export default function MainPage() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Button
-            onClick={() => {
-              console.log(Routines);
-            }}
-          >
-            test
-          </Button>
+          <Button onClick={() => test()}>test</Button>
           <Logout></Logout>
-          <HomePage />
+          <HomePage swipe={WorkoutEnd} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <RoutinePage />

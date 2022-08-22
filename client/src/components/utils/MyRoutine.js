@@ -18,7 +18,7 @@ import SettingPage from "../SettingPage/SettingPage";
 import { getRoutine } from "../../_actions/routine_action";
 import WorkoutPage from "../WorkoutPage/WorkoutPage";
 
-export default function MyRoutine() {
+export default function MyRoutine(props) {
   const [expanded, setExpanded] = React.useState("false");
   const myRoutine = useSelector((state) => state.routine.myRoutines);
   const user = useSelector((state) => state.user);

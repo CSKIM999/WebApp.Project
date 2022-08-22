@@ -15,9 +15,14 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { Box, Fab, ListItemText } from "@material-ui/core";
+import Stopwatch from "../utils/Stopwatch";
+
+// todo ...
+// stopwatch
+// count toggle
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="right" ref={ref} {...props} />;
 });
 
 export default function WorkoutPage(props) {
@@ -70,6 +75,9 @@ export default function WorkoutPage(props) {
             </ListItem>
             <ListItem>
               <Button onClick={() => console.log("hi")}>check</Button>
+            </ListItem>
+            <ListItem>
+              <Stopwatch />
             </ListItem>
           </List>
         </Box>
