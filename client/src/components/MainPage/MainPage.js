@@ -15,7 +15,7 @@ import RoutinePage from "./Sections/RoutinePage";
 import CalendarPage from "./Sections/CalendarPage";
 import Logout from "../utils/Logout";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getRoutine } from "../../_actions/routine_action";
 
 const StyledTabs = withStyles({
@@ -67,16 +67,21 @@ export default function MainPage() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
   React.useEffect(() => {
-    dispatch(getRoutine()).then((response) => {
-      if (response.payload.length !== 0) {
-        console.log("success", response.payload);
-        setRoutines(response.payload);
-      } else {
-        console.log("fail", response.payload);
-      }
-    });
-  }, []);
+    if (user.userData) {
+      console.log("user", user);
+      dispatch(getRoutine({ writer: user.userData._id })).then((response) => {
+        if (response.payload.length !== 0) {
+          console.log("success", response.payload);
+          setRoutines(response.payload);
+        } else {
+          console.log("fail", response.payload);
+        }
+      });
+    }
+  }, [user]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

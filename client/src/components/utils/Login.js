@@ -48,11 +48,9 @@ export default function Login() {
 
       dispatch(loginUser(body)).then((response) => {
         if (response.payload.loginSuccess) {
-          console.log("Login success");
           alert("로그인 성공!");
           navigate("/");
         } else {
-          console.log("Login Fail", response.payload);
           alert("로그인 실패");
         }
       });

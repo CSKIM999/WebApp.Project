@@ -10,6 +10,7 @@ import {
   Card,
   CardContent,
 } from "@material-ui/core";
+import DetailPage from "../../DetailPage/DetailPage";
 
 export default function WorkoutCards(props) {
   const [expanded, setExpanded] = React.useState(false);
@@ -62,7 +63,14 @@ export default function WorkoutCards(props) {
               </CardContent>
               <Grid container direction="row" spacing={2}>
                 <Button size="small">삭제</Button>
-                <Button size="small">수정</Button>
+                {/* <Button onClick={() => console.log(item)} size="small">
+                  수정
+                </Button> */}
+                <DetailPage
+                  adj={index}
+                  data={item}
+                  setRoutine={props.setRoutine}
+                />
                 {/* 여기 DetailPage 들어가야함 */}
               </Grid>
             </Collapse>

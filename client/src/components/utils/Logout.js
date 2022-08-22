@@ -12,6 +12,7 @@ export default function Logout() {
         navigate("/front");
       } else {
         alert("로그아웃 실패");
+        console.log(response);
       }
     });
   };

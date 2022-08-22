@@ -1,4 +1,8 @@
 import * as React from "react";
+import * as Axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getRoutine } from "../../_actions/routine_action";
+
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import ListItem from "@mui/material/ListItem";
@@ -22,12 +26,31 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function SettingPage(props) {
   const [open, setOpen] = React.useState(false);
-  const [Title, setTitle] = React.useState(props.title ? props.title : "");
-  const [Routine, setRoutine] = React.useState(props.data ? props.data : []);
-  const IsAdjust = props.data ? true : false;
+  const [TitleFlag, setTitleFlag] = React.useState(false);
+  const [Title, setTitle] = React.useState(props.data ? props.data.title : "");
+  const [Routine, setRoutine] = React.useState(
+    props.data ? props.data.detail : []
+  );
+  const [IsAdjust, setIsAdjust] = React.useState(
+    props.data ? props.data._id : false
+  );
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+
+  const reset = (Adjust) => {
+    setTitleFlag(false);
+    setTitle(Adjust ? Adjust.data.title : "");
+    setRoutine(Adjust ? Adjust.data.detail : []);
+    setIsAdjust(Adjust ? Adjust.data._id : false);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
+    if (!IsAdjust) {
+      reset();
+    } else {
+      reset(props);
+    }
   };
   const handleClose = () => {
     setOpen(false);
@@ -39,8 +62,11 @@ export default function SettingPage(props) {
     console.log(Routine, IsAdjust, props);
   };
   const handleSetroutine = (data, adjust) => {
-    if (adjust) {
+    if (adjust !== false) {
       // 수정
+      const newRoutine = [...Routine];
+      newRoutine[adjust] = data;
+      setRoutine([...newRoutine]);
     } else {
       //생성
       setRoutine([...Routine, data]);
@@ -48,13 +74,39 @@ export default function SettingPage(props) {
   };
 
   const handleSave = () => {
+    const dispatchRoutine = (data) => {
+      dispatch(getRoutine({ writer: data.writer })).then((response) => {
+        console.log("ALL success", response);
+        handleClose();
+      });
+    };
+
+    if (!Title) {
+      setTitleFlag(true);
+    }
+
     const body = {
+      writer: user.userData._id,
       title: Title,
       detail: [...Routine],
     };
-    if (IsAdjust) {
+    if (IsAdjust !== false) {
+      body._id = IsAdjust;
+      console.log("adjust", body);
+      Axios.post("/api/routine/modify", body).then((response) => {
+        if (response.data.success) {
+          dispatchRoutine(body);
+        }
+      });
     } else {
-      console.log(Routine, "routine");
+      console.log("not adjust", body);
+      Axios.post("/api/routine/", body).then((response) => {
+        if (response.data.success) {
+          dispatchRoutine(body);
+        } else {
+          console.log("upload error", response.payload);
+        }
+      });
     }
   };
 
@@ -95,8 +147,12 @@ export default function SettingPage(props) {
           <List>
             <ListItem>
               <TextField
-                label="입력해주세요"
+                label="루틴 이름"
                 variant="outlined"
+                error={TitleFlag && Title === ""}
+                helperText={
+                  TitleFlag && Title === "" ? "루틴 이름을 입력해주세요" : ""
+                }
                 value={Title}
                 onChange={(event) => handleTitle(event.target.value)}
               />
@@ -108,7 +164,10 @@ export default function SettingPage(props) {
               <Button onClick={check}>check</Button>
             </ListItem>
           </List>
-          <WorkoutCards detail={Routine}></WorkoutCards>
+          <WorkoutCards
+            setRoutine={handleSetroutine}
+            detail={Routine}
+          ></WorkoutCards>
         </Box>
       </Dialog>
     </div>

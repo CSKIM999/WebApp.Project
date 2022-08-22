@@ -53,7 +53,7 @@ router.get("/auth", auth, (req, res) => {
 
 router.get("/logout", auth, (req, res) => {
   User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
-    if (err) return res.json({ seccess: false, err });
+    if (err) return res.status(400).json({ seccess: false, err, req });
     return res.status(200).send({
       success: true,
     });

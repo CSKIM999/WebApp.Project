@@ -1,9 +1,9 @@
 import axios from "axios";
 import { GET_ROUTINE, MODIFY_ROUTINE } from "./types";
 
-export function getRoutine() {
+export function getRoutine(dataToSubmit) {
   const request = axios
-    .post("/api/routine/routines")
+    .post("/api/routine/routines", dataToSubmit)
     .then((response) => response.data.info);
 
   return {

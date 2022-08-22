@@ -46,6 +46,26 @@ export default function DetailPage(props) {
   );
 
   // [...state,newValue]
+  // React.useEffect(() => {
+  //   if (props.data) {
+  //     setSetcount(props.data.contents.length);
+  //     setTypeTop(props.data.option[0]);
+  //     setTypeBtm(props.data.option[1]);
+  //     setTimeUnit(props.data.option[2]);
+  //     setTitle(props.data.name);
+  //     setDetail(props.data.contents);
+  //     console.log("props set", props.data.name, "Title", Title);
+  //   }
+  // }, [props]);
+
+  const reset = () => {
+    setSetcount(1);
+    setTypeTop("weight");
+    setTypeBtm("only");
+    setTimeUnit("초");
+    setTitle("");
+    setDetail([[20, 10]]);
+  };
 
   const handleSetcount = (event) => {
     setSetcount(event.target.value * 1);
@@ -59,6 +79,16 @@ export default function DetailPage(props) {
   const handleClickOpen = () => {
     setTitle("");
     setOpen(true);
+    if (!props.data) {
+      reset();
+    } else {
+      setSetcount(props.data.contents.length);
+      setTypeTop(props.data.option[0]);
+      setTypeBtm(props.data.option[1]);
+      setTimeUnit(props.data.option[2]);
+      setTitle(props.data.name);
+      setDetail(props.data.contents);
+    }
   };
   const handleTypeTop = (event, newTypeTop) => {
     if (newTypeTop !== null) {
@@ -115,13 +145,29 @@ export default function DetailPage(props) {
 
     props.setRoutine(body, props.adj);
   };
-
+  const ButtonType = () => {
+    if (!props.data) {
+      return (
+        <Fab variant="extended" onClick={handleClickOpen}>
+          운동 추가
+          <AddIcon />
+        </Fab>
+      );
+    } else {
+      return (
+        <Button onClick={handleClickOpen} size="small">
+          수정
+        </Button>
+      );
+    }
+  };
   return (
     <div>
-      <Fab variant="extended" onClick={handleClickOpen}>
+      {/* <Fab variant="extended" onClick={handleClickOpen}>
         운동 추가
         <AddIcon />
-      </Fab>
+      </Fab> */}
+      {ButtonType()}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>운동 추가</DialogTitle>
         <DialogContent>
@@ -139,6 +185,7 @@ export default function DetailPage(props) {
                 : ""
             }
             margin="dense"
+            value={Title}
             label="운동이름"
             fullWidth
             variant="standard"
@@ -275,7 +322,7 @@ export default function DetailPage(props) {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
-          <Button onClick={() => console.log(Detail)}>test</Button>
+          <Button onClick={() => console.log(Title)}>test</Button>
         </DialogActions>
       </Dialog>
     </div>

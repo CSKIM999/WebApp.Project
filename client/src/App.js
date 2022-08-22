@@ -7,7 +7,7 @@ import NavBar from "./components/NavBar/NavBar";
 import Auth from "./hoc/auth";
 
 function App() {
-  const AuthMainPage = Auth(MainPage, null);
+  const AuthMainPage = Auth(MainPage, true);
   const AuthLandingPage = Auth(LandingPage, false);
 
   return (

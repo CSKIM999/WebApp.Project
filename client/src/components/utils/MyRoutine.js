@@ -1,5 +1,6 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
+import * as Axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@mui/material/Typography";
 import {
@@ -14,10 +15,14 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
 import SettingPage from "../SettingPage/SettingPage";
+import { getRoutine } from "../../_actions/routine_action";
+import WorkoutPage from "../WorkoutPage/WorkoutPage";
 
 export default function MyRoutine() {
   const [expanded, setExpanded] = React.useState("false");
   const myRoutine = useSelector((state) => state.routine.myRoutines);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleExpandClick = (panel) => {
     if (expanded !== panel) {
@@ -25,6 +30,14 @@ export default function MyRoutine() {
     } else {
       setExpanded("false");
     }
+  };
+
+  const handleDelete = (data) => {
+    Axios.post("/api/routine/remove", { _id: data }).then((response) => {
+      if (response.data.success) {
+        dispatch(getRoutine({ writer: user.userData._id }));
+      }
+    });
   };
 
   return (
@@ -64,9 +77,11 @@ export default function MyRoutine() {
               </CardContent>
             </Collapse>
             <Grid container direction="row" spacing={2}>
-              <Button size="small">삭제</Button>
-              <SettingPage title={item.title} data={item.detail} />
-              <Button size="small">실행</Button>
+              <Button onClick={() => handleDelete(item)} size="small">
+                삭제
+              </Button>
+              <SettingPage data={item} />
+              <WorkoutPage />
             </Grid>
           </Card>
         ))}
