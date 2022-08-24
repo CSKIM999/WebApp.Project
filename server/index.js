@@ -5,7 +5,6 @@ const config = require("./config/key");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const { User } = require("./models/User");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -13,6 +12,7 @@ app.use(cookieParser());
 
 app.use("/api/user", require("./routes/user"));
 app.use("/api/routine", require("./routes/routine"));
+app.use("/api/history", require("./routes/history"));
 
 mongoose
   .connect(config.mongoURI, {})

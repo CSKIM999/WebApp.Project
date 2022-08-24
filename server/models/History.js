@@ -2,21 +2,19 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // schema => DB 의 detail
-const routineSchema = Schema({
+const historySchema = Schema({
   writer: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: "User",
   },
   date: {
-    type: String,
+    type: Date,
     required: true,
-    maxlength: 20,
   },
-  routine: {
-    type: Schema.Types.Array,
-    require: true,
-    ref: "Routines",
+  runtime: {
+    type: Array,
+    required: true,
   },
   execute: {
     type: Array,
@@ -25,6 +23,6 @@ const routineSchema = Schema({
   },
 });
 
-const User = mongoose.model("User", routineSchema);
+const History = mongoose.model("History", historySchema);
 
-module.exports = { User };
+module.exports = { History };

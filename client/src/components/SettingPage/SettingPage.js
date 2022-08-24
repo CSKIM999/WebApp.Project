@@ -37,6 +37,9 @@ export default function SettingPage(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  const check = () => {
+    console.log(Routine, IsAdjust, props);
+  };
   const reset = (Adjust) => {
     setTitleFlag(false);
     setTitle(Adjust ? Adjust.data.title : "");
@@ -57,9 +60,6 @@ export default function SettingPage(props) {
   };
   const handleTitle = (newTitle) => {
     setTitle(newTitle);
-  };
-  const check = () => {
-    console.log(Routine, IsAdjust, props);
   };
   const handleSetroutine = (data, adjust) => {
     if (adjust !== false) {

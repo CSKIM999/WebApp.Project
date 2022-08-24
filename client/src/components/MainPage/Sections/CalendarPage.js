@@ -11,6 +11,7 @@ import Badge from "@mui/material/Badge";
 
 // fakeFetch 에서 이번달의 운동데이터를 state 에 저장하고 렌더링하게 던져주기
 // ++ 날짜 클릭 시 해당 날짜에 해당하는 정보가 state 안에 있다면 밑에 렌더링 해주기
+
 function fakeFetch(date, { signal }) {
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(() => {

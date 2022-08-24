@@ -18,10 +18,6 @@ import { Box, Fab, ListItemText } from "@material-ui/core";
 import Stopwatch from "./Sections/Stopwatch";
 import ProgressCard from "./Sections/ProgressCard";
 
-// todo ...
-// stopwatch
-// count toggle <= Stepper - Progress
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
 });
@@ -32,12 +28,40 @@ export default function WorkoutPage(props) {
   )[0];
   const id = props.id;
   const [open, setOpen] = React.useState(false);
-
+  const [Timer, setTimer] = React.useState([]);
+  const [Progress, setProgress] = React.useState(
+    Array(myRoutine.detail.length).fill(0)
+  );
+  const date = new Date();
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSave = () => {
+    const exec = myRoutine.detail.map((item, index) => {
+      return {
+        name: item.name,
+        progress: `${Progress[index]} / ${item.contents.length}`,
+      };
+    });
+    const body = {
+      writer: id,
+      date: date,
+      runtime: Timer,
+      execute: exec,
+    };
+    Axios.post("/api/history/", body).then((response) => {
+      if (response.data.success) {
+        console.log("history Save");
+        handleClose();
+        props.swipe();
+      } else {
+        console.log("history Save Fail");
+      }
+    });
   };
 
   return (
@@ -65,23 +89,20 @@ export default function WorkoutPage(props) {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 {myRoutine.title}
               </Typography>
-              <Button
-                autoFocus
-                color="inherit"
-                onClick={() => {
-                  console.log(myRoutine);
-                }}
-              >
+              <Button autoFocus color="inherit" onClick={() => handleSave()}>
                 save
               </Button>
             </Toolbar>
           </AppBar>
           <List>
             <ListItem>
-              <Stopwatch />
+              <Stopwatch timer={setTimer} />
             </ListItem>
             <ListItem>
-              <ProgressCard routine={myRoutine.detail} />
+              <ProgressCard
+                getProgress={setProgress}
+                routine={myRoutine.detail}
+              />
             </ListItem>
           </List>
         </Box>

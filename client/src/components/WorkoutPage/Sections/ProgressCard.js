@@ -4,12 +4,10 @@ import { useSelector } from "react-redux";
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import MobileStepper from "@mui/material/MobileStepper";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import BackspaceOutlinedIcon from "@mui/icons-material/BackspaceOutlined";
 import { CardActionArea, Grid } from "@mui/material";
 
 export default function ProgressCard(props) {
-  const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(
     Array(props.routine.length).fill(0)
   );
@@ -18,12 +16,14 @@ export default function ProgressCard(props) {
     const newStep = [...activeStep];
     newStep[index]++;
     setActiveStep([...newStep]);
+    props.getProgress([...newStep]);
   };
 
   const handleBack = (index) => {
     const newStep = [...activeStep];
     newStep[index]--;
     setActiveStep([...newStep]);
+    props.getProgress([...newStep]);
   };
 
   const handleContent = (option, itemIndex) => {
@@ -56,12 +56,13 @@ export default function ProgressCard(props) {
 
   return (
     <Box>
-      {props &&
+      {props.routine &&
         props.routine.map((item, index) => {
           const contentsLength = item.contents.length;
           return (
             <Card key={index} sx={{ Width: 500 }}>
               <CardActionArea
+                component="span"
                 onClick={() =>
                   activeStep[index] !== contentsLength && handleNext(index)
                 }
@@ -77,27 +78,21 @@ export default function ProgressCard(props) {
                 </CardContent>
                 <MobileStepper
                   variant="progress"
-                  steps={`${contentsLength + 1}`}
+                  steps={contentsLength + 1}
                   position="static"
                   activeStep={activeStep[index]}
                   sx={{}}
                   nextButton={
                     <Button
                       size="small"
-                      // onMouseDown={(event) => event.stopPropagation()}
                       onClick={(event) => {
                         event.stopPropagation();
-                        // event.preventDefault();
                         handleBack(index);
                       }}
                       disabled={activeStep[index] === 0}
                     >
-                      {theme.direction === "rtl" ? (
-                        <KeyboardArrowRight />
-                      ) : (
-                        <KeyboardArrowLeft />
-                      )}
-                      Back
+                      <BackspaceOutlinedIcon fontSize="small" sx={{ p: 1 }} />{" "}
+                      -1 Set
                     </Button>
                   }
                 />
