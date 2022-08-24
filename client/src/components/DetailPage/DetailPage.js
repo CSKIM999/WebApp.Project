@@ -68,11 +68,20 @@ export default function DetailPage(props) {
   };
 
   const handleSetcount = (event) => {
-    setSetcount(event.target.value * 1);
-    if (event.target.value * 1 < Setcount) {
-      setDetail(Detail.slice(0, -1));
+    const Changed = event.target.value * 1;
+    if (event.target.value === "") {
+      setSetcount("");
     } else {
-      setDetail([...Detail, [20, 10]]);
+      setSetcount(Changed);
+    }
+    if (Changed < Setcount) {
+      setDetail(Detail.slice(0, -(Setcount - Changed)));
+    } else {
+      var array = [];
+      for (var i = 0; i < Changed - Setcount; i++) {
+        array.push([20, 10]);
+      }
+      setDetail([...Detail, ...array]);
     }
   };
 
@@ -119,7 +128,9 @@ export default function DetailPage(props) {
   };
 
   const handleDetail = (event, index) => {
-    console.log(index);
+    if (event === undefined) {
+      event = 0;
+    }
     var newDetail = [...Detail];
     newDetail[index[0]][index[1]] = event * 1;
     setDetail(newDetail);
@@ -200,7 +211,7 @@ export default function DetailPage(props) {
             spacing={2}
           >
             <TextField
-              InputProps={{ inputProps: { min: 1, max: 20 } }}
+              InputProps={{ inputProps: { min: 0, max: 20 } }}
               type={"number"}
               label="1 SET - 20 SET"
               value={Setcount}
@@ -253,7 +264,7 @@ export default function DetailPage(props) {
                           <InputAdornment position="end">kg</InputAdornment>
                         ),
                         value: item[0],
-                        inputProps: { min: 1, max: 1000 },
+                        inputProps: { min: 0, max: 1000 },
                       }}
                       type={"number"}
                       onChange={(event) =>
@@ -269,7 +280,7 @@ export default function DetailPage(props) {
                           </InputAdornment>
                         ),
                         value: item[1],
-                        inputProps: { min: 1, max: 500 },
+                        inputProps: { min: 0, max: 500 },
                       }}
                       type={"number"}
                       onChange={(event) =>
@@ -278,7 +289,7 @@ export default function DetailPage(props) {
                     />
                   </Grid>
                 ))}
-              {TypeBtm === "only" && (
+              {TypeBtm === "only" && Setcount > 0 && (
                 <Grid>
                   <TextField
                     sx={{
@@ -306,7 +317,7 @@ export default function DetailPage(props) {
                         </InputAdornment>
                       ),
                       value: Detail[0][1],
-                      inputProps: { min: 1, max: 500 },
+                      inputProps: { min: 0, max: 500 },
                     }}
                     type={"number"}
                     onChange={(event) =>
@@ -322,7 +333,7 @@ export default function DetailPage(props) {
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
-          <Button onClick={() => console.log(Title)}>test</Button>
+          <Button onClick={() => console.log(Detail)}>test</Button>
         </DialogActions>
       </Dialog>
     </div>

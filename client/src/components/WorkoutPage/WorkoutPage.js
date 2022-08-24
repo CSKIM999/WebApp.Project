@@ -15,17 +15,22 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { Box, Fab, ListItemText } from "@material-ui/core";
-import Stopwatch from "../utils/Stopwatch";
+import Stopwatch from "./Sections/Stopwatch";
+import ProgressCard from "./Sections/ProgressCard";
 
 // todo ...
 // stopwatch
-// count toggle
+// count toggle <= Stepper - Progress
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
 });
 
 export default function WorkoutPage(props) {
+  const myRoutine = useSelector((state) => state.routine.myRoutines).filter(
+    (x) => x._id === props.id
+  )[0];
+  const id = props.id;
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -58,26 +63,25 @@ export default function WorkoutPage(props) {
                 <CloseIcon />
               </IconButton>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                루틴 상세
+                {myRoutine.title}
               </Typography>
-              <Button autoFocus color="inherit" onClick={() => {}}>
+              <Button
+                autoFocus
+                color="inherit"
+                onClick={() => {
+                  console.log(myRoutine);
+                }}
+              >
                 save
               </Button>
             </Toolbar>
           </AppBar>
           <List>
             <ListItem>
-              <TextField
-                label="루틴 이름"
-                variant="outlined"
-                onChange={(event) => console.log(event.target.value)}
-              />
-            </ListItem>
-            <ListItem>
-              <Button onClick={() => console.log("hi")}>check</Button>
-            </ListItem>
-            <ListItem>
               <Stopwatch />
+            </ListItem>
+            <ListItem>
+              <ProgressCard routine={myRoutine.detail} />
             </ListItem>
           </List>
         </Box>

@@ -10,24 +10,29 @@ export default function Stopwatch() {
   const startHandler = () => {
     if (!timer.run) {
       timer.run = setInterval(() => setCount((c) => c + 1), 1000);
-      setRun(false);
+      setRun(true);
     }
   };
 
   const stopHandler = () => {
     clearInterval(timer.run);
-    setRun(true);
+    setRun(false);
     console.log(timer);
     timer.run = 0;
   };
 
   return (
     <Box>
-      <Typography variant="h4" style={Run ? { color: "red" } : {}}>
+      <Typography variant="h4" style={!Count || Run ? {} : { color: "red" }}>
         Timer: {Count}{" "}
       </Typography>
-      <Button onClick={startHandler}>Start</Button>
-      <Button onClick={stopHandler}>Stop</Button>
+      <Button disabled={Run ? true : false} onClick={startHandler}>
+        Start
+      </Button>
+      <Button disabled={Run ? false : true} onClick={stopHandler}>
+        Stop
+      </Button>
+      <Button onClick={() => console.log(Run, Count)}>Test</Button>
     </Box>
   );
 }

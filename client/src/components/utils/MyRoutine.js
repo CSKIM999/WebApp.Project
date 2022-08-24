@@ -81,7 +81,7 @@ export default function MyRoutine(props) {
                 삭제
               </Button>
               <SettingPage data={item} />
-              <WorkoutPage />
+              <WorkoutPage id={item._id} />
             </Grid>
           </Card>
         ))}

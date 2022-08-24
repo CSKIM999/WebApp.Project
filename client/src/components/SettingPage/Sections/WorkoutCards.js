@@ -21,7 +21,6 @@ export default function WorkoutCards(props) {
       setExpanded("false");
     }
   };
-
   return (
     <div>
       {props.detail &&
