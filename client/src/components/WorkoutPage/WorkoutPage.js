@@ -9,7 +9,6 @@ import ListItem from "@mui/material/ListItem";
 import List from "@mui/material/List";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
@@ -26,13 +25,12 @@ export default function WorkoutPage(props) {
   const myRoutine = useSelector((state) => state.routine.myRoutines).filter(
     (x) => x._id === props.id
   )[0];
-  const id = props.id;
+  const userId = useSelector((state) => state.user.userData._id);
   const [open, setOpen] = React.useState(false);
   const [Timer, setTimer] = React.useState([]);
   const [Progress, setProgress] = React.useState(
     Array(myRoutine.detail.length).fill(0)
   );
-  const date = new Date();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -48,8 +46,7 @@ export default function WorkoutPage(props) {
       };
     });
     const body = {
-      writer: id,
-      date: date,
+      writer: userId,
       runtime: Timer,
       execute: exec,
     };
@@ -86,7 +83,12 @@ export default function WorkoutPage(props) {
               >
                 <CloseIcon />
               </IconButton>
-              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              <Typography
+                onClick={() => console.log(props)}
+                sx={{ ml: 2, flex: 1 }}
+                variant="h6"
+                component="div"
+              >
                 {myRoutine.title}
               </Typography>
               <Button autoFocus color="inherit" onClick={() => handleSave()}>

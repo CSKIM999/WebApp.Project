@@ -77,7 +77,7 @@ export default function MainPage() {
           console.log("success", response.payload);
           setRoutines(response.payload);
         } else {
-          console.log("fail", response.payload);
+          console.log("User have no Routine", response.payload);
         }
       });
     }
@@ -108,7 +108,7 @@ export default function MainPage() {
           <HomePage swipe={WorkoutEnd} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <RoutinePage />
+          <RoutinePage swipe={WorkoutEnd} />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           <CalendarPage />
