@@ -65,7 +65,11 @@ export default function SettingPage(props) {
     if (adjust !== false) {
       // 수정
       const newRoutine = [...Routine];
-      newRoutine[adjust] = data;
+      if (adjust === null) {
+        newRoutine.splice(data, 1);
+      } else {
+        newRoutine[adjust] = data;
+      }
       setRoutine([...newRoutine]);
     } else {
       //생성

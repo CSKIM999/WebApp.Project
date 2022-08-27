@@ -9,6 +9,10 @@ const historySchema = Schema(
       required: true,
       ref: "User",
     },
+    name: {
+      type: String,
+      required: true,
+    },
     runtime: {
       type: Array,
       required: true,

@@ -16,6 +16,7 @@ import Slide from "@mui/material/Slide";
 import { Box, Fab, ListItemText } from "@material-ui/core";
 import Stopwatch from "./Sections/Stopwatch";
 import ProgressCard from "./Sections/ProgressCard";
+import { getHistory } from "../../_actions/history_action";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
@@ -25,6 +26,7 @@ export default function WorkoutPage(props) {
   const myRoutine = useSelector((state) => state.routine.myRoutines).filter(
     (x) => x._id === props.id
   )[0];
+  const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.userData._id);
   const [open, setOpen] = React.useState(false);
   const [Timer, setTimer] = React.useState([]);
@@ -47,13 +49,14 @@ export default function WorkoutPage(props) {
     });
     const body = {
       writer: userId,
+      name: myRoutine.title,
       runtime: Timer,
       execute: exec,
     };
     Axios.post("/api/history/", body).then((response) => {
       if (response.data.success) {
         console.log("history Save");
-        handleClose();
+        dispatch(getHistory({ writer: userId })).then(handleClose());
         props.swipe();
       } else {
         console.log("history Save Fail");

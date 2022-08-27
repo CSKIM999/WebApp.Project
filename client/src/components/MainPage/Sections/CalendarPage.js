@@ -11,6 +11,7 @@ import { CalendarPickerSkeleton } from "@mui/x-date-pickers/CalendarPickerSkelet
 import Badge from "@mui/material/Badge";
 import { Button } from "@material-ui/core";
 import { getHistory } from "../../../_actions/history_action";
+import HistoryCard from "../../utils/HistoryCard";
 
 //calendar 의 dynamic data 활용
 
@@ -24,20 +25,23 @@ export default function StaticDatePickerDemo() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [highlightedDays, setHighlightedDays] = React.useState([]);
   const [value, setValue] = React.useState(initialValue);
-  const [Record, setRecord] = React.useState([]);
-  const userId = useSelector((state) => state.user.userData._id);
-  const dispatch = useDispatch();
+  const [Rendervalue, setRendervalue] = React.useState([]);
+  const [Record, setRecord] = React.useState(
+    useSelector((state) => state.history.myDocs)
+  );
 
-  const testFunction = () => {
-    console.log(
-      Record.filter((x) => x.year === 2022 && x.month === 8 && x.day === 26)
+  const testFunction = (date) => {
+    const yyyy = date.getFullYear();
+    const mm = date.getMonth() + 1;
+    const dd = date.getDate();
+    setRendervalue(
+      Record.filter((x) => x.year === yyyy && x.month === mm && x.day === dd)
     );
   };
   function fakeFetch(date, { signal }) {
-    const pivot = new Date(date);
+    const pivot = date;
     const yyyy = pivot.getFullYear();
     const mm = pivot.getMonth() + 1;
-
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         const daysToHighlight = Record.filter(
@@ -45,7 +49,7 @@ export default function StaticDatePickerDemo() {
         ).map((item, index) => {
           return item.day;
         });
-        console.log(daysToHighlight);
+
         resolve({ daysToHighlight });
       }, 500);
 
@@ -73,15 +77,9 @@ export default function StaticDatePickerDemo() {
   };
 
   React.useEffect(() => {
-    dispatch(getHistory({ writer: userId })).then((response) => {
-      console.log(response);
-      if (response.payload.length > 0) {
-        setRecord(response.payload);
-      }
-    });
-
+    console.log("EFFECTED");
     fetchHighlightedDays(initialValue);
-    return () => requestAbortController.current?.abort();
+    // return requestAbortController.current?.abort();
   }, []);
 
   const handleMonthChange = (date) => {
@@ -95,14 +93,13 @@ export default function StaticDatePickerDemo() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Button onClick={testFunction}>TEST BUTTON</Button>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <StaticDatePicker
           displayStaticWrapperAs="desktop"
           value={value}
           loading={isLoading}
           onChange={(newValue) => {
-            console.log(newValue.getMonth() + 1, newValue.getDate());
+            testFunction(newValue);
             setValue(newValue);
           }}
           onMonthChange={handleMonthChange}
@@ -125,6 +122,7 @@ export default function StaticDatePickerDemo() {
           }}
         />
       </LocalizationProvider>
+      <HistoryCard data={Rendervalue} />
     </Box>
   );
 }

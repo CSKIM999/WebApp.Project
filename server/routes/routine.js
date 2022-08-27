@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const { Routine } = require("../models/Routine");
-const { auth } = require("../middleware/auth");
 
 router.post("/", (req, res) => {
   const routine = new Routine(req.body);

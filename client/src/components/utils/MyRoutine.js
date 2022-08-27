@@ -3,14 +3,7 @@ import * as Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@mui/material/Typography";
-import {
-  Box,
-  Button,
-  Collapse,
-  CardActionArea,
-  CardActions,
-  Grid,
-} from "@material-ui/core";
+import { Box, Button, Collapse, CardActionArea, Grid } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
@@ -88,38 +81,3 @@ export default function MyRoutine(props) {
     </Box>
   );
 }
-
-// <div>
-//   {myRoutine &&
-//     myRoutine.map((item, index) => (
-//       <Accordion
-//         key={index}
-//         expanded={expanded === `panel${index + 1}`}
-//         onChange={handleChange(`panel${index + 1}`)}
-//       >
-//         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-//           <Typography sx={{ width: "33%", flexShrink: 0 }}>
-//             {item.title}
-//           </Typography>
-//           <Typography sx={{ color: "text.secondary" }}>
-//             {item.detail.length} workouts
-//           </Typography>
-//         </AccordionSummary>
-//         <Box>
-//           <Button>Remove</Button>
-//           <Button>Adjust</Button>
-//           <Button>Start</Button>
-//         </Box>
-//         <AccordionDetails>
-//           <Typography component="div">
-//             {item.detail &&
-//               item.detail.map((node, nodeIndex) => (
-//                 <div key={nodeIndex}>
-//                   {node.name} {node.contents.length} set
-//                 </div>
-//               ))}
-//           </Typography>
-//         </AccordionDetails>
-//       </Accordion>
-//     ))}
-// </div>

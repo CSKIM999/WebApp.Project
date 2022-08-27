@@ -17,6 +17,7 @@ import Logout from "../utils/Logout";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getRoutine } from "../../_actions/routine_action";
+import { getHistory } from "../../_actions/history_action";
 
 const StyledTabs = withStyles({
   indicator: {
@@ -68,6 +69,7 @@ export default function MainPage() {
   const [value, setValue] = React.useState(0);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
+  const history = useSelector((state) => state.history);
 
   React.useEffect(() => {
     if (user.userData) {
@@ -80,6 +82,7 @@ export default function MainPage() {
           console.log("User have no Routine", response.payload);
         }
       });
+      dispatch(getHistory({ writer: user.userData._id }));
     }
   }, [user]);
 
