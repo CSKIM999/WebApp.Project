@@ -12,10 +12,11 @@ import Badge from "@mui/material/Badge";
 import { Button } from "@material-ui/core";
 import { getHistory } from "../../../_actions/history_action";
 import HistoryCard from "../../utils/HistoryCard";
+import AdjustHistory from "../../utils/AdjustHistory";
 
 //calendar 의 dynamic data 활용
 
-// fakeFetch 에서 이번달의 운동데이터를 state 에 저장하고 렌더링하게 던져주기
+// fakeFetch 에서 이번달의 운동데이터를 state 에 저장z하고 렌더링하게 던져주기
 // ++ 날짜 클릭 시 해당 날짜에 해당하는 정보가 state 안에 있다면 밑에 렌더링 해주기
 
 const initialValue = new Date();
@@ -44,6 +45,8 @@ export default function StaticDatePickerDemo() {
     const mm = pivot.getMonth() + 1;
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
+        // 메인페이지 렌더중 history redux state 가 불러와지기 전 메뉴 변경 시
+        //  filter 에러가 발생하게 됨. 이부분은 해결해야함.
         const daysToHighlight = Record.filter(
           (x) => x.year === yyyy && x.month === mm
         ).map((item, index) => {
@@ -122,6 +125,7 @@ export default function StaticDatePickerDemo() {
           }}
         />
       </LocalizationProvider>
+      <AdjustHistory date={value} />
       <HistoryCard data={Rendervalue} />
     </Box>
   );

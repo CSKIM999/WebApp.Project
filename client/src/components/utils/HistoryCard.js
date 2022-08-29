@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import DetailPage from "../DetailPage/DetailPage";
 import { getHistory } from "../../_actions/history_action";
+import AdjustHistory from "./AdjustHistory";
 
 export default function HistoryCard(props) {
   const [expanded, setExpanded] = React.useState(false);
@@ -91,7 +92,7 @@ export default function HistoryCard(props) {
                 <Button onClick={() => handleDelete(item._id)} size="small">
                   삭제
                 </Button>
-                <DetailPage adj={index} data={item} />
+                <AdjustHistory data={item} />
                 <Button onClick={() => console.log(item)} size="small">
                   test
                 </Button>
