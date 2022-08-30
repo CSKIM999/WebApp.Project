@@ -44,7 +44,7 @@ export default function WorkoutPage(props) {
     const exec = myRoutine.detail.map((item, index) => {
       return {
         name: item.name,
-        progress: `${Progress[index]} / ${item.contents.length}`,
+        progress: [Progress[index], item.contents.length],
       };
     });
     const body = {

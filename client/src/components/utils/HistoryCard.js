@@ -12,12 +12,29 @@ import {
 } from "@material-ui/core";
 import DetailPage from "../DetailPage/DetailPage";
 import { getHistory } from "../../_actions/history_action";
+// <<<<<<< Updated upstream
 import AdjustHistory from "./AdjustHistory";
+// // =======
+// import HistoryAdjust from "./HistoryAdjust";
+// // >>>>>>> Stashed changes
 
 export default function HistoryCard(props) {
   const [expanded, setExpanded] = React.useState(false);
   const dispatch = useDispatch();
+  const Record = useSelector((state) => state.history.myDocs);
+  const [Rendervalue, setRendervalue] = React.useState([]);
   const user = useSelector((state) => state.user);
+  React.useEffect(() => {
+    const yyyy = props.value.getFullYear();
+    const mm = props.value.getMonth() + 1;
+    const dd = props.value.getDate();
+    setRendervalue(
+      Record &&
+        Record.filter((x) => x.year === yyyy && x.month === mm && x.day === dd)
+    );
+    // return requestAbortController.current?.abort();
+  }, [props]);
+
   const handleExpandClick = (panel) => {
     if (expanded !== panel) {
       setExpanded(panel);
@@ -52,8 +69,8 @@ export default function HistoryCard(props) {
 
   return (
     <div>
-      {props.data &&
-        props.data.map((item, index) => (
+      {Rendervalue &&
+        Rendervalue.map((item, index) => (
           <Card key={index}>
             <CardActionArea
               expanded={expanded === `panel${index + 1}` ? "true" : undefined}
@@ -84,7 +101,9 @@ export default function HistoryCard(props) {
                     key={`workout${workoutIndex}`}
                   >
                     <Typography>{workout.name}</Typography>
-                    <Typography>{workout.progress} SET</Typography>
+                    <Typography>
+                      {workout.progress[0]} / {workout.progress[1]} SET
+                    </Typography>
                   </Grid>
                 ))}
               </CardContent>
@@ -92,6 +111,7 @@ export default function HistoryCard(props) {
                 <Button onClick={() => handleDelete(item._id)} size="small">
                   삭제
                 </Button>
+                {/* adj 하는경우 props 에 넣어주기 */}
                 <AdjustHistory data={item} />
                 <Button onClick={() => console.log(item)} size="small">
                   test

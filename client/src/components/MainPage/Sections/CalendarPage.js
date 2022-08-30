@@ -117,6 +117,7 @@ export default function StaticDatePickerDemo() {
               <Badge
                 key={day.toString()}
                 overlap="circular"
+                style={{ cursor: "default" }}
                 badgeContent={isSelected ? "💦" : undefined}
               >
                 <PickersDay {...DayComponentProps} />
@@ -126,7 +127,7 @@ export default function StaticDatePickerDemo() {
         />
       </LocalizationProvider>
       <AdjustHistory date={value} />
-      <HistoryCard data={Rendervalue} />
+      <HistoryCard value={value} />
     </Box>
   );
 }

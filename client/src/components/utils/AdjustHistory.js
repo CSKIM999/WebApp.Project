@@ -24,13 +24,16 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function AdjustHistory(props) {
   const myRoutines = useSelector((state) => state.routine.myRoutines);
-  const userId = useSelector((state) => state.user.useData);
+  const userId = useSelector((state) => state.user.userData._id);
   const [open, setOpen] = React.useState(false);
+  const [Flag, setFlag] = React.useState(false);
   const [Hour, setHour] = React.useState(0);
   const [Minute, setMinute] = React.useState(0);
   const [Second, setSecond] = React.useState(0);
   const [Title, setTitle] = React.useState("");
   const [Detail, setDetail] = React.useState([]);
+  const [OncardTitle, setOncardTitle] = React.useState([""]);
+  const [OncardExec, setOncardExec] = React.useState([[0, 0]]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
@@ -47,7 +50,9 @@ export default function AdjustHistory(props) {
     setMinute(0);
     setSecond(0);
     setTitle("");
-    setDetail([0, 0]);
+    setDetail([{ name: "", progress: [0, 0] }]);
+    setOncardTitle([""]);
+    setOncardExec([[0, 0]]);
   };
   const handleClose = () => {
     setOpen(false);
@@ -55,6 +60,7 @@ export default function AdjustHistory(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    setFlag(false);
     if (!props.data) {
       reset();
     } else {
@@ -62,8 +68,31 @@ export default function AdjustHistory(props) {
       setMinute(props.data.runtime[1]);
       setSecond(props.data.runtime[2]);
       setTitle(props.data.name);
-      setDetail(props.data.execute);
+      const newData = JSON.parse(JSON.stringify(props.data.execute));
+      setDetail([...newData]);
     }
+  };
+
+  const handleFormation = (index) => {
+    if (index === undefined) {
+      setDetail([...Detail, { name: "", progress: [0, 0] }]);
+    } else {
+      const newDetail = [...Detail];
+      newDetail.splice(index, 1);
+      setDetail([...newDetail]);
+    }
+  };
+
+  const handleOncardTitle = (value, index) => {
+    var newDetail = [...Detail];
+    newDetail[index].name = value;
+    setDetail([...newDetail]);
+  };
+
+  const handleOncardExec = (value, index, target) => {
+    var newDetail = [...Detail];
+    newDetail[index].progress[target] = value * 1;
+    setDetail([...newDetail]);
   };
 
   const ButtonType = () => {
@@ -85,41 +114,63 @@ export default function AdjustHistory(props) {
   const timeGrid = (props) => {
     // 세트별 onchange 를 위한 state 디자인 ++ 함수 디자인 필요
     return (
-      <Grid container spacing={3}>
+      <Grid container alignItems="center" spacing={3}>
         <Grid item xs={2}>
           <TextField
             type={"number"}
-            onChange={setHour}
+            onChange={(event) => setHour(event.target.value * 1)}
             value={Hour}
             label={"시"}
           />
         </Grid>
         <Grid item xs={2}>
-          <TextField type={"number"} value={Minute} label={"분"} />
+          <TextField
+            onChange={(event) => setMinute(event.target.value * 1)}
+            type={"number"}
+            value={Minute}
+            label={"분"}
+          />
         </Grid>
         <Grid item xs={2}>
-          <TextField type={"number"} value={Second} label={"초"} />
+          <TextField
+            onChange={(event) => setSecond(event.target.value * 1)}
+            type={"number"}
+            value={Second}
+            label={"초"}
+          />
+        </Grid>
+        <Grid item>
+          <Button onClick={() => handleFormation()}>운동 추가</Button>
         </Grid>
       </Grid>
     );
   };
-  const gridElement = (props, index) => {
-    var temporary = [0, 0];
-    if (props) {
-      temporary = props.progress.split("/");
-      console.log(props, temporary);
+  const gridElement = (index) => {
+    if (!index) {
+      const index = 0;
     }
     return (
-      <Grid key={index ? index : 0} item container direction="row">
+      <Grid key={index} item container direction="row">
         <Grid>
-          <TextField value={props ? props.name : ""} label="운동 이름" />
+          <TextField
+            onChange={(event) => handleOncardTitle(event.target.value, index)}
+            error={Flag && Detail[index].name === ""}
+            helperText={
+              Flag && Detail[index].name === "" ? "이름을 입력해주세요" : ""
+            }
+            value={Detail[index].name}
+            label="운동 이름"
+          />
         </Grid>
         <Grid>
           <TextField
-            InputProps={{ inputProps: { min: 0, max: 20 } }}
+            InputProps={{
+              inputProps: { min: 0, max: `${Detail[index].progress[1]}` },
+            }}
             type={"number"}
             label="수행 세트"
-            value={temporary[0] * 1}
+            onChange={(event) => handleOncardExec(event.target.value, index, 0)}
+            value={Detail[index].progress[0]}
           />
         </Grid>
         <Grid>
@@ -127,16 +178,32 @@ export default function AdjustHistory(props) {
             InputProps={{ inputProps: { min: 0, max: 20 } }}
             type={"number"}
             label="총 세트수"
-            value={temporary[1] * 1}
+            onChange={(event) => handleOncardExec(event.target.value, index, 1)}
+            value={Detail[index].progress[1]}
           />
+        </Grid>
+        <Grid>
+          <Button onClick={() => handleFormation(index)}>DEL</Button>
         </Grid>
       </Grid>
     );
   };
-  // 루틴이름
-  // 1단위 박스
-  //  운동이름 // 수행횟수 // 총횟수
-  // 박스추가버튼
+
+  const handleSave = () => {
+    setFlag(true);
+    const body = {
+      id: userId,
+      name: Title,
+      runtime: [Hour, Minute, Second],
+      detail: Detail,
+    };
+    console.log(body);
+  };
+  const handleMenu = (props) => {
+    console.log(props);
+    handleMenuClose();
+  };
+
   return (
     <div>
       {ButtonType()}
@@ -166,7 +233,7 @@ export default function AdjustHistory(props) {
             >
               {myRoutines &&
                 myRoutines.map((item, index) => (
-                  <MenuItem key={index} onClick={handleMenuClose}>
+                  <MenuItem key={index} onClick={() => handleMenu(item)}>
                     {item.title}
                   </MenuItem>
                 ))}
@@ -191,14 +258,12 @@ export default function AdjustHistory(props) {
           />
           <Grid container direction="column">
             {timeGrid()}
-            {props.data &&
-              props.data.execute.map((item, index) => gridElement(item, index))}
-            {props.date && gridElement()}
+            {Detail && Detail.map((item, index) => gridElement(index))}
           </Grid>
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={() => console.log(Detail)}>test</Button>
+          <Button onClick={() => handleSave()}>test huh</Button>
         </DialogActions>
       </Dialog>
     </div>
