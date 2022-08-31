@@ -2,29 +2,30 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // schema => DB 의 detail
-const historySchema = Schema(
-  {
-    writer: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    runtime: {
-      type: Array,
-      required: true,
-    },
-    execute: {
-      type: Array,
-      required: true,
-      default: [],
-    },
+const historySchema = Schema({
+  writer: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
   },
-  { timestamps: true }
-);
+  date: {
+    type: Date,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  runtime: {
+    type: Array,
+    required: true,
+  },
+  execute: {
+    type: Array,
+    required: true,
+    default: [],
+  },
+});
 
 const History = mongoose.model("History", historySchema);
 

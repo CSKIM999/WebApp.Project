@@ -10,13 +10,8 @@ import {
   Card,
   CardContent,
 } from "@material-ui/core";
-import DetailPage from "../DetailPage/DetailPage";
-import { getHistory } from "../../_actions/history_action";
-// <<<<<<< Updated upstream
+import { getHistory } from "../../../../_actions/history_action";
 import AdjustHistory from "./AdjustHistory";
-// // =======
-// import HistoryAdjust from "./HistoryAdjust";
-// // >>>>>>> Stashed changes
 
 export default function HistoryCard(props) {
   const [expanded, setExpanded] = React.useState(false);
@@ -32,7 +27,6 @@ export default function HistoryCard(props) {
       Record &&
         Record.filter((x) => x.year === yyyy && x.month === mm && x.day === dd)
     );
-    // return requestAbortController.current?.abort();
   }, [props]);
 
   const handleExpandClick = (panel) => {
@@ -112,7 +106,7 @@ export default function HistoryCard(props) {
                   삭제
                 </Button>
                 {/* adj 하는경우 props 에 넣어주기 */}
-                <AdjustHistory data={item} />
+                <AdjustHistory date={props.value} data={item} />
                 <Button onClick={() => console.log(item)} size="small">
                   test
                 </Button>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import * as Axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -21,8 +22,10 @@ import AddIcon from "@mui/icons-material/Add";
 import { Alert, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Stack } from "@mui/system";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { getHistory } from "../../../../_actions/history_action";
 
 export default function AdjustHistory(props) {
+  const dispatch = useDispatch();
   const myRoutines = useSelector((state) => state.routine.myRoutines);
   const userId = useSelector((state) => state.user.userData._id);
   const [open, setOpen] = React.useState(false);
@@ -32,8 +35,6 @@ export default function AdjustHistory(props) {
   const [Second, setSecond] = React.useState(0);
   const [Title, setTitle] = React.useState("");
   const [Detail, setDetail] = React.useState([]);
-  const [OncardTitle, setOncardTitle] = React.useState([""]);
-  const [OncardExec, setOncardExec] = React.useState([[0, 0]]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
@@ -51,8 +52,6 @@ export default function AdjustHistory(props) {
     setSecond(0);
     setTitle("");
     setDetail([{ name: "", progress: [0, 0] }]);
-    setOncardTitle([""]);
-    setOncardExec([[0, 0]]);
   };
   const handleClose = () => {
     setOpen(false);
@@ -192,16 +191,36 @@ export default function AdjustHistory(props) {
   const handleSave = () => {
     setFlag(true);
     const body = {
-      id: userId,
+      writer: userId,
+      date: props.date,
       name: Title,
       runtime: [Hour, Minute, Second],
-      detail: Detail,
+      execute: Detail,
     };
-    console.log(body);
+    Axios.post("/api/history/", body).then((response) => {
+      if (response.data.success) {
+        console.log("history Save", response.data);
+        dispatch(getHistory({ writer: userId }));
+        handleClose();
+      } else {
+        console.log("history Save Fail");
+      }
+    });
   };
   const handleMenu = (props) => {
     console.log(props);
     handleMenuClose();
+    setHour(0);
+    setMinute(0);
+    setSecond(0);
+    setFlag(false);
+    setTitle(props.title);
+    const beforeParse = props.detail.map((item) => {
+      const c = item.contents.length;
+      return { name: item.name, progress: [c, c] };
+    });
+    const newData = JSON.parse(JSON.stringify(beforeParse));
+    setDetail([...newData]);
   };
 
   return (
@@ -263,7 +282,7 @@ export default function AdjustHistory(props) {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={() => handleSave()}>test huh</Button>
+          <Button onClick={() => handleSave()}>SAVE</Button>
         </DialogActions>
       </Dialog>
     </div>

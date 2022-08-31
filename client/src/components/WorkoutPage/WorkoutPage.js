@@ -17,6 +17,7 @@ import { Box, Fab, ListItemText } from "@material-ui/core";
 import Stopwatch from "./Sections/Stopwatch";
 import ProgressCard from "./Sections/ProgressCard";
 import { getHistory } from "../../_actions/history_action";
+import { ListItemButton } from "@mui/material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
@@ -47,16 +48,19 @@ export default function WorkoutPage(props) {
         progress: [Progress[index], item.contents.length],
       };
     });
+    const date = new Date();
     const body = {
       writer: userId,
+      date: date,
       name: myRoutine.title,
       runtime: Timer,
       execute: exec,
     };
     Axios.post("/api/history/", body).then((response) => {
       if (response.data.success) {
-        console.log("history Save");
-        dispatch(getHistory({ writer: userId })).then(handleClose());
+        console.log("history Save", response.data);
+        dispatch(getHistory({ writer: userId }));
+        handleClose();
         props.swipe();
       } else {
         console.log("history Save Fail");
@@ -87,7 +91,7 @@ export default function WorkoutPage(props) {
                 <CloseIcon />
               </IconButton>
               <Typography
-                onClick={() => console.log(props)}
+                onClick={() => console.log(Timer)}
                 sx={{ ml: 2, flex: 1 }}
                 variant="h6"
                 component="div"
@@ -103,12 +107,12 @@ export default function WorkoutPage(props) {
             <ListItem>
               <Stopwatch timer={setTimer} />
             </ListItem>
-            <ListItem>
+            <ListItemButton disabled={Timer.every((i) => i <= 0)}>
               <ProgressCard
                 getProgress={setProgress}
                 routine={myRoutine.detail}
               />
-            </ListItem>
+            </ListItemButton>
           </List>
         </Box>
       </Dialog>

@@ -15,7 +15,7 @@ import Register from "../utils/Register";
 function LandingPage() {
   return (
     <div>
-      랜딩페이지입니다
+      App 사용을 위해선 로그인이 필요합니다
       <Login></Login>
       <Register></Register>
     </div>

@@ -29,7 +29,7 @@ router.post("/mydocs", (req, res) => {
     if (myDocs.length > 0) {
       const myRecs = [];
       myDocs.map((item, index) => {
-        const date = new Date(item.createdAt);
+        const date = new Date(item.date);
         const yyyy = date.getFullYear();
         const mm = date.getMonth() + 1;
         const dd = date.getDate();

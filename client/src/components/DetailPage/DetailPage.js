@@ -20,43 +20,12 @@ import { display } from "@mui/system";
 
 export default function DetailPage(props) {
   const [open, setOpen] = React.useState(false);
-  const [Setcount, setSetcount] = React.useState(
-    // props.data ? props.data.contents : 1
-    1
-  );
-  const [TypeTop, setTypeTop] = React.useState(
-    // props.data ? props.data.option.TypeTop : "weight"
-    "weight"
-  );
-  const [TypeBtm, setTypeBtm] = React.useState(
-    // props.data ? props.data.option.TypeBtm : "only"
-    "only"
-  );
-  const [TimeUnit, setTimeUnit] = React.useState(
-    // props.data ? props.data.option.TimeUnit : "초"
-    "초"
-  );
-  const [Title, setTitle] = React.useState(
-    // props.data ? props.data.name : ""
-    ""
-  );
-  const [Detail, setDetail] = React.useState(
-    // props.data ? props.data.contents : [[20, 10]]
-    [[20, 10]]
-  );
-
-  // [...state,newValue]
-  // React.useEffect(() => {
-  //   if (props.data) {
-  //     setSetcount(props.data.contents.length);
-  //     setTypeTop(props.data.option[0]);
-  //     setTypeBtm(props.data.option[1]);
-  //     setTimeUnit(props.data.option[2]);
-  //     setTitle(props.data.name);
-  //     setDetail(props.data.contents);
-  //     console.log("props set", props.data.name, "Title", Title);
-  //   }
-  // }, [props]);
+  const [Setcount, setSetcount] = React.useState(1);
+  const [TypeTop, setTypeTop] = React.useState("weight");
+  const [TypeBtm, setTypeBtm] = React.useState("only");
+  const [TimeUnit, setTimeUnit] = React.useState("초");
+  const [Title, setTitle] = React.useState("");
+  const [Detail, setDetail] = React.useState([[20, 10]]);
 
   const reset = () => {
     setSetcount(1);
@@ -174,10 +143,6 @@ export default function DetailPage(props) {
   };
   return (
     <div>
-      {/* <Fab variant="extended" onClick={handleClickOpen}>
-        운동 추가
-        <AddIcon />
-      </Fab> */}
       {ButtonType()}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>운동 추가</DialogTitle>

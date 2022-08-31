@@ -20,6 +20,9 @@ export default function ProgressCard(props) {
   };
 
   const handleBack = (index) => {
+    if (activeStep[index] === 0) {
+      return;
+    }
     const newStep = [...activeStep];
     newStep[index]--;
     setActiveStep([...newStep]);
@@ -89,7 +92,7 @@ export default function ProgressCard(props) {
                         event.stopPropagation();
                         handleBack(index);
                       }}
-                      disabled={activeStep[index] === 0}
+                      // disabled={activeStep[index] === 0}
                     >
                       <BackspaceOutlinedIcon fontSize="small" sx={{ p: 1 }} />{" "}
                       -1 Set
