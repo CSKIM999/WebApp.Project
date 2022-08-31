@@ -11,6 +11,8 @@ import SettingPage from "../SettingPage/SettingPage";
 import { getRoutine } from "../../_actions/routine_action";
 import WorkoutPage from "../WorkoutPage/WorkoutPage";
 
+import { Delete } from "@mui/icons-material";
+
 export default function MyRoutine(props) {
   const [expanded, setExpanded] = React.useState("false");
   const myRoutine = useSelector((state) => state.routine.myRoutines);
@@ -37,44 +39,59 @@ export default function MyRoutine(props) {
     <Box>
       {myRoutine &&
         myRoutine.map((item, index) => (
-          <Card key={index} sx={{ minWidth: 275 }}>
+          <Card key={index} variant={"outlined"} sx={{ minWidth: 275, my: 1 }}>
             <CardActionArea
               expanded={expanded === `panel${index + 1}` ? "true" : undefined}
               onClick={() => handleExpandClick(`panel${index + 1}`)}
               aria-expanded={expanded}
             >
               <CardContent>
-                <Grid container direction="row">
-                  <Typography variant="h5" component="div">
-                    {item.title}
-                  </Typography>
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {item.detail.length} Workouts
-                  </Typography>
-                </Grid>
-              </CardContent>
-            </CardActionArea>
-            <Collapse
-              in={expanded === `panel${index + 1}` ? true : undefined}
-              timeout="auto"
-              unmountOnExit
-            >
-              <CardContent>
-                {item.detail.map((workout, index) => (
-                  <Grid key={`workout${index}`}>
-                    <Typography>
-                      {workout.name} {workout.contents.length} set
+                <Grid container justifyContent="space-between" direction="row">
+                  <Grid item>
+                    <Typography variant="h5" component="div">
+                      {item.title}
                     </Typography>
                   </Grid>
-                ))}
+                  <Grid item>
+                    <Typography variant="subtitle1" color="text.secondary">
+                      {item.detail.length} Workouts
+                    </Typography>
+                  </Grid>
+                </Grid>
               </CardContent>
-            </Collapse>
-            <Grid container direction="row" spacing={2}>
-              <Button onClick={() => handleDelete(item)} size="small">
-                삭제
-              </Button>
-              <SettingPage data={item} />
-              <WorkoutPage swipe={props.swipe} id={item._id} />
+              <Collapse
+                in={expanded === `panel${index + 1}` ? true : undefined}
+                timeout="auto"
+                unmountOnExit
+              >
+                <CardContent>
+                  {item.detail.map((workout, index) => (
+                    <Grid key={`workout${index}`}>
+                      <Typography>
+                        {workout.name} {workout.contents.length} set
+                      </Typography>
+                    </Grid>
+                  ))}
+                </CardContent>
+              </Collapse>
+            </CardActionArea>
+            <Grid container justifyContent="space-evenly" direction="row">
+              <Grid item p={2}>
+                <Button
+                  onClick={() => handleDelete(item)}
+                  variant={"text"}
+                  size="small"
+                >
+                  삭제
+                  <Delete fontSize="small" />
+                </Button>
+              </Grid>
+              <Grid item p={2}>
+                <SettingPage data={item} />
+              </Grid>
+              <Grid item p={2}>
+                <WorkoutPage swipe={props.swipe} id={item._id} />
+              </Grid>
             </Grid>
           </Card>
         ))}

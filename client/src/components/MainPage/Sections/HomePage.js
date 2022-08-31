@@ -1,25 +1,34 @@
+import { Box, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import Settingpage from "../../SettingPage/SettingPage";
 import MyRoutine from "../../utils/MyRoutine";
-
-// what we use?
-// base : dialog [ x title save]
-// 박스에 담아야하나?
-// 텍스트필드
-// 플로팅액션버튼 (운동추가)
-
-// util
-//아코디언 in mainpage [rm, adj, start]
-// 포함해야 할 내용 [ 루틴이름, 루틴 내 운동개수,
-//루틴 내 각각의 운동이름과 횟수]
+import { useSelector } from "react-redux";
+import { Container } from "@mui/system";
+import Logout from "../../utils/Logout";
 
 function HomePage(props) {
+  const myRoutine = useSelector((state) => state.routine.myRoutines);
+  const useHelper = () => {
+    if (myRoutine && myRoutine.length === 0) {
+      return <Settingpage state="C" />;
+    } else {
+      return (
+        <Typography variant="button" gutterBottom>
+          내 루틴 빠른 시작
+        </Typography>
+      );
+    }
+  };
   return (
-    <div>
-      반갑습니다
-      <Settingpage state="C" />
-      <MyRoutine swipe={props.swipe} />
-    </div>
+    <Grid container direction="column">
+      <Grid item>
+        {useHelper()}
+        <Logout />
+      </Grid>
+      <Grid item>
+        <MyRoutine swipe={props.swipe} />
+      </Grid>
+    </Grid>
   );
 }
 

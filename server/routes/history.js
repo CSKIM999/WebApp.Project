@@ -51,12 +51,12 @@ router.post("/mydocs", (req, res) => {
   });
 });
 
-// router.post("/modify", (req, res) => {
-//   Routine.findOneAndUpdate({ _id: req.body._id }, req.body, (err) => {
-//     if (err) return res.status(400).json({ success: false, err });
-//     return res.status(200).send({ success: true });
-//   });
-// });
+router.post("/modify", (req, res) => {
+  History.findOneAndUpdate({ _id: req.body._id }, req.body, (err) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).send({ success: true });
+  });
+});
 
 router.post("/remove", (req, res) => {
   History.findByIdAndRemove(req.body._id, (err) => {

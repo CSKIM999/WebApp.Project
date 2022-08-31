@@ -18,6 +18,7 @@ import Stopwatch from "./Sections/Stopwatch";
 import ProgressCard from "./Sections/ProgressCard";
 import { getHistory } from "../../_actions/history_action";
 import { ListItemButton } from "@mui/material";
+import { FitnessCenter } from "@mui/icons-material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
@@ -70,8 +71,14 @@ export default function WorkoutPage(props) {
 
   return (
     <div>
-      <Button variant={""} size={"small"} onClick={handleClickOpen}>
+      <Button
+        color="inherit"
+        variant={"text"}
+        size={"small"}
+        onClick={handleClickOpen}
+      >
         실행
+        <FitnessCenter fontSize="small" />
       </Button>
       <Dialog
         fullScreen

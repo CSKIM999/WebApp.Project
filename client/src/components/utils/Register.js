@@ -55,10 +55,9 @@ export default function Register() {
 
       dispatch(registerUser(body)).then((response) => {
         if (response.payload.success) {
-          console.log("regist success");
           alert("회원가입 성공! 로그인 해주세요!");
+          handleClose();
         } else {
-          console.log("regist Fail", response.payload);
           alert("회원가입 실패");
         }
       });

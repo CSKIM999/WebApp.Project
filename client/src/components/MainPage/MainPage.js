@@ -8,7 +8,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Button } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 
 import HomePage from "./Sections/HomePage";
 import RoutinePage from "./Sections/RoutinePage";
@@ -50,11 +50,11 @@ function TabPanel(props) {
   );
 }
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
+// TabPanel.propTypes = {
+//   children: PropTypes.node,
+//   index: PropTypes.number.isRequired,
+//   value: PropTypes.number.isRequired,
+// };
 
 function getId(index) {
   return {
@@ -73,13 +73,10 @@ export default function MainPage() {
 
   React.useEffect(() => {
     if (user.userData) {
-      console.log("user", user);
       dispatch(getRoutine({ writer: user.userData._id })).then((response) => {
         if (response.payload.length !== 0) {
-          console.log("success", response.payload);
           setRoutines(response.payload);
         } else {
-          console.log("User have no Routine", response.payload);
         }
       });
       dispatch(getHistory({ writer: user.userData._id }));
@@ -94,21 +91,26 @@ export default function MainPage() {
     setValue(index);
   };
   const WorkoutEnd = () => {
-    console.log(Routines);
     setValue(2);
   };
 
   return (
-    <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
+    <Box
+      sx={{
+        bgcolor: "background.paper",
+        width: "100%",
+      }}
+    >
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         onChangeIndex={handleChangeIndex}
+        style={{ paddingBottom: "7vh" }}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <Button onClick={() => test()}>test</Button>
-          <Logout></Logout>
-          <HomePage swipe={WorkoutEnd} />
+          <Box>
+            <HomePage swipe={WorkoutEnd} />
+          </Box>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
           <RoutinePage swipe={WorkoutEnd} />
@@ -126,7 +128,7 @@ export default function MainPage() {
             textColor="inherit"
             variant="fullWidth"
             aria-label="full width tabs example"
-            style={{ height: "4rem" }}
+            style={{ height: "7vh" }}
           >
             <Tab label="메인페이지" {...getId(0)} />
             <Tab label="내 루틴" {...getId(1)} />

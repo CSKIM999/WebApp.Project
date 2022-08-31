@@ -9,10 +9,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import {
   Box,
-  Container,
   Fab,
   Grid,
-  InputAdornment,
   DialogTitle,
   Menu,
   MenuItem,
@@ -104,7 +102,13 @@ export default function AdjustHistory(props) {
       );
     } else {
       return (
-        <Button onClick={handleClickOpen} size="small">
+        <Button
+          onClick={(event) => {
+            event.stopPropagation();
+            handleClickOpen();
+          }}
+          size="small"
+        >
           수정
         </Button>
       );
@@ -197,18 +201,28 @@ export default function AdjustHistory(props) {
       runtime: [Hour, Minute, Second],
       execute: Detail,
     };
-    Axios.post("/api/history/", body).then((response) => {
-      if (response.data.success) {
-        console.log("history Save", response.data);
-        dispatch(getHistory({ writer: userId }));
-        handleClose();
-      } else {
-        console.log("history Save Fail");
-      }
-    });
+    if (props.adj) {
+      body._id = props.data._id;
+      Axios.post("/api/history/modify", body).then((response) => {
+        if (response.data.success) {
+          dispatch(getHistory({ writer: userId }));
+          handleClose();
+        } else {
+          alert("ERROR : HIST-MODIFY");
+        }
+      });
+    } else {
+      Axios.post("/api/history/", body).then((response) => {
+        if (response.data.success) {
+          dispatch(getHistory({ writer: userId }));
+          handleClose();
+        } else {
+          alert("ERROR : HIST-SUBMIT");
+        }
+      });
+    }
   };
   const handleMenu = (props) => {
-    console.log(props);
     handleMenuClose();
     setHour(0);
     setMinute(0);

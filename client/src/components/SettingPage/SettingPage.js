@@ -17,6 +17,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { Box, Fab, ListItemText } from "@material-ui/core";
 
+import { Build, Add } from "@mui/icons-material";
+
 import DetailPage from "../DetailPage/DetailPage";
 import WorkoutCards from "./Sections/WorkoutCards";
 
@@ -37,9 +39,6 @@ export default function SettingPage(props) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
-  const check = () => {
-    console.log(Routine, IsAdjust, props);
-  };
   const reset = (Adjust) => {
     setTitleFlag(false);
     setTitle(Adjust ? Adjust.data.title : "");
@@ -80,7 +79,6 @@ export default function SettingPage(props) {
   const handleSave = () => {
     const dispatchRoutine = (data) => {
       dispatch(getRoutine({ writer: data.writer })).then((response) => {
-        console.log("ALL success", response);
         handleClose();
       });
     };
@@ -96,19 +94,16 @@ export default function SettingPage(props) {
     };
     if (IsAdjust !== false) {
       body._id = IsAdjust;
-      console.log("adjust", body);
       Axios.post("/api/routine/modify", body).then((response) => {
         if (response.data.success) {
           dispatchRoutine(body);
         }
       });
     } else {
-      console.log("not adjust", body);
       Axios.post("/api/routine/", body).then((response) => {
         if (response.data.success) {
           dispatchRoutine(body);
         } else {
-          console.log("upload error", response.payload);
         }
       });
     }
@@ -117,11 +112,12 @@ export default function SettingPage(props) {
   return (
     <div>
       <Button
-        variant={props.state === "C" ? "outlined" : ""}
+        variant={props.state === "C" ? "outlined" : "text"}
         size={props.state === "C" ? "" : "small"}
         onClick={handleClickOpen}
       >
         {props.state === "C" ? "루틴추가" : "수정"}
+        {props.state === "C" ? <Add /> : <Build fontSize="small" />}
       </Button>
       <Dialog
         fullScreen
@@ -163,9 +159,6 @@ export default function SettingPage(props) {
             </ListItem>
             <ListItem>
               <DetailPage adj={false} setRoutine={handleSetroutine} />
-            </ListItem>
-            <ListItem>
-              <Button onClick={check}>check</Button>
             </ListItem>
           </List>
           <WorkoutCards

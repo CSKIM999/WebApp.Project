@@ -9,6 +9,7 @@ import {
   Grid,
   Card,
   CardContent,
+  Box,
 } from "@material-ui/core";
 import { getHistory } from "../../../../_actions/history_action";
 import AdjustHistory from "./AdjustHistory";
@@ -62,10 +63,10 @@ export default function HistoryCard(props) {
   };
 
   return (
-    <div>
+    <Box>
       {Rendervalue &&
         Rendervalue.map((item, index) => (
-          <Card key={index}>
+          <Card key={index} style={{ marginTop: 10 }} variant={"outlined"}>
             <CardActionArea
               expanded={expanded === `panel${index + 1}` ? "true" : undefined}
               onClick={() => handleExpandClick(`panel${index + 1}`)}
@@ -81,39 +82,44 @@ export default function HistoryCard(props) {
                   </Typography>
                 </Grid>
               </CardContent>
+              <Collapse
+                in={expanded === `panel${index + 1}` ? true : undefined}
+                timeout="auto"
+                unmountOnExit
+              >
+                <CardContent>
+                  {item.execute.map((workout, workoutIndex) => (
+                    <Grid
+                      container
+                      direction="row"
+                      key={`workout${workoutIndex}`}
+                    >
+                      <Typography>{workout.name}</Typography>
+                      <Typography>
+                        {workout.progress[0]} / {workout.progress[1]} SET
+                      </Typography>
+                    </Grid>
+                  ))}
+                </CardContent>
+              </Collapse>
             </CardActionArea>
-            <Collapse
-              in={expanded === `panel${index + 1}` ? true : undefined}
-              timeout="auto"
-              unmountOnExit
+            <Grid
+              container
+              justifyContent="flex-end"
+              direction="row"
+              spacing={2}
             >
-              <CardContent>
-                {item.execute.map((workout, workoutIndex) => (
-                  <Grid
-                    container
-                    direction="row"
-                    key={`workout${workoutIndex}`}
-                  >
-                    <Typography>{workout.name}</Typography>
-                    <Typography>
-                      {workout.progress[0]} / {workout.progress[1]} SET
-                    </Typography>
-                  </Grid>
-                ))}
-              </CardContent>
-              <Grid container direction="row" spacing={2}>
+              <Grid item>
                 <Button onClick={() => handleDelete(item._id)} size="small">
                   삭제
                 </Button>
-                {/* adj 하는경우 props 에 넣어주기 */}
-                <AdjustHistory date={props.value} data={item} />
-                <Button onClick={() => console.log(item)} size="small">
-                  test
-                </Button>
               </Grid>
-            </Collapse>
+              <Grid item>
+                <AdjustHistory date={props.value} data={item} adj={true} />
+              </Grid>
+            </Grid>
           </Card>
         ))}
-    </div>
+    </Box>
   );
 }
