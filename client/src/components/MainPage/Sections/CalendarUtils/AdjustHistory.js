@@ -37,36 +37,35 @@ export default function AdjustHistory(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
 
+  const reset = (Adjust) => {
+    setHour(Adjust ? Adjust.data.runtime[0] : 0);
+    setMinute(Adjust ? Adjust.data.runtime[1] : 0);
+    setSecond(Adjust ? Adjust.data.runtime[2] : 0);
+    setTitle(Adjust ? Adjust.data.name : "");
+    if (Adjust) {
+      const newData = JSON.parse(JSON.stringify(Adjust.data.execute));
+      setDetail([...newData]);
+    } else {
+      setDetail([{ name: "", progress: [0, 0] }]);
+    }
+  };
+
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
-  const reset = () => {
-    setHour(0);
-    setMinute(0);
-    setSecond(0);
-    setTitle("");
-    setDetail([{ name: "", progress: [0, 0] }]);
-  };
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleClickOpen = () => {
     setOpen(true);
     setFlag(false);
     if (!props.data) {
       reset();
     } else {
-      setHour(props.data.runtime[0]);
-      setMinute(props.data.runtime[1]);
-      setSecond(props.data.runtime[2]);
-      setTitle(props.data.name);
-      const newData = JSON.parse(JSON.stringify(props.data.execute));
-      setDetail([...newData]);
+      reset(props);
     }
   };
 
@@ -79,19 +78,16 @@ export default function AdjustHistory(props) {
       setDetail([...newDetail]);
     }
   };
-
   const handleOncardTitle = (value, index) => {
     var newDetail = [...Detail];
     newDetail[index].name = value;
     setDetail([...newDetail]);
   };
-
   const handleOncardExec = (value, index, target) => {
     var newDetail = [...Detail];
     newDetail[index].progress[target] = value * 1;
     setDetail([...newDetail]);
   };
-
   const ButtonType = () => {
     if (!props.data) {
       return (
@@ -115,7 +111,6 @@ export default function AdjustHistory(props) {
     }
   };
   const timeGrid = (props) => {
-    // 세트별 onchange 를 위한 state 디자인 ++ 함수 디자인 필요
     return (
       <Grid container alignItems="center" spacing={3}>
         <Grid item xs={2}>
@@ -149,9 +144,6 @@ export default function AdjustHistory(props) {
     );
   };
   const gridElement = (index) => {
-    if (!index) {
-      const index = 0;
-    }
     return (
       <Grid key={index} item container direction="row">
         <Grid>

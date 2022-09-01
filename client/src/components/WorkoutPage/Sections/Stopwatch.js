@@ -1,4 +1,6 @@
-import { Box, Button, Typography } from "@material-ui/core";
+import { Button, Slide, Typography } from "@material-ui/core";
+import { PlayArrow, Stop } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 
 export default function Stopwatch(props) {
@@ -41,17 +43,30 @@ export default function Stopwatch(props) {
   };
 
   return (
-    <Box>
+    <Stack>
       <Typography variant="h4" style={!Count || Run ? {} : { color: "red" }}>
         {realTime()}
       </Typography>
-      <Button disabled={Run ? true : false} onClick={startHandler}>
-        Start
-      </Button>
-      <Button disabled={Run ? false : true} onClick={stopHandler}>
-        Stop
-      </Button>
-      <Button onClick={() => console.log(Run, Count)}>Test</Button>
-    </Box>
+      <Stack direction="row" justifyContent="center">
+        <Slide direction="right" in={!Run}>
+          <Button
+            onClick={startHandler}
+            style={{ minWidth: 0, width: 0, padding: 0 }}
+          >
+            Start
+            <PlayArrow />
+          </Button>
+        </Slide>
+        <Slide direction="left" in={Run}>
+          <Button
+            onClick={stopHandler}
+            style={{ minWidth: 0, width: 0, padding: 0 }}
+          >
+            Stop
+            <Stop />
+          </Button>
+        </Slide>
+      </Stack>
+    </Stack>
   );
 }

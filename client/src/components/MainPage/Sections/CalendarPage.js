@@ -13,6 +13,7 @@ import { Button, Grid } from "@material-ui/core";
 import { getHistory } from "../../../_actions/history_action";
 import AdjustHistory from "./CalendarUtils/AdjustHistory";
 import HistoryCard from "./CalendarUtils/HistoryCard";
+import { DatePicker } from "@mui/x-date-pickers";
 
 const initialValue = new Date();
 
@@ -82,6 +83,10 @@ export default function StaticDatePickerDemo() {
       <Grid container direction="column">
         <Grid item>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
+            {/* <DatePicker
+            https://codesandbox.io/s/material-ui-date-picker-forked-k8v5e?fontsize=14&hidenavigation=1&theme=dark&file=/demo.js
+            확인해보기
+            */}
             <StaticDatePicker
               displayStaticWrapperAs="desktop"
               value={value}

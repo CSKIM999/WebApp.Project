@@ -17,12 +17,13 @@ import { Box, Fab, ListItemText } from "@material-ui/core";
 import Stopwatch from "./Sections/Stopwatch";
 import ProgressCard from "./Sections/ProgressCard";
 import { getHistory } from "../../_actions/history_action";
-import { ListItemButton } from "@mui/material";
-import { FitnessCenter } from "@mui/icons-material";
+import { ListItemButton, Stack } from "@mui/material";
+import { FitnessCenter, Save } from "@mui/icons-material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
 });
+const AppbarMargin = "4rem";
 
 export default function WorkoutPage(props) {
   const myRoutine = useSelector((state) => state.routine.myRoutines).filter(
@@ -87,7 +88,13 @@ export default function WorkoutPage(props) {
         TransitionComponent={Transition}
       >
         <Box>
-          <AppBar sx={{ position: "relative" }}>
+          <AppBar
+            sx={{
+              position: "stick",
+              height: AppbarMargin,
+              justifyContent: "center",
+            }}
+          >
             <Toolbar>
               <IconButton
                 edge="start"
@@ -97,30 +104,22 @@ export default function WorkoutPage(props) {
               >
                 <CloseIcon />
               </IconButton>
-              <Typography
-                onClick={() => console.log(Timer)}
-                sx={{ ml: 2, flex: 1 }}
-                variant="h6"
-                component="div"
-              >
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 {myRoutine.title}
               </Typography>
               <Button autoFocus color="inherit" onClick={() => handleSave()}>
+                <Save fontSize="small" />
                 save
               </Button>
             </Toolbar>
           </AppBar>
-          <List>
-            <ListItem>
-              <Stopwatch timer={setTimer} />
-            </ListItem>
-            <ListItemButton disabled={Timer.every((i) => i <= 0)}>
-              <ProgressCard
-                getProgress={setProgress}
-                routine={myRoutine.detail}
-              />
-            </ListItemButton>
-          </List>
+          <Stack sx={{ p: 2, mt: AppbarMargin }} alignItems="center">
+            <Stopwatch timer={setTimer} />
+            <ProgressCard
+              getProgress={setProgress}
+              routine={myRoutine.detail}
+            />
+          </Stack>
         </Box>
       </Dialog>
     </div>

@@ -13,13 +13,13 @@ import {
   InputAdornment,
   DialogTitle,
 } from "@material-ui/core";
-import AddIcon from "@mui/icons-material/Add";
 import { Alert, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Stack } from "@mui/system";
-import { display } from "@mui/system";
+import { Build, Add, AddCircle, RemoveCircle } from "@mui/icons-material";
 
 export default function DetailPage(props) {
   const [open, setOpen] = React.useState(false);
+  const [SubmitFlag, setSubmitFlag] = React.useState(false);
   const [Setcount, setSetcount] = React.useState(1);
   const [TypeTop, setTypeTop] = React.useState("weight");
   const [TypeBtm, setTypeBtm] = React.useState("only");
@@ -27,18 +27,24 @@ export default function DetailPage(props) {
   const [Title, setTitle] = React.useState("");
   const [Detail, setDetail] = React.useState([[20, 10]]);
 
-  const reset = () => {
-    setSetcount(1);
-    setTypeTop("weight");
-    setTypeBtm("only");
-    setTimeUnit("초");
-    setTitle("");
-    setDetail([[20, 10]]);
+  const reset = (Adjust) => {
+    setSubmitFlag(false);
+    setSetcount(Adjust ? Adjust.contents.length : 1);
+    setTypeTop(Adjust ? Adjust.option[0] : "weight");
+    setTypeBtm(Adjust ? Adjust.option[1] : "only");
+    setTimeUnit(Adjust ? Adjust.option[2] : "초");
+    setTitle(Adjust ? Adjust.name : "");
+    setDetail(Adjust ? Adjust.contents : [[20, 10]]);
   };
 
-  const handleSetcount = (event) => {
-    const Changed = event.target.value * 1;
-    if (event.target.value === "") {
+  const handleSetcount = (value) => {
+    var Changed = value * 1;
+    if (Changed > 20) {
+      Changed = 20;
+    } else if (Changed < 1) {
+      Changed = 1;
+    }
+    if (value === "") {
       setSetcount("");
     } else {
       setSetcount(Changed);
@@ -60,12 +66,7 @@ export default function DetailPage(props) {
     if (!props.data) {
       reset();
     } else {
-      setSetcount(props.data.contents.length);
-      setTypeTop(props.data.option[0]);
-      setTypeBtm(props.data.option[1]);
-      setTimeUnit(props.data.option[2]);
-      setTitle(props.data.name);
-      setDetail(props.data.contents);
+      reset(props.data);
     }
   };
   const handleTypeTop = (event, newTypeTop) => {
@@ -91,6 +92,7 @@ export default function DetailPage(props) {
           setTimeUnit("시간");
           break;
         default:
+          setTimeUnit("분");
           break;
       }
     }
@@ -116,13 +118,12 @@ export default function DetailPage(props) {
       contents: Detail,
     };
     if (Title && Title.split(" ").join("").length) {
-      // save
       setOpen(false);
     } else {
-      // save err
-      setTitle(" ");
+      setSubmitFlag(true);
+      setTitle("");
+      return;
     }
-
     props.setRoutine(body, props.adj);
   };
   const ButtonType = () => {
@@ -130,35 +131,35 @@ export default function DetailPage(props) {
       return (
         <Fab variant="extended" onClick={handleClickOpen}>
           운동 추가
-          <AddIcon />
+          <Add />
         </Fab>
       );
     } else {
       return (
         <Button onClick={handleClickOpen} size="small">
           수정
+          <Build fontSize="small" />
         </Button>
       );
     }
+  };
+  const inputProps = (min, max) => {
+    return { min: min, max: max, style: { textAlign: "center" } };
   };
   return (
     <div>
       {ButtonType()}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>운동 추가</DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ minHeight: "13vh", pb: 0 }}>
           <DialogContentText>
             추가하고 싶은 운동을 작성해주세요
           </DialogContentText>
           <TextField
             autoFocus
-            error={Title !== "" && Title.split(" ").join("").length === 0}
+            error={SubmitFlag && Title === ""}
             helperText={
-              Title.split(" ").join("").length === 0
-                ? Title === ""
-                  ? ""
-                  : "최소 한 글자 이상 입력해주세요!!"
-                : ""
+              SubmitFlag && Title === "" ? "한글자 이상 입력해주세요!" : ""
             }
             margin="dense"
             value={Title}
@@ -172,30 +173,56 @@ export default function DetailPage(props) {
         <DialogContent>
           <Stack
             sx={{ width: "100%" }}
-            justifyContent="space-around"
-            spacing={2}
+            alignItems="stretch"
+            justifyContent="center"
+            spacing={1}
           >
-            <TextField
-              InputProps={{ inputProps: { min: 0, max: 20 } }}
-              type={"number"}
-              label="1 SET - 20 SET"
-              value={Setcount}
-              onChange={handleSetcount}
-            />
+            <Stack
+              alignItems="center"
+              justifyContent="center"
+              direction="row"
+              spacing={2}
+            >
+              <RemoveCircle
+                onClick={() => handleSetcount(Setcount - 1)}
+                fontSize="small"
+                color="primary"
+              />
+              <TextField
+                InputProps={{
+                  inputProps: inputProps(0, 20),
+                  endAdornment: (
+                    <InputAdornment position="start">SET</InputAdornment>
+                  ),
+                }}
+                type={"number"}
+                label="1 SET - 20 SET"
+                focused
+                value={Setcount}
+                onChange={(event) => handleSetcount(event.target.value)}
+                sx={{ width: "30vw" }}
+              />
+              <AddCircle
+                onClick={() => handleSetcount(Setcount + 1)}
+                fontSize="small"
+                color="primary"
+              />
+            </Stack>
             <ToggleButtonGroup
-              sx={{ width: "100%" }}
               color="primary"
               value={TypeTop}
               exclusive
+              fullWidth
               onChange={handleTypeTop}
             >
-              <ToggleButton value="weight">무게 & 개수</ToggleButton>
+              <ToggleButton value="weight">무게,개수</ToggleButton>
               <ToggleButton value="count">개수만</ToggleButton>
               <ToggleButton value="time">시간</ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup
               color="primary"
               value={TypeBtm}
+              fullWidth
               exclusive
               onChange={handleTypeBtm}
             >
@@ -207,6 +234,7 @@ export default function DetailPage(props) {
               value={
                 TimeUnit === "초" ? "sec" : TimeUnit === "분" ? "min" : "hour"
               }
+              fullWidth
               exclusive
               onChange={handleTimeUnit}
               sx={{ display: TypeTop === "time" ? "" : "none" }}
@@ -215,21 +243,22 @@ export default function DetailPage(props) {
               <ToggleButton value="min">분</ToggleButton>
               <ToggleButton value="hour">시간</ToggleButton>
             </ToggleButtonGroup>
-            <Grid container direction="column">
+            <Stack alignItems="center" spacing={1}>
               {TypeBtm === "each" &&
                 Detail.map((item, index) => (
-                  <Grid key={index}>
+                  <Stack justifyContent="center" direction="row" key={index}>
                     <TextField
                       sx={{
                         width: "6rem",
                         display: TypeTop === "weight" ? "" : "none",
+                        pr: 2,
                       }}
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">kg</InputAdornment>
+                          <InputAdornment position="end">Kg</InputAdornment>
                         ),
                         value: item[0],
-                        inputProps: { min: 0, max: 1000 },
+                        inputProps: inputProps(0, 1000),
                       }}
                       type={"number"}
                       onChange={(event) =>
@@ -237,7 +266,7 @@ export default function DetailPage(props) {
                       }
                     />
                     <TextField
-                      sx={{ width: "5rem" }}
+                      sx={{ width: "6rem" }}
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
@@ -245,28 +274,29 @@ export default function DetailPage(props) {
                           </InputAdornment>
                         ),
                         value: item[1],
-                        inputProps: { min: 0, max: 500 },
+                        inputProps: inputProps(0, 500),
                       }}
                       type={"number"}
                       onChange={(event) =>
                         handleDetail(event.target.value, [index, 1])
                       }
                     />
-                  </Grid>
+                  </Stack>
                 ))}
               {TypeBtm === "only" && Setcount > 0 && (
-                <Grid>
+                <Stack direction="row">
                   <TextField
                     sx={{
                       width: "6rem",
                       display: TypeTop === "weight" ? "" : "none",
+                      pr: 2,
                     }}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">kg</InputAdornment>
+                        <InputAdornment position="end">Kg</InputAdornment>
                       ),
                       value: Detail[0][0],
-                      inputProps: { min: 0, max: 1000 },
+                      inputProps: inputProps(0, 1000),
                     }}
                     type={"number"}
                     onChange={(event) =>
@@ -274,7 +304,7 @@ export default function DetailPage(props) {
                     }
                   />
                   <TextField
-                    sx={{ width: "5rem" }}
+                    sx={{ width: "6rem" }}
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -282,23 +312,22 @@ export default function DetailPage(props) {
                         </InputAdornment>
                       ),
                       value: Detail[0][1],
-                      inputProps: { min: 0, max: 500 },
+                      inputProps: inputProps(0, 500),
                     }}
                     type={"number"}
                     onChange={(event) =>
                       handleDetail(event.target.value, [0, 1])
                     }
                   />
-                </Grid>
+                </Stack>
               )}
-            </Grid>
+            </Stack>
           </Stack>
         </DialogContent>
 
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handleSave}>Save</Button>
-          <Button onClick={() => console.log(Detail)}>test</Button>
         </DialogActions>
       </Dialog>
     </div>
