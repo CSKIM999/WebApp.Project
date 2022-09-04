@@ -26,40 +26,47 @@ export default function WorkoutCards(props) {
     var body;
     switch (item[0]) {
       case "weight":
-        body = (
-          <React.Fragment>
-            <Typography>{index + 1} SET</Typography>
-            <Typography>{data[0]} KG x</Typography>
-            <Typography>{data[1]} 개</Typography>
-          </React.Fragment>
+        return (
+          <Grid container justifyContent="center">
+            <Grid item xs={10}>
+              <Typography>{index + 1} SET</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>{data[0]} KG x</Typography>
+            </Grid>
+            <Grid item>
+              <Typography>{data[1]} 개</Typography>
+            </Grid>
+          </Grid>
         );
         break;
       case "count":
-        body = (
-          <React.Fragment>
-            <Typography>{index + 1} SET</Typography>
-            <Typography>{data[1]} 개</Typography>
-          </React.Fragment>
+        return (
+          <Grid container justifyContent="space-between">
+            <Grid item xs={4}>
+              <Typography>{index + 1} SET</Typography>
+            </Grid>
+            <Grid item xs={2}>
+              <Typography>{data[1]} 개</Typography>
+            </Grid>
+          </Grid>
         );
         break;
       case "time":
-        body = (
-          <React.Fragment>
+        return (
+          <Grid container>
+            <Grid item></Grid>
+            <Grid item></Grid>
             <Typography>{index + 1} SET</Typography>
             <Typography>
               {data[1]} {item[2]}
             </Typography>
-          </React.Fragment>
+          </Grid>
         );
         break;
       default:
         break;
     }
-    return (
-      <Stack direction="row" alignItems="center" spacing={2}>
-        {body}
-      </Stack>
-    );
   };
   return (
     <Stack spacing={1}>
@@ -72,7 +79,12 @@ export default function WorkoutCards(props) {
               aria-expanded={expanded}
             >
               <CardContent>
-                <Grid container justifyContent="space-between" direction="row">
+                <Grid
+                  container
+                  alignItems="center"
+                  justifyContent="space-between"
+                  direction="row"
+                >
                   <Grid item>
                     <Typography variant="h5" component="div">
                       {item.name}
@@ -92,14 +104,9 @@ export default function WorkoutCards(props) {
               >
                 <CardContent>
                   {item.contents.map((workout, workoutIndex) => (
-                    <Stack
-                      key={workoutIndex}
-                      direction="row"
-                      alignItems="center"
-                      spacing={2}
-                    >
+                    <Box key={workoutIndex}>
                       {handleWorkoutData(item.option, workout, workoutIndex)}
-                    </Stack>
+                    </Box>
                   ))}
                 </CardContent>
               </Collapse>

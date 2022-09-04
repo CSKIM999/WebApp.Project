@@ -14,10 +14,14 @@ import { getHistory } from "../../../_actions/history_action";
 import AdjustHistory from "./CalendarUtils/AdjustHistory";
 import HistoryCard from "./CalendarUtils/HistoryCard";
 import { DatePicker } from "@mui/x-date-pickers";
+import { PickersArrowSwitcher } from "@mui/x-date-pickers/internals";
+import CalendarParts from "./CalendarUtils/CalendarParts";
+import "../../../App.css";
+import { Stack } from "@mui/material";
 
 const initialValue = new Date();
 
-export default function StaticDatePickerDemo() {
+export default function Calendar() {
   const requestAbortController = React.useRef(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [highlightedDays, setHighlightedDays] = React.useState([]);
@@ -79,14 +83,10 @@ export default function StaticDatePickerDemo() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Grid container direction="column">
+    <Box sx={{ pt: 0, width: "100%" }}>
+      <Grid container alignItems="center" direction="column">
         <Grid item>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            {/* <DatePicker
-            https://codesandbox.io/s/material-ui-date-picker-forked-k8v5e?fontsize=14&hidenavigation=1&theme=dark&file=/demo.js
-            확인해보기
-            */}
             <StaticDatePicker
               displayStaticWrapperAs="desktop"
               value={value}
@@ -97,7 +97,14 @@ export default function StaticDatePickerDemo() {
               }}
               onMonthChange={handleMonthChange}
               renderInput={(params) => <TextField size="small" {...params} />}
-              renderLoading={() => <CalendarPickerSkeleton />}
+              renderLoading={() => (
+                <CalendarPickerSkeleton
+                  sx={{
+                    width: "100%",
+                    justifyContent: "space-evenly",
+                  }}
+                />
+              )}
               renderDay={(day, _value, DayComponentProps) => {
                 const isSelected =
                   !DayComponentProps.outsideCurrentMonth &&
@@ -110,7 +117,10 @@ export default function StaticDatePickerDemo() {
                     style={{ cursor: "default" }}
                     badgeContent={isSelected ? "💦" : undefined}
                   >
-                    <PickersDay {...DayComponentProps} />
+                    <PickersDay
+                      sx={{ fontSize: "1rem" }}
+                      {...DayComponentProps}
+                    />
                   </Badge>
                 );
               }}
@@ -118,11 +128,12 @@ export default function StaticDatePickerDemo() {
           </LocalizationProvider>
         </Grid>
         <Grid item>
-          <AdjustHistory date={value} />
-        </Grid>
-        <Grid item>
           <HistoryCard value={value} />
         </Grid>
+        <Grid item>
+          <AdjustHistory date={value} />
+        </Grid>
+        {/* <CalendarParts /> */}
       </Grid>
     </Box>
   );

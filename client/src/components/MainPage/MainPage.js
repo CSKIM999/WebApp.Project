@@ -13,11 +13,12 @@ import { Button, Grid } from "@material-ui/core";
 import HomePage from "./Sections/HomePage";
 import RoutinePage from "./Sections/RoutinePage";
 import CalendarPage from "./Sections/CalendarPage";
-import Logout from "../utils/Logout";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getRoutine } from "../../_actions/routine_action";
 import { getHistory } from "../../_actions/history_action";
+
+const paddingBottom = "2rem";
 
 const StyledTabs = withStyles({
   indicator: {
@@ -32,7 +33,6 @@ const StyledTabs = withStyles({
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -49,12 +49,6 @@ function TabPanel(props) {
     </div>
   );
 }
-
-// TabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.number.isRequired,
-//   value: PropTypes.number.isRequired,
-// };
 
 function getId(index) {
   return {
@@ -105,7 +99,7 @@ export default function MainPage() {
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         onChangeIndex={handleChangeIndex}
-        style={{ paddingBottom: "7vh" }}
+        style={{ paddingBottom: paddingBottom }}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Box>
@@ -128,7 +122,7 @@ export default function MainPage() {
             textColor="inherit"
             variant="fullWidth"
             aria-label="full width tabs example"
-            style={{ height: "7vh" }}
+            style={{ height: paddingBottom }}
           >
             <Tab label="메인페이지" {...getId(0)} />
             <Tab label="내 루틴" {...getId(1)} />

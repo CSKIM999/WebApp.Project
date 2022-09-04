@@ -12,6 +12,7 @@ import { getRoutine } from "../../_actions/routine_action";
 import WorkoutPage from "../WorkoutPage/WorkoutPage";
 
 import { Delete } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 
 export default function MyRoutine(props) {
   const [expanded, setExpanded] = React.useState("false");
@@ -36,17 +37,32 @@ export default function MyRoutine(props) {
   };
 
   return (
-    <Box>
+    <Stack>
       {myRoutine &&
         myRoutine.map((item, index) => (
-          <Card key={index} variant={"outlined"} sx={{ minWidth: 275, my: 1 }}>
+          <Card
+            key={index}
+            variant={"outlined"}
+            sx={{
+              minWidth: 275,
+              my: 1,
+              borderRadius: "0.5rem",
+              maxWidth: 500,
+              width: "80vw",
+            }}
+          >
             <CardActionArea
               expanded={expanded === `panel${index + 1}` ? "true" : undefined}
               onClick={() => handleExpandClick(`panel${index + 1}`)}
               aria-expanded={expanded}
             >
               <CardContent>
-                <Grid container justifyContent="space-between" direction="row">
+                <Grid
+                  container
+                  alignItems="center"
+                  justifyContent="space-between"
+                  direction="row"
+                >
                   <Grid item>
                     <Typography variant="h5" component="div">
                       {item.title}
@@ -64,12 +80,15 @@ export default function MyRoutine(props) {
                 timeout="auto"
                 unmountOnExit
               >
-                <CardContent>
+                <CardContent sx={{ color: "text.secondary" }}>
                   {item.detail.map((workout, index) => (
-                    <Grid key={`workout${index}`}>
-                      <Typography>
-                        {workout.name} {workout.contents.length} set
-                      </Typography>
+                    <Grid direction="row" container key={`workout${index}`}>
+                      <Grid item xs={9}>
+                        <Typography>{workout.name}</Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Typography>{workout.contents.length} SET</Typography>
+                      </Grid>
                     </Grid>
                   ))}
                 </CardContent>
@@ -95,6 +114,6 @@ export default function MyRoutine(props) {
             </Grid>
           </Card>
         ))}
-    </Box>
+    </Stack>
   );
 }

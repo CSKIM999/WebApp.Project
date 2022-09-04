@@ -125,7 +125,7 @@ export default function SettingPage(props) {
   };
 
   return (
-    <div>
+    <Box>
       <Button
         variant={props.state === "C" ? "outlined" : "text"}
         size={props.state === "C" ? "" : "small"}
@@ -140,7 +140,7 @@ export default function SettingPage(props) {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <Box>
+        <Box justifyContent="center" display="flex">
           <AppBar
             sx={{
               position: "stick",
@@ -175,7 +175,11 @@ export default function SettingPage(props) {
               </Snackbar>
             </Toolbar>
           </AppBar>
-          <Stack sx={{ p: 2, mt: AppbarMargin }} spacing={2}>
+          <Stack
+            justifyContent="center"
+            sx={{ p: 2, mt: AppbarMargin, width: "80vw" }}
+            spacing={2}
+          >
             <TextField
               label="루틴 이름"
               variant="outlined"
@@ -192,6 +196,6 @@ export default function SettingPage(props) {
           </Stack>
         </Box>
       </Dialog>
-    </div>
+    </Box>
   );
 }

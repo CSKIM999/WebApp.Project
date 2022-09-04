@@ -1,33 +1,29 @@
-.App {
-  text-align: center;
+
+.css-epd502 {
+    margin: 0 !important;
+    width: 90vw !important;
+    max-width: 500px;
+
+}
+.css-19kzrtu{
+    padding-top: .5rem !important;
+}
+.MuiCalendarPicker-root {
+
+    margin: 0 !important;
+    width: 90vw !important;
+    max-width: 500px;
+}
+.MuiCalendarPickerSkeleton-week {
+    /* date skeleton */
+    justify-content: space-evenly !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.css-1n2mv2k { 
+    /* day text */
+    justify-content: space-evenly !important;
 }
-
-.App-header {
-  background-color: #153575;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: rgb(217, 0, 0);
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.css-mvmu1r {
+    /* date grid */
+    justify-content: space-evenly !important;
 }

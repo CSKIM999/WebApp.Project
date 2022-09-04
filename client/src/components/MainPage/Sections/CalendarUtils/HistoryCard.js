@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import { getHistory } from "../../../../_actions/history_action";
 import AdjustHistory from "./AdjustHistory";
+import { Stack } from "@mui/material";
 
 export default function HistoryCard(props) {
   const [expanded, setExpanded] = React.useState(false);
@@ -63,10 +64,10 @@ export default function HistoryCard(props) {
   };
 
   return (
-    <Box>
+    <Stack direction="column" sx={{ width: "80vw", maxWidth: 500 }}>
       {Rendervalue &&
         Rendervalue.map((item, index) => (
-          <Card key={index} style={{ marginTop: 10 }} variant={"outlined"}>
+          <Card key={index} style={{ marginBottom: 10 }} variant={"outlined"}>
             <CardActionArea
               expanded={expanded === `panel${index + 1}` ? "true" : undefined}
               onClick={() => handleExpandClick(`panel${index + 1}`)}
@@ -120,6 +121,6 @@ export default function HistoryCard(props) {
             </Grid>
           </Card>
         ))}
-    </Box>
+    </Stack>
   );
 }
