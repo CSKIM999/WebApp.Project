@@ -10,17 +10,25 @@ import DialogContentText from "@mui/material/DialogContentText";
 import {
   Box,
   Fab,
-  Grid,
   DialogTitle,
   Menu,
   MenuItem,
   GridList,
 } from "@material-ui/core";
 import AddIcon from "@mui/icons-material/Add";
-import { Alert, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {
+  Alert,
+  Divider,
+  Grid,
+  IconButton,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { getHistory } from "../../../../_actions/history_action";
+import { Build, DeleteForever } from "@mui/icons-material";
 
 export default function AdjustHistory(props) {
   const dispatch = useDispatch();
@@ -106,48 +114,81 @@ export default function AdjustHistory(props) {
           size="small"
         >
           수정
+          <Build fontSize="small" />
         </Button>
       );
     }
   };
+
+  const inputProps = (min, max) => {
+    return {
+      min: min,
+      max: max,
+      style: { textAlign: "center" },
+    };
+  };
   const timeGrid = (props) => {
     return (
-      <Grid container alignItems="center" spacing={3}>
-        <Grid item xs={2}>
+      <Grid
+        container
+        justifyContent="space-evenly"
+        alignItems="center"
+        spacing={1}
+        sx={{ pt: 1 }}
+      >
+        <Grid item xs={3}>
           <TextField
+            size="small"
             type={"number"}
             onChange={(event) => setHour(event.target.value * 1)}
+            InputProps={{ inputProps: inputProps(0, 99) }}
             value={Hour}
             label={"시"}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
+            size="small"
             onChange={(event) => setMinute(event.target.value * 1)}
+            InputProps={{ inputProps: inputProps(0, 99) }}
             type={"number"}
             value={Minute}
             label={"분"}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
+            size="small"
             onChange={(event) => setSecond(event.target.value * 1)}
+            InputProps={{ inputProps: inputProps(0, 99) }}
             type={"number"}
             value={Second}
             label={"초"}
           />
         </Grid>
-        <Grid item>
-          <Button onClick={() => handleFormation()}>운동 추가</Button>
+        <Grid item xs={3} al>
+          <Button sx={{ p: 0.3 }} onClick={() => handleFormation()}>
+            <Typography variant="caption">
+              운동추가
+              <KeyboardArrowDownIcon fontSize="small" />
+            </Typography>
+          </Button>
         </Grid>
       </Grid>
     );
   };
   const gridElement = (index) => {
     return (
-      <Grid key={index} item container direction="row">
-        <Grid>
+      <Grid
+        key={index}
+        item
+        container
+        justifyContent="space-evenly"
+        sx={{ py: 1 }}
+      >
+        <Grid item xs>
           <TextField
+            size="small"
             onChange={(event) => handleOncardTitle(event.target.value, index)}
             error={Flag && Detail[index].name === ""}
             helperText={
@@ -157,28 +198,30 @@ export default function AdjustHistory(props) {
             label="운동 이름"
           />
         </Grid>
-        <Grid>
+        <Grid item xs={2} sx={{ width: "20%" }}>
           <TextField
+            size="small"
             InputProps={{
-              inputProps: { min: 0, max: `${Detail[index].progress[1]}` },
+              inputProps: inputProps(0, Detail[index].progress[1]),
             }}
             type={"number"}
-            label="수행 세트"
             onChange={(event) => handleOncardExec(event.target.value, index, 0)}
             value={Detail[index].progress[0]}
           />
         </Grid>
-        <Grid>
+        <Grid item xs={2} sx={{ width: "20%" }}>
           <TextField
-            InputProps={{ inputProps: { min: 0, max: 20 } }}
+            InputProps={{ inputProps: inputProps(0, 20) }}
+            size="small"
             type={"number"}
-            label="총 세트수"
             onChange={(event) => handleOncardExec(event.target.value, index, 1)}
             value={Detail[index].progress[1]}
           />
         </Grid>
-        <Grid>
-          <Button onClick={() => handleFormation(index)}>DEL</Button>
+        <Grid item xs="auto">
+          <IconButton onClick={() => handleFormation(index)}>
+            <DeleteForever color="red" />
+          </IconButton>
         </Grid>
       </Grid>
     );
@@ -233,10 +276,9 @@ export default function AdjustHistory(props) {
     <div>
       {ButtonType()}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>운동 추가</DialogTitle>
-        <DialogContent>
-          <DialogContentText>추가/수정 내용을 작성해주세요</DialogContentText>
-          <div>
+        <Grid container justifyContent="space-between" alignItems="center">
+          <DialogTitle>운동 {props.adj ? "수정" : "추가"}</DialogTitle>
+          <Box sx={{ pr: 1 }}>
             <Button
               id="basic-button"
               aria-controls={openMenu ? "basic-menu" : undefined}
@@ -245,11 +287,20 @@ export default function AdjustHistory(props) {
               onClick={handleMenuClick}
               endIcon={<KeyboardArrowDownIcon />}
             >
-              Dashboard
+              내 루틴 불러오기
             </Button>
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
               open={openMenu}
               onClose={handleMenuClose}
               MenuListProps={{
@@ -263,7 +314,12 @@ export default function AdjustHistory(props) {
                   </MenuItem>
                 ))}
             </Menu>
-          </div>
+          </Box>
+        </Grid>
+        <DialogContent sx={{ py: 0 }}>
+          <DialogContentText>
+            {props.adj ? "수정" : "추가"} 하시려는 내용을 작성해주세요
+          </DialogContentText>
           <TextField
             autoFocus
             error={Title !== "" && Title.split(" ").join("").length === 0}
@@ -281,8 +337,12 @@ export default function AdjustHistory(props) {
             variant="standard"
             onChange={(event) => setTitle(event.target.value)}
           />
-          <Grid container direction="column">
-            {timeGrid()}
+
+          {timeGrid()}
+          <Divider sx={{ fontSize: "0.8rem", pb: 1.5 }} textAlign="right">
+            수행 / 총 세트수
+          </Divider>
+          <Grid container direction="row">
             {Detail && Detail.map((item, index) => gridElement(index))}
           </Grid>
         </DialogContent>

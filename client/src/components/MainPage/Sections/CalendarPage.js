@@ -15,9 +15,8 @@ import AdjustHistory from "./CalendarUtils/AdjustHistory";
 import HistoryCard from "./CalendarUtils/HistoryCard";
 import { DatePicker } from "@mui/x-date-pickers";
 import { PickersArrowSwitcher } from "@mui/x-date-pickers/internals";
-import CalendarParts from "./CalendarUtils/CalendarParts";
 import "../../../App.css";
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 
 const initialValue = new Date();
 

@@ -53,7 +53,7 @@ function HomePage(props) {
 
           <Grid item>
             <IconButton style={{ padding: 0 }} onClick={handleClick}>
-              <ManageAccounts />
+              <ManageAccounts sx={{ p: 0.5, border: 1, borderRadius: 10 }} />
             </IconButton>
             <Menu
               anchorEl={anchorEl}

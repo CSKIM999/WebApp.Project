@@ -18,7 +18,7 @@ import { Build, Add, Save } from "@mui/icons-material";
 
 import DetailPage from "../DetailPage/DetailPage";
 import WorkoutCards from "./Sections/WorkoutCards";
-import { Alert } from "@mui/material";
+import { Alert, Divider } from "@mui/material";
 import { Stack } from "@mui/system";
 
 const AppbarMargin = "4rem";
@@ -180,18 +180,30 @@ export default function SettingPage(props) {
             sx={{ p: 2, mt: AppbarMargin, width: "80vw" }}
             spacing={2}
           >
-            <TextField
-              label="루틴 이름"
-              variant="outlined"
-              error={TitleFlag && Title === ""}
-              helperText={
-                TitleFlag && Title === "" ? "루틴 이름을 입력해주세요" : ""
-              }
-              value={Title}
-              onChange={(event) => handleTitle(event.target.value)}
-              sx={{ width: "60%", mt: 2 }}
-            />
-            <DetailPage adj={false} setRoutine={handleSetroutine} />
+            <Grid
+              container
+              justifyContent="flex-end"
+              direction="row"
+              alignItems="center"
+            >
+              <Grid item xs={7}>
+                <TextField
+                  label="루틴 이름"
+                  variant="outlined"
+                  error={TitleFlag && Title === ""}
+                  helperText={
+                    TitleFlag && Title === "" ? "루틴 이름을 입력해주세요" : ""
+                  }
+                  value={Title}
+                  onChange={(event) => handleTitle(event.target.value)}
+                  sx={{ width: "100%", mt: 2 }}
+                />
+              </Grid>
+              <Grid item xs={5}>
+                <DetailPage adj={false} setRoutine={handleSetroutine} />
+              </Grid>
+            </Grid>
+            <Divider />
             <WorkoutCards setRoutine={handleSetroutine} detail={Routine} />
           </Stack>
         </Box>

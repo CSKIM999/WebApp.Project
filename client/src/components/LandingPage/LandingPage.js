@@ -1,3 +1,4 @@
+import { TextField, Typography } from "@mui/material";
 import React from "react";
 import Login from "../utils/Login";
 import Register from "../utils/Register";
@@ -15,7 +16,10 @@ import Register from "../utils/Register";
 function LandingPage() {
   return (
     <div>
-      App 사용을 위해선 로그인이 필요합니다
+      <Typography>App 사용을 위해선 로그인이 필요합니다</Typography>
+      <Typography>SAMPLE ID : 찰스@cs.kim</Typography>
+      <Typography>SAMPLE PW :1234</Typography>
+
       <Login></Login>
       <Register></Register>
     </div>

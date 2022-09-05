@@ -4,7 +4,6 @@ import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
-  Collapse,
   CardActionArea,
   Grid,
   Card,
@@ -13,7 +12,9 @@ import {
 } from "@material-ui/core";
 import { getHistory } from "../../../../_actions/history_action";
 import AdjustHistory from "./AdjustHistory";
-import { Stack } from "@mui/material";
+import { Collapse, Divider, Stack } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import RemoveBtn from "../../../utils/RemoveBtn";
 
 export default function HistoryCard(props) {
   const [expanded, setExpanded] = React.useState(false);
@@ -74,34 +75,48 @@ export default function HistoryCard(props) {
               aria-expanded={expanded}
             >
               <CardContent>
-                <Grid container direction="row">
-                  <Typography variant="h5" component="div">
-                    {item.name}
-                  </Typography>
-                  <Typography variant="h6" component="div">
-                    {handleTimeUnit(item.runtime)}
-                  </Typography>
+                <Grid container justifyContent="space-between" direction="row">
+                  <Grid item>
+                    <Typography variant="h5" component="div">
+                      {item.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography variant="h6" component="div">
+                      {handleTimeUnit(item.runtime)}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </CardContent>
               <Collapse
                 in={expanded === `panel${index + 1}` ? true : undefined}
                 timeout="auto"
                 unmountOnExit
+                sx={{ pb: 1 }}
               >
+                <Divider textAlign="left">
+                  {item.month}/{item.day}
+                </Divider>
                 <CardContent>
                   {item.execute.map((workout, workoutIndex) => (
                     <Grid
                       container
+                      justifyContent="space-between"
                       direction="row"
                       key={`workout${workoutIndex}`}
                     >
-                      <Typography>{workout.name}</Typography>
-                      <Typography>
-                        {workout.progress[0]} / {workout.progress[1]} SET
-                      </Typography>
+                      <Grid item>
+                        <Typography>{workout.name}</Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography>
+                          {workout.progress[0]} / {workout.progress[1]} SET
+                        </Typography>
+                      </Grid>
                     </Grid>
                   ))}
                 </CardContent>
+                <Divider />
               </Collapse>
             </CardActionArea>
             <Grid
@@ -111,9 +126,7 @@ export default function HistoryCard(props) {
               spacing={2}
             >
               <Grid item>
-                <Button onClick={() => handleDelete(item._id)} size="small">
-                  삭제
-                </Button>
+                <RemoveBtn event={() => handleDelete(item._id)} />
               </Grid>
               <Grid item>
                 <AdjustHistory date={props.value} data={item} adj={true} />

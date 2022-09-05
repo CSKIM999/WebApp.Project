@@ -1,17 +1,10 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import {
-  Box,
-  Button,
-  Collapse,
-  CardActionArea,
-  Grid,
-  Card,
-  CardContent,
-} from "@material-ui/core";
+import { Box, Button, Grid, Card, CardContent } from "@material-ui/core";
 import DetailPage from "../../DetailPage/DetailPage";
-import { Stack } from "@mui/material";
+import { CardActionArea, Collapse, Divider, Stack } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import RemoveBtn from "../../utils/RemoveBtn";
 
 export default function WorkoutCards(props) {
   const [expanded, setExpanded] = React.useState(false);
@@ -31,10 +24,10 @@ export default function WorkoutCards(props) {
             <Grid item xs={10}>
               <Typography>{index + 1} SET</Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs>
               <Typography>{data[0]} KG x</Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs>
               <Typography>{data[1]} 개</Typography>
             </Grid>
           </Grid>
@@ -46,7 +39,7 @@ export default function WorkoutCards(props) {
             <Grid item xs={4}>
               <Typography>{index + 1} SET</Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs="auto">
               <Typography>{data[1]} 개</Typography>
             </Grid>
           </Grid>
@@ -54,13 +47,15 @@ export default function WorkoutCards(props) {
         break;
       case "time":
         return (
-          <Grid container>
-            <Grid item></Grid>
-            <Grid item></Grid>
-            <Typography>{index + 1} SET</Typography>
-            <Typography>
-              {data[1]} {item[2]}
-            </Typography>
+          <Grid container justifyContent="space-between">
+            <Grid item xs={8}>
+              <Typography>{index + 1} SET</Typography>
+            </Grid>
+            <Grid item xs="auto">
+              <Typography>
+                {data[1]} {item[2]}
+              </Typography>
+            </Grid>
           </Grid>
         );
         break;
@@ -101,7 +96,9 @@ export default function WorkoutCards(props) {
                 in={expanded === `panel${index + 1}` ? true : undefined}
                 timeout="auto"
                 unmountOnExit
+                sx={{ pb: 2 }}
               >
+                <Divider textAlign="right">Set Detail</Divider>
                 <CardContent>
                   {item.contents.map((workout, workoutIndex) => (
                     <Box key={workoutIndex}>
@@ -109,16 +106,11 @@ export default function WorkoutCards(props) {
                     </Box>
                   ))}
                 </CardContent>
+                <Divider />
               </Collapse>
             </CardActionArea>
             <Grid container justifyContent="flex-end" direction="row">
-              <Button
-                onClick={() => props.setRoutine(index, null)}
-                size="small"
-              >
-                삭제
-                <Delete fontSize="small" />
-              </Button>
+              <RemoveBtn event={() => props.setRoutine(index, null)} />
               <DetailPage
                 adj={index}
                 data={item}

@@ -3,7 +3,7 @@ import * as Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@mui/material/Typography";
-import { Box, Button, Collapse, CardActionArea, Grid } from "@material-ui/core";
+import { Box, Button, Grid } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
@@ -12,7 +12,8 @@ import { getRoutine } from "../../_actions/routine_action";
 import WorkoutPage from "../WorkoutPage/WorkoutPage";
 
 import { Delete } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import { CardActionArea, Collapse, Divider, Stack } from "@mui/material";
+import RemoveBtn from "./RemoveBtn";
 
 export default function MyRoutine(props) {
   const [expanded, setExpanded] = React.useState("false");
@@ -47,7 +48,7 @@ export default function MyRoutine(props) {
               minWidth: 275,
               my: 1,
               borderRadius: "0.5rem",
-              maxWidth: 500,
+              // maxWidth: 500,
               width: "80vw",
             }}
           >
@@ -80,9 +81,18 @@ export default function MyRoutine(props) {
                 timeout="auto"
                 unmountOnExit
               >
-                <CardContent sx={{ color: "text.secondary" }}>
+                <CardContent sx={{ py: 0, color: "text.secondary" }}>
+                  <Divider sx={{ pb: 1 }} textAlign="left">
+                    루틴 상세
+                  </Divider>
                   {item.detail.map((workout, index) => (
-                    <Grid direction="row" container key={`workout${index}`}>
+                    <Grid
+                      container
+                      alignItems="center"
+                      justifyContent="space-between"
+                      direction="row"
+                      key={`workout${index}`}
+                    >
                       <Grid item xs={9}>
                         <Typography>{workout.name}</Typography>
                       </Grid>
@@ -91,19 +101,13 @@ export default function MyRoutine(props) {
                       </Grid>
                     </Grid>
                   ))}
+                  <Divider sx={{ pt: 2 }} />
                 </CardContent>
               </Collapse>
             </CardActionArea>
             <Grid container justifyContent="space-evenly" direction="row">
               <Grid item p={2}>
-                <Button
-                  onClick={() => handleDelete(item)}
-                  variant={"text"}
-                  size="small"
-                >
-                  삭제
-                  <Delete fontSize="small" />
-                </Button>
+                <RemoveBtn evemt={() => handleDelete(item)} />
               </Grid>
               <Grid item p={2}>
                 <SettingPage data={item} />

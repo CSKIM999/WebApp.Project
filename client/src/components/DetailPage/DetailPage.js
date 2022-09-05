@@ -12,6 +12,7 @@ import {
   Grid,
   InputAdornment,
   DialogTitle,
+  IconButton,
 } from "@material-ui/core";
 import { Alert, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Stack } from "@mui/system";
@@ -129,8 +130,14 @@ export default function DetailPage(props) {
   const ButtonType = () => {
     if (!props.data) {
       return (
-        <Fab variant="extended" onClick={handleClickOpen}>
-          운동 추가
+        <Fab
+          variant="extended"
+          fontSize="small"
+          size="medium"
+          style={{ marginLeft: "0.7rem", marginTop: "1rem" }}
+          onClick={handleClickOpen}
+        >
+          운동추가
           <Add />
         </Fab>
       );
@@ -144,19 +151,22 @@ export default function DetailPage(props) {
     }
   };
   const inputProps = (min, max) => {
-    return { min: min, max: max, style: { textAlign: "center" } };
+    return {
+      min: min,
+      max: max,
+      style: { padding: "0.5rem", textAlign: "center" },
+    };
   };
   return (
     <div>
       {ButtonType()}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>운동 추가</DialogTitle>
-        <DialogContent sx={{ minHeight: "13vh", pb: 0 }}>
+        <DialogTitle>운동 {props.data ? "수정" : "추가"}</DialogTitle>
+        <DialogContent sx={{ height: "6rem", pb: 0 }}>
           <DialogContentText>
-            추가하고 싶은 운동을 작성해주세요
+            {props.data ? "수정" : "추가"}하시려는 내용을 작성해주세요
           </DialogContentText>
           <TextField
-            autoFocus
             error={SubmitFlag && Title === ""}
             helperText={
               SubmitFlag && Title === "" ? "한글자 이상 입력해주세요!" : ""
@@ -169,25 +179,27 @@ export default function DetailPage(props) {
             onChange={(event) => setTitle(event.target.value)}
           />
         </DialogContent>
-
-        <DialogContent>
+        <DialogContent sx={{ pt: 2 }}>
           <Stack
             sx={{ width: "100%" }}
-            alignItems="stretch"
+            alignItems="center"
             justifyContent="center"
             spacing={1}
           >
             <Stack
+              sx={{ minWidth: "210px", width: "60%" }}
               alignItems="center"
               justifyContent="center"
               direction="row"
               spacing={2}
             >
-              <RemoveCircle
-                onClick={() => handleSetcount(Setcount - 1)}
+              <IconButton
                 fontSize="small"
-                color="primary"
-              />
+                onClick={() => handleSetcount(Setcount - 1)}
+                style={{ padding: "0.3rem" }}
+              >
+                <RemoveCircle fontSize="small" color="primary" />
+              </IconButton>
               <TextField
                 InputProps={{
                   inputProps: inputProps(0, 20),
@@ -197,31 +209,36 @@ export default function DetailPage(props) {
                 }}
                 type={"number"}
                 label="1 SET - 20 SET"
-                focused
                 value={Setcount}
                 onChange={(event) => handleSetcount(event.target.value)}
                 sx={{ width: "30vw" }}
               />
-              <AddCircle
-                onClick={() => handleSetcount(Setcount + 1)}
+              <IconButton
                 fontSize="small"
-                color="primary"
-              />
+                onClick={() => handleSetcount(Setcount + 1)}
+                style={{ padding: "0.3rem" }}
+              >
+                <AddCircle fontSize="small" color="primary" />
+              </IconButton>
             </Stack>
             <ToggleButtonGroup
               color="primary"
               value={TypeTop}
+              size="small"
               exclusive
               fullWidth
               onChange={handleTypeTop}
             >
-              <ToggleButton value="weight">무게,개수</ToggleButton>
+              <ToggleButton sx={{ fontSize: "0.7rem" }} value="weight">
+                무게,개수
+              </ToggleButton>
               <ToggleButton value="count">개수만</ToggleButton>
               <ToggleButton value="time">시간</ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup
               color="primary"
               value={TypeBtm}
+              size="small"
               fullWidth
               exclusive
               onChange={handleTypeBtm}
@@ -234,6 +251,7 @@ export default function DetailPage(props) {
               value={
                 TimeUnit === "초" ? "sec" : TimeUnit === "분" ? "min" : "hour"
               }
+              size="small"
               fullWidth
               exclusive
               onChange={handleTimeUnit}

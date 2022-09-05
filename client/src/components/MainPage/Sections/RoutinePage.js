@@ -6,9 +6,14 @@ import { Stack } from "@mui/material";
 
 function RoutinePage(props) {
   return (
-    <Stack>
-      <Typography variant="h5">RoutinePage</Typography>
-      <SettingPage state="C" />
+    <Stack direction="column" alignItems="center">
+      <Stack sx={{ width: "80vw" }}>
+        <Typography variant="h5">RoutinePage</Typography>
+        <Typography variant="overline">
+          루틴 추가 및 수정을 위한 페이지입니다
+        </Typography>
+        <SettingPage state="C" />
+      </Stack>
       <Stack alignItems="center">
         <MyRoutine swipe={props.swipe} />
       </Stack>

@@ -1,6 +1,6 @@
-import { Button, Slide, Typography } from "@material-ui/core";
+import { Slide, Typography } from "@material-ui/core";
 import { PlayArrow, Stop } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 
 export default function Stopwatch(props) {
@@ -41,29 +41,27 @@ export default function Stopwatch(props) {
       } : ${second < 10 ? `0${second}` : second}`;
     }
   };
-
+  const buttonStyle = { minWidth: 0, width: 0, padding: 0, fontSize: "1.2rem" };
   return (
-    <Stack>
+    <Stack sx={{ py: 2 }}>
       <Typography variant="h4" style={!Count || Run ? {} : { color: "red" }}>
         {realTime()}
       </Typography>
-      <Stack direction="row" justifyContent="center">
+      <Stack sx={{ pt: 1 }} direction="row" justifyContent="center">
         <Slide direction="right" in={!Run}>
-          <Button
-            onClick={startHandler}
-            style={{ minWidth: 0, width: 0, padding: 0 }}
-          >
+          <Button onClick={startHandler} style={buttonStyle}>
             Start
-            <PlayArrow />
+            <PlayArrow fontSize="large" />
           </Button>
         </Slide>
         <Slide direction="left" in={Run}>
           <Button
+            sx={{ color: "red" }}
             onClick={stopHandler}
-            style={{ minWidth: 0, width: 0, padding: 0 }}
+            style={buttonStyle}
           >
             Stop
-            <Stop />
+            <Stop fontSize="large" />
           </Button>
         </Slide>
       </Stack>

@@ -17,11 +17,11 @@ import { Box, Fab, ListItemText } from "@material-ui/core";
 import Stopwatch from "./Sections/Stopwatch";
 import ProgressCard from "./Sections/ProgressCard";
 import { getHistory } from "../../_actions/history_action";
-import { ListItemButton, Stack } from "@mui/material";
+import { Grid, ListItemButton, Stack } from "@mui/material";
 import { FitnessCenter, Save } from "@mui/icons-material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="right" ref={ref} {...props} />;
+  return <Slide direction="left" ref={ref} {...props} />;
 });
 const AppbarMargin = "4rem";
 
@@ -44,6 +44,10 @@ export default function WorkoutPage(props) {
   };
 
   const handleSave = () => {
+    if (Timer.every((item) => item <= 0)) {
+      alert("시작 버튼을 눌러주세요");
+      return;
+    }
     const exec = myRoutine.detail.map((item, index) => {
       return {
         name: item.name,
@@ -60,7 +64,7 @@ export default function WorkoutPage(props) {
     };
     Axios.post("/api/history/", body).then((response) => {
       if (response.data.success) {
-        console.log("history Save", response.data);
+        console.log("history Save", Timer);
         dispatch(getHistory({ writer: userId }));
         handleClose();
         props.swipe();
@@ -87,7 +91,7 @@ export default function WorkoutPage(props) {
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <Box>
+        <Box justifyContent="center" display="flex">
           <AppBar
             sx={{
               position: "stick",
@@ -113,13 +117,22 @@ export default function WorkoutPage(props) {
               </Button>
             </Toolbar>
           </AppBar>
-          <Stack sx={{ p: 2, mt: AppbarMargin }} alignItems="center">
-            <Stopwatch timer={setTimer} />
-            <ProgressCard
-              getProgress={setProgress}
-              routine={myRoutine.detail}
-            />
-          </Stack>
+          <Grid
+            container
+            direction="column"
+            sx={{ p: 2, mt: AppbarMargin }}
+            alignItems="center"
+          >
+            <Grid item>
+              <Stopwatch timer={setTimer} />
+            </Grid>
+            <Grid item>
+              <ProgressCard
+                getProgress={setProgress}
+                routine={myRoutine.detail}
+              />
+            </Grid>
+          </Grid>
         </Box>
       </Dialog>
     </div>
