@@ -4,7 +4,7 @@ import * as axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from "@mui/icons-material";
 import { Box, Stack } from "@mui/system";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 export default function Logout() {
   const navigate = useNavigate();
@@ -21,7 +21,8 @@ export default function Logout() {
   };
   return (
     <Stack direction="row" alignItems="center" onClick={onClickHandler}>
-      LOGOUT <LogoutOutlined sx={{ pl: 1 }} />
+      <Typography variant="button">LOGOUT</Typography>
+      <LogoutOutlined color="error" sx={{ pl: 1 }} />
     </Stack>
   );
 }

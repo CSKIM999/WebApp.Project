@@ -1,3 +1,9 @@
+import React from "react";
+import Settingpage from "../../SettingPage/SettingPage";
+import MyRoutine from "../../utils/MyRoutine";
+import { useSelector } from "react-redux";
+import { Container } from "@mui/system";
+import Logout from "../../utils/Logout";
 import {
   Box,
   Grid,
@@ -5,14 +11,8 @@ import {
   Menu,
   MenuItem,
   Typography,
-} from "@material-ui/core";
-import React from "react";
-import Settingpage from "../../SettingPage/SettingPage";
-import MyRoutine from "../../utils/MyRoutine";
-import { useSelector } from "react-redux";
-import { Container } from "@mui/system";
-import Logout from "../../utils/Logout";
-import { Stack } from "@mui/material";
+  Stack,
+} from "@mui/material";
 import { LogoutOutlined, ManageAccounts } from "@mui/icons-material";
 
 function HomePage(props) {
@@ -37,7 +37,7 @@ function HomePage(props) {
       );
     } else {
       return (
-        <Typography variant="button" gutterBottom>
+        <Typography fontSize="0.9rem" variant="button" gutterBottom>
           내 루틴 빠른 시작
         </Typography>
       );
@@ -46,18 +46,17 @@ function HomePage(props) {
   return (
     <Stack alignItems="center" direction="column" sx={{ pt: "0.5rem" }}>
       <Stack sx={{ width: "80vw" }} spacing={1}>
-        <Grid container justifyContent="space-between">
+        <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
-            <Typography variant="h6">MainPage</Typography>
+            <Typography variant="h5">MainPage</Typography>
           </Grid>
 
           <Grid item>
-            <IconButton style={{ padding: 0 }} onClick={handleClick}>
+            <IconButton color="secondary" sx={{ p: 0 }} onClick={handleClick}>
               <ManageAccounts sx={{ p: 0.5, border: 1, borderRadius: 10 }} />
             </IconButton>
             <Menu
               anchorEl={anchorEl}
-              getContentAnchorEl={null}
               anchorOrigin={{
                 vertical: "center",
                 horizontal: "left",
@@ -71,15 +70,12 @@ function HomePage(props) {
             >
               <MenuItem>
                 <Logout />
-                {/* LOGOUT
-                <LogoutOutlined sx={{ pl: 1 }} /> */}
               </MenuItem>
             </Menu>
-            {/* <Logout /> */}
           </Grid>
         </Grid>
         <Grid item>
-          <Typography variant="subtitle2">
+          <Typography fontSize="0.9rem" variant="subtitle1">
             🙋‍♂️{user ? `${user.nickname}님 ` : ""}반갑습니다!🙋‍♀️
           </Typography>
         </Grid>

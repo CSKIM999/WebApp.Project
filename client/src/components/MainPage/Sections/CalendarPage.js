@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as Axios from "axios";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -9,14 +8,10 @@ import { StaticDatePicker } from "@mui/x-date-pickers/StaticDatePicker";
 import { PickersDay } from "@mui/x-date-pickers/PickersDay";
 import { CalendarPickerSkeleton } from "@mui/x-date-pickers/CalendarPickerSkeleton";
 import Badge from "@mui/material/Badge";
-import { Button, Grid } from "@material-ui/core";
-import { getHistory } from "../../../_actions/history_action";
 import AdjustHistory from "./CalendarUtils/AdjustHistory";
 import HistoryCard from "./CalendarUtils/HistoryCard";
-import { DatePicker } from "@mui/x-date-pickers";
-import { PickersArrowSwitcher } from "@mui/x-date-pickers/internals";
 import "../../../App.css";
-import { Divider, Stack } from "@mui/material";
+import { Button, Grid, Divider, Stack } from "@mui/material";
 
 const initialValue = new Date();
 
@@ -129,7 +124,7 @@ export default function Calendar() {
         <Grid item>
           <HistoryCard value={value} />
         </Grid>
-        <Grid item>
+        <Grid item sx={{ pt: 2 }}>
           <AdjustHistory date={value} />
         </Grid>
         {/* <CalendarParts /> */}

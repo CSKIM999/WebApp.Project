@@ -7,6 +7,9 @@ import { applyMiddleware, createStore } from "redux";
 import promiseMiddleware from "redux-promise";
 import ReduxThunk from "redux-thunk";
 import Reducer from "./_reducers";
+import { ThemeProvider } from "@mui/material/styles";
+import { globalTheme } from "./globalTheme";
+import { CssBaseline } from "@mui/material";
 
 const createStoreWithMiddleWare = applyMiddleware(
   ReduxThunk,
@@ -15,13 +18,16 @@ const createStoreWithMiddleWare = applyMiddleware(
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider
-    store={createStoreWithMiddleWare(
-      Reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
-    )}
-  >
-    <App />
-  </Provider>
+  <ThemeProvider theme={globalTheme}>
+    <CssBaseline />
+    <Provider
+      store={createStoreWithMiddleWare(
+        Reducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      )}
+    >
+      <App />
+    </Provider>
+  </ThemeProvider>
 );

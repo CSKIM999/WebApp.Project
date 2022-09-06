@@ -1,18 +1,19 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  LinearProgress,
-  Typography,
-} from "@material-ui/core";
 import { useSelector } from "react-redux";
-
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import MobileStepper from "@mui/material/MobileStepper";
 import BackspaceOutlinedIcon from "@mui/icons-material/BackspaceOutlined";
-import { CardActionArea, Grid, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  LinearProgress,
+  Typography,
+  CardActionArea,
+  CardContent,
+  Grid,
+  Stack,
+} from "@mui/material";
 import { DoneAll } from "@mui/icons-material";
 export default function ProgressCard(props) {
   const [activeStep, setActiveStep] = React.useState(
@@ -38,31 +39,30 @@ export default function ProgressCard(props) {
 
   const handleContent = (option, itemIndex) => {
     const setCount = activeStep[itemIndex];
-    const nowSetContents = props.routine[itemIndex].contents;
-    var returnWord = `${setCount + 1} SET  `;
-    var count = 0;
+    const nowSetContents = props.routine[itemIndex].contents[setCount];
+    var returnWord = "";
     try {
       if (option[0] === "weight") {
-        const weight = nowSetContents[setCount][0];
-        count = nowSetContents[setCount][1];
-        returnWord += `${weight} Kg x ${count} 회`;
+        returnWord = `${nowSetContents[0]} Kg x ${nowSetContents[1]} 회`;
       } else if (option[0] === "count") {
-        count = nowSetContents[setCount][1];
-        returnWord += `${count} 회`;
+        returnWord = `${nowSetContents[1]} 회`;
       } else {
-        // only time
-        const timeUnit = option[2];
-        count = nowSetContents[setCount][1];
-        returnWord += `${count} ${timeUnit}`;
+        returnWord = `${nowSetContents[1]} ${option[2]}`;
       }
     } catch (err) {
       return (
-        <Typography variant="body1">
-          SET DONE <DoneAll fontSize="small" />
-        </Typography>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Typography variant="body1">SET DONE</Typography>
+          <DoneAll fontSize="small" />
+        </Stack>
       );
     }
-    return <Typography variant="body1">{returnWord}</Typography>;
+    return (
+      <Stack direction="row" spacing={2} alignItems="center">
+        <Typography variant="body1">{setCount + 1} SET</Typography>
+        <Typography variant="body1">{returnWord}</Typography>
+      </Stack>
+    );
   };
 
   return (
@@ -78,9 +78,8 @@ export default function ProgressCard(props) {
                 onClick={() => {
                   activeStep[index] !== contentsLength && handleNext(index);
                 }}
-                // disabled={activeStep[index] === contentsLength}
               >
-                <CardContent>
+                <CardContent sx={{ pb: 0 }}>
                   <Typography variant="h5" gutterBottom>
                     {item.name}
                   </Typography>
@@ -110,7 +109,7 @@ export default function ProgressCard(props) {
                         handleBack(index);
                       }}
                     >
-                      <BackspaceOutlinedIcon fontSize="small" sx={{ p: 1 }} />{" "}
+                      <BackspaceOutlinedIcon fontSize="small" sx={{ mr: 1 }} />
                       -1 Set
                     </Button>
                   </Grid>

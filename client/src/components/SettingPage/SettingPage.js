@@ -3,22 +3,28 @@ import * as Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getRoutine } from "../../_actions/routine_action";
 
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
-import Slide from "@mui/material/Slide";
-import { Box, Fab, Grid, ListItemText, Snackbar } from "@material-ui/core";
-
 import { Build, Add, Save } from "@mui/icons-material";
 
 import DetailPage from "../DetailPage/DetailPage";
 import WorkoutCards from "./Sections/WorkoutCards";
-import { Alert, Divider } from "@mui/material";
+import {
+  Box,
+  Fab,
+  Grid,
+  ListItemText,
+  Snackbar,
+  Alert,
+  Divider,
+  Button,
+  Dialog,
+  AppBar,
+  Toolbar,
+  TextField,
+  IconButton,
+  Typography,
+  Slide,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 
 const AppbarMargin = "4rem";
@@ -127,8 +133,9 @@ export default function SettingPage(props) {
   return (
     <Box>
       <Button
-        variant={props.state === "C" ? "outlined" : "text"}
+        variant={props.state === "C" ? "contained" : "text"}
         size={props.state === "C" ? "" : "small"}
+        color="secondary"
         onClick={handleClickOpen}
       >
         {props.state === "C" ? "루틴추가" : "수정"}
@@ -161,8 +168,10 @@ export default function SettingPage(props) {
                 루틴 {props.state ? "생성" : "수정"}
               </Typography>
               <Button autoFocus color="inherit" onClick={handleSave}>
-                <Save fontSize="small" />
-                SAVE
+                <Save fontSize="medium" />
+                <Typography variant="subtitle2" sx={{ pl: 0.5 }}>
+                  SAVE
+                </Typography>
               </Button>
               <Snackbar
                 open={alertOpen}

@@ -8,7 +8,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Button, Grid } from "@material-ui/core";
 
 import HomePage from "./Sections/HomePage";
 import RoutinePage from "./Sections/RoutinePage";
@@ -91,7 +90,6 @@ export default function MainPage() {
   return (
     <Box
       sx={{
-        bgcolor: "background.paper",
         width: "100%",
       }}
     >
@@ -118,7 +116,7 @@ export default function MainPage() {
           <StyledTabs
             value={value}
             onChange={handleChange}
-            indicatorColor="secondary"
+            TabIndicatorProps={{ style: { background: "#42FF9F" } }}
             textColor="inherit"
             variant="fullWidth"
             aria-label="full width tabs example"

@@ -13,11 +13,10 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import { Box, Fab, ListItemText } from "@material-ui/core";
 import Stopwatch from "./Sections/Stopwatch";
 import ProgressCard from "./Sections/ProgressCard";
 import { getHistory } from "../../_actions/history_action";
-import { Grid, ListItemButton, Stack } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { FitnessCenter, Save } from "@mui/icons-material";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -64,7 +63,6 @@ export default function WorkoutPage(props) {
     };
     Axios.post("/api/history/", body).then((response) => {
       if (response.data.success) {
-        console.log("history Save", Timer);
         dispatch(getHistory({ writer: userId }));
         handleClose();
         props.swipe();
@@ -77,7 +75,7 @@ export default function WorkoutPage(props) {
   return (
     <div>
       <Button
-        color="inherit"
+        color="primary"
         variant={"text"}
         size={"small"}
         onClick={handleClickOpen}
@@ -112,8 +110,10 @@ export default function WorkoutPage(props) {
                 {myRoutine.title}
               </Typography>
               <Button autoFocus color="inherit" onClick={() => handleSave()}>
-                <Save fontSize="small" />
-                save
+                <Save fontSize="medium" />
+                <Typography variant="subtitle2" sx={{ pl: 0.5 }}>
+                  Save
+                </Typography>
               </Button>
             </Toolbar>
           </AppBar>

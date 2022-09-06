@@ -12,6 +12,8 @@ import isEmail from "validator/lib/isEmail";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../_actions/user_action";
+import { LoginOutlined } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -26,6 +28,11 @@ export default function Login() {
       setValidate(false);
     } else {
       setValidate(true);
+    }
+  };
+  const handleKeydown = (key) => {
+    if (key === "Enter") {
+      handleSubmit();
     }
   };
 
@@ -64,30 +71,37 @@ export default function Login() {
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         로그인
+        <LoginOutlined sx={{ ml: 1 }} />
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>LOG-IN</DialogTitle>
+        <DialogTitle color="primary">
+          <Stack alignItems="center" direction="row">
+            로그인 <LoginOutlined sx={{ ml: 1 }} />
+          </Stack>
+        </DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            id="name"
-            label="Email Address"
-            error={Validate}
-            helperText={!Validate ? "" : "올바른 이메일을 입력해주세요"}
-            type="email"
-            variant="standard"
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </DialogContent>
-        <DialogContent>
-          <TextField
-            autoFocus
-            id="password"
-            label="Password"
-            type="password"
-            variant="standard"
-            onChange={(event) => setPassword(event.target.value)}
-          />
+          <Stack spacing={2}>
+            <TextField
+              autoFocus
+              id="name"
+              label="Email Address"
+              error={Validate}
+              helperText={!Validate ? "" : "올바른 이메일을 입력해주세요"}
+              type="email"
+              variant="standard"
+              onChange={(event) => setEmail(event.target.value)}
+            />
+
+            <TextField
+              autoFocus
+              id="password"
+              label="Password"
+              type="password"
+              variant="standard"
+              onKeyDown={(event) => handleKeydown(event.key)}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </Stack>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>취소</Button>

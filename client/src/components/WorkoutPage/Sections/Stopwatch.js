@@ -1,6 +1,5 @@
-import { Slide, Typography } from "@material-ui/core";
 import { PlayArrow, Stop } from "@mui/icons-material";
-import { Button, Stack } from "@mui/material";
+import { Slide, Typography, Button, Stack } from "@mui/material";
 import { useRef, useState, useEffect } from "react";
 
 export default function Stopwatch(props) {
@@ -48,20 +47,16 @@ export default function Stopwatch(props) {
         {realTime()}
       </Typography>
       <Stack sx={{ pt: 1 }} direction="row" justifyContent="center">
-        <Slide direction="right" in={!Run}>
-          <Button onClick={startHandler} style={buttonStyle}>
+        <Slide color="secondary" direction="right" in={!Run}>
+          <Button color="inherit" onClick={startHandler} style={buttonStyle}>
             Start
-            <PlayArrow fontSize="large" />
+            <PlayArrow color="inherit" fontSize="large" />
           </Button>
         </Slide>
-        <Slide direction="left" in={Run}>
-          <Button
-            sx={{ color: "red" }}
-            onClick={stopHandler}
-            style={buttonStyle}
-          >
+        <Slide color="secondary" direction="left" in={Run}>
+          <Button color="inherit" onClick={stopHandler} style={buttonStyle}>
             Stop
-            <Stop fontSize="large" />
+            <Stop color="inherit" fontSize="large" />
           </Button>
         </Slide>
       </Stack>

@@ -1,8 +1,17 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import { Box, Button, Grid, Card, CardContent } from "@material-ui/core";
 import DetailPage from "../../DetailPage/DetailPage";
-import { CardActionArea, Collapse, Divider, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  CardActionArea,
+  Collapse,
+  Divider,
+  Stack,
+} from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import RemoveBtn from "../../utils/RemoveBtn";
 
@@ -19,20 +28,20 @@ export default function WorkoutCards(props) {
     var body;
     switch (item[0]) {
       case "weight":
+        const fontSize = "0.9rem";
         return (
-          <Grid container justifyContent="center">
-            <Grid item xs={10}>
+          <Grid container justifyContent="center" alignItems="center">
+            <Grid item xs={7}>
               <Typography>{index + 1} SET</Typography>
             </Grid>
-            <Grid item xs>
-              <Typography>{data[0]} KG x</Typography>
-            </Grid>
-            <Grid item xs>
-              <Typography>{data[1]} 개</Typography>
+            <Grid item xs={5}>
+              <Stack direction="row">
+                <Typography fontSize={fontSize}>{data[0]} KG X </Typography>
+                <Typography fontSize={fontSize}>{data[1]} 개</Typography>
+              </Stack>
             </Grid>
           </Grid>
         );
-        break;
       case "count":
         return (
           <Grid container justifyContent="space-between">
@@ -44,7 +53,6 @@ export default function WorkoutCards(props) {
             </Grid>
           </Grid>
         );
-        break;
       case "time":
         return (
           <Grid container justifyContent="space-between">
@@ -58,7 +66,6 @@ export default function WorkoutCards(props) {
             </Grid>
           </Grid>
         );
-        break;
       default:
         break;
     }

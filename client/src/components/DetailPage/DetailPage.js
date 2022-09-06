@@ -1,21 +1,25 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
+
 import {
   Box,
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
   Container,
-  Fab,
   Grid,
   InputAdornment,
   DialogTitle,
   IconButton,
-} from "@material-ui/core";
-import { Alert, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { Stack } from "@mui/system";
+  Alert,
+  Fab,
+  ToggleButton,
+  ToggleButtonGroup,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Build, Add, AddCircle, RemoveCircle } from "@mui/icons-material";
 
 export default function DetailPage(props) {
@@ -132,12 +136,14 @@ export default function DetailPage(props) {
       return (
         <Fab
           variant="extended"
-          fontSize="small"
           size="medium"
-          style={{ marginLeft: "0.7rem", marginTop: "1rem" }}
           onClick={handleClickOpen}
+          sx={{ py: 1, mt: 1, ml: 1, borderRadius: 3 }}
+          color="secondary"
         >
-          운동추가
+          <Typography variant="subtitle2" fontSize="0.73rem">
+            운동추가
+          </Typography>
           <Add />
         </Fab>
       );
@@ -161,11 +167,15 @@ export default function DetailPage(props) {
     <div>
       {ButtonType()}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>운동 {props.data ? "수정" : "추가"}</DialogTitle>
+        <DialogTitle>
+          <Typography fontSize="1.5rem" variant="h5">
+            운동 {props.data ? "수정" : "추가"}
+          </Typography>
+        </DialogTitle>
         <DialogContent sx={{ height: "6rem", pb: 0 }}>
-          <DialogContentText>
+          <Typography sx={{ py: 0.5 }} fontSize="0.8rem" variant="subtitle1">
             {props.data ? "수정" : "추가"}하시려는 내용을 작성해주세요
-          </DialogContentText>
+          </Typography>
           <TextField
             error={SubmitFlag && Title === ""}
             helperText={

@@ -2,17 +2,17 @@ import * as React from "react";
 import * as Axios from "axios";
 import Typography from "@mui/material/Typography";
 import { useDispatch, useSelector } from "react-redux";
+import { getHistory } from "../../../../_actions/history_action";
+import AdjustHistory from "./AdjustHistory";
 import {
-  Button,
+  Collapse,
+  Divider,
+  Stack,
   CardActionArea,
   Grid,
   Card,
   CardContent,
-  Box,
-} from "@material-ui/core";
-import { getHistory } from "../../../../_actions/history_action";
-import AdjustHistory from "./AdjustHistory";
-import { Collapse, Divider, Stack } from "@mui/material";
+} from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import RemoveBtn from "../../../utils/RemoveBtn";
 
@@ -49,7 +49,7 @@ export default function HistoryCard(props) {
       unit = `${arr[2]} 초`;
     }
     return (
-      <Typography variant="h6" component="div">
+      <Typography variant="subtitle1" component="div">
         {unit}
       </Typography>
     );
@@ -75,7 +75,12 @@ export default function HistoryCard(props) {
               aria-expanded={expanded}
             >
               <CardContent>
-                <Grid container justifyContent="space-between" direction="row">
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                  direction="row"
+                >
                   <Grid item>
                     <Typography variant="h5" component="div">
                       {item.name}

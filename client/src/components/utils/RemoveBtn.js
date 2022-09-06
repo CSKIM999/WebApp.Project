@@ -4,15 +4,22 @@ import React from "react";
 
 function RemoveBtn(props) {
   const onClick = props ? props.event : console.log("ERROR");
+
   return (
     <Button
-      onClick={() => onClick()}
-      variant={"text"}
+      onClick={() => {
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+          onClick();
+        } else {
+          return;
+        }
+      }}
+      color="error"
+      variant="text"
       size="small"
-      color="inherit"
     >
       삭제
-      <Delete fontSize="small" />
+      <Delete color="inherit" fontSize="small" />
     </Button>
   );
 }

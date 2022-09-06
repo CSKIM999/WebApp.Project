@@ -1,22 +1,21 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as Axios from "axios";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
+
+import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
   Fab,
   DialogTitle,
   Menu,
   MenuItem,
   GridList,
-} from "@material-ui/core";
-import AddIcon from "@mui/icons-material/Add";
-import {
   Alert,
   Divider,
   Grid,
@@ -99,9 +98,15 @@ export default function AdjustHistory(props) {
   const ButtonType = () => {
     if (!props.data) {
       return (
-        <Fab variant="extended" onClick={handleClickOpen}>
+        <Fab
+          sx={{ borderRadius: 3 }}
+          variant="extended"
+          onClick={handleClickOpen}
+          size="midium"
+          color="secondary"
+        >
           루틴 추가
-          <AddIcon />
+          <AddIcon fontSize="small" />
         </Fab>
       );
     } else {
@@ -112,6 +117,7 @@ export default function AdjustHistory(props) {
             handleClickOpen();
           }}
           size="small"
+          color="secondary"
         >
           수정
           <Build fontSize="small" />
@@ -166,7 +172,7 @@ export default function AdjustHistory(props) {
             label={"초"}
           />
         </Grid>
-        <Grid item xs={3} al>
+        <Grid item xs={3}>
           <Button sx={{ p: 0.3 }} onClick={() => handleFormation()}>
             <Typography variant="caption">
               운동추가
@@ -220,7 +226,10 @@ export default function AdjustHistory(props) {
         </Grid>
         <Grid item xs="auto">
           <IconButton onClick={() => handleFormation(index)}>
-            <DeleteForever color="red" />
+            <DeleteForever
+              color="error"
+              sx={{ p: 0.1, border: 2, borderRadius: 10 }}
+            />
           </IconButton>
         </Grid>
       </Grid>
@@ -286,13 +295,13 @@ export default function AdjustHistory(props) {
               aria-expanded={openMenu ? "true" : undefined}
               onClick={handleMenuClick}
               endIcon={<KeyboardArrowDownIcon />}
+              sx={{ p: 1 }}
             >
               내 루틴 불러오기
             </Button>
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
-              getContentAnchorEl={null}
               anchorOrigin={{
                 vertical: "bottom",
                 horizontal: "right",
@@ -339,7 +348,7 @@ export default function AdjustHistory(props) {
           />
 
           {timeGrid()}
-          <Divider sx={{ fontSize: "0.8rem", pb: 1.5 }} textAlign="right">
+          <Divider sx={{ fontSize: "0.8rem", py: 0.5 }} textAlign="right">
             수행 / 총 세트수
           </Divider>
           <Grid container direction="row">
@@ -348,7 +357,12 @@ export default function AdjustHistory(props) {
         </DialogContent>
 
         <DialogActions>
-          <Button onClick={() => handleSave()}>SAVE</Button>
+          <Button
+            sx={{ px: 3, py: 1, fontSize: "1.2rem" }}
+            onClick={() => handleSave()}
+          >
+            SAVE
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -3,7 +3,6 @@ import * as Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 import Typography from "@mui/material/Typography";
-import { Box, Button, Grid } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
@@ -12,7 +11,7 @@ import { getRoutine } from "../../_actions/routine_action";
 import WorkoutPage from "../WorkoutPage/WorkoutPage";
 
 import { Delete } from "@mui/icons-material";
-import { CardActionArea, Collapse, Divider, Stack } from "@mui/material";
+import { Grid, CardActionArea, Collapse, Divider, Stack } from "@mui/material";
 import RemoveBtn from "./RemoveBtn";
 
 export default function MyRoutine(props) {
@@ -48,7 +47,6 @@ export default function MyRoutine(props) {
               minWidth: 275,
               my: 1,
               borderRadius: "0.5rem",
-              // maxWidth: 500,
               width: "80vw",
             }}
           >
@@ -70,7 +68,7 @@ export default function MyRoutine(props) {
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <Typography variant="subtitle1" color="text.secondary">
+                    <Typography variant="subtitle1">
                       {item.detail.length} Workouts
                     </Typography>
                   </Grid>
@@ -106,13 +104,13 @@ export default function MyRoutine(props) {
               </Collapse>
             </CardActionArea>
             <Grid container justifyContent="space-evenly" direction="row">
-              <Grid item p={2}>
+              <Grid item sx={{ px: 1.5, pb: 1 }}>
                 <RemoveBtn evemt={() => handleDelete(item)} />
               </Grid>
-              <Grid item p={2}>
+              <Grid item sx={{ px: 1.5, pb: 1 }}>
                 <SettingPage data={item} />
               </Grid>
-              <Grid item p={2}>
+              <Grid item sx={{ px: 1.5, pb: 1 }}>
                 <WorkoutPage swipe={props.swipe} id={item._id} />
               </Grid>
             </Grid>
