@@ -3,18 +3,6 @@ const router = express.Router();
 
 const { History } = require("../models/History");
 
-const handleDate = (date) => {
-  const yyyy = date.getFullYear();
-  const mm = date.getMonth() + 1;
-  const dd = date.getDate();
-  const res = {
-    year: yyyy,
-    month: mm,
-    day: dd,
-  };
-  return res;
-};
-
 router.post("/", (req, res) => {
   const history = new History(req.body);
   history.save((err) => {

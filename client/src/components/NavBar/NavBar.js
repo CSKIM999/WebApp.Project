@@ -7,10 +7,8 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
 function NavBar(props) {
   const [value, setValue] = React.useState(props.page);
-  console.log(props);
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(value);
   };
 
   return (

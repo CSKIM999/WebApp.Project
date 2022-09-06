@@ -10,7 +10,6 @@ import SettingPage from "../SettingPage/SettingPage";
 import { getRoutine } from "../../_actions/routine_action";
 import WorkoutPage from "../WorkoutPage/WorkoutPage";
 
-import { Delete } from "@mui/icons-material";
 import { Grid, CardActionArea, Collapse, Divider, Stack } from "@mui/material";
 import RemoveBtn from "./RemoveBtn";
 

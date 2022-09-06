@@ -24,7 +24,6 @@ export default function Stopwatch(props) {
   const stopHandler = () => {
     clearInterval(timer.run);
     setRun(false);
-    console.log(timer);
     timer.run = 0;
   };
 

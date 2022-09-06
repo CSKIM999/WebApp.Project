@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// schema => DB 의 detail
 const routineSchema = Schema({
   writer: {
     type: Schema.Types.ObjectId,

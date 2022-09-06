@@ -9,9 +9,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import isEmail from "validator/lib/isEmail";
 
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../_actions/user_action";
-import { HowToReg, PersonAdd } from "@mui/icons-material";
+import { PersonAdd } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 
 export default function Register() {

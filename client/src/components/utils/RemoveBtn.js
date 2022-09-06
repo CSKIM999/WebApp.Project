@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import React from "react";
 
 function RemoveBtn(props) {
-  const onClick = props ? props.event : console.log("ERROR");
+  const onClick = props ? props.event : alert("DELETE ERROR");
 
   return (
     <Button

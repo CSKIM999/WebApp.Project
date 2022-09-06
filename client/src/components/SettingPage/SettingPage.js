@@ -10,9 +10,7 @@ import DetailPage from "../DetailPage/DetailPage";
 import WorkoutCards from "./Sections/WorkoutCards";
 import {
   Box,
-  Fab,
   Grid,
-  ListItemText,
   Snackbar,
   Alert,
   Divider,

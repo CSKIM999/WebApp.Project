@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import DetailPage from "../../DetailPage/DetailPage";
 import {
   Box,
-  Button,
   Grid,
   Card,
   CardContent,
@@ -12,7 +11,6 @@ import {
   Divider,
   Stack,
 } from "@mui/material";
-import { Delete } from "@mui/icons-material";
 import RemoveBtn from "../../utils/RemoveBtn";
 
 export default function WorkoutCards(props) {

@@ -2,7 +2,6 @@ import React from "react";
 import Settingpage from "../../SettingPage/SettingPage";
 import MyRoutine from "../../utils/MyRoutine";
 import { useSelector } from "react-redux";
-import { Container } from "@mui/system";
 import Logout from "../../utils/Logout";
 import {
   Box,
@@ -13,7 +12,7 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
-import { LogoutOutlined, ManageAccounts } from "@mui/icons-material";
+import { ManageAccounts } from "@mui/icons-material";
 
 function HomePage(props) {
   const myRoutine = useSelector((state) => state.routine.myRoutines);

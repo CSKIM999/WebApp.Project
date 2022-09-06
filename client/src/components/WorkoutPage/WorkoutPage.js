@@ -1,12 +1,9 @@
 import * as React from "react";
 import * as Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { getRoutine } from "../../_actions/routine_action";
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import ListItem from "@mui/material/ListItem";
-import List from "@mui/material/List";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
@@ -67,7 +64,7 @@ export default function WorkoutPage(props) {
         handleClose();
         props.swipe();
       } else {
-        console.log("history Save Fail");
+        alert("history Save Fail");
       }
     });
   };

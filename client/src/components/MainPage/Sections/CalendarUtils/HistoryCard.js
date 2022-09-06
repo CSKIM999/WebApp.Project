@@ -13,7 +13,6 @@ import {
   Card,
   CardContent,
 } from "@mui/material";
-import { Delete } from "@mui/icons-material";
 import RemoveBtn from "../../../utils/RemoveBtn";
 
 export default function HistoryCard(props) {
@@ -59,7 +58,6 @@ export default function HistoryCard(props) {
     Axios.post("/api/history/remove", { _id: Contentid }).then((response) => {
       if (response.data.success) {
         dispatch(getHistory({ writer: user.userData._id }));
-        console.log("done check the redux state");
       }
     });
   };

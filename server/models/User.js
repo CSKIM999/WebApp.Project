@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
-// schema => DB 의 detail
 const userSchema = mongoose.Schema({
   email: {
     type: String,

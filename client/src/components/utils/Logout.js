@@ -1,10 +1,9 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import * as axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from "@mui/icons-material";
-import { Box, Stack } from "@mui/system";
-import { Grid, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
+import { Typography } from "@mui/material";
 
 export default function Logout() {
   const navigate = useNavigate();

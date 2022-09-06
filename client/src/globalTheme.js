@@ -1,4 +1,3 @@
-import { blue, red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 const bgColor = "#242424";
 const ftColor = { main: "#cccccc", light: "#ffffff", dark: "#b3b3b3" }; //main-light-dark
@@ -6,22 +5,8 @@ const CardBgColor = "#333333";
 const pointColor = "#FF8736";
 const complementaryColor = "#02A9B3";
 
-const overRideFontColor = (option) => ({
-  styleOverrides: {
-    root: {
-      color: option + "!important",
-    },
-  },
-});
-
 export const globalTheme = createTheme({
   components: {
-    // Name of the component
-
-    // MuiTextField: overRideFontColor,
-    // MuiFormLabel: overRideFontColor,
-    // MuiDialog: overRideFontColor,
-    // MuiDialogContentText: overRideFontColor,
     MuiTab: {
       styleOverrides: {
         root: {
@@ -42,8 +27,6 @@ export const globalTheme = createTheme({
           color: ftColor.main,
           borderColor: complementaryColor + "!important",
         },
-        // today: {
-        // },
       },
     },
     MuiTypography: {
@@ -106,13 +89,11 @@ export const globalTheme = createTheme({
       styleOverrides: {
         root: {
           background: CardBgColor,
-          color: blue[200],
         },
       },
     },
   },
   palette: {
-    // primary: {},
     text: {
       primary: ftColor.main,
       secondary: ftColor.light,
