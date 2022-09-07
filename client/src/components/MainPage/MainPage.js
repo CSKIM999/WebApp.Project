@@ -56,22 +56,14 @@ function getId(index) {
 }
 
 export default function MainPage() {
-  // const [Routines, setRoutines] = React.useState([]);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  // const history = useSelector((state) => state.history);
 
   React.useEffect(() => {
     if (user.userData) {
       dispatch(getRoutine({ writer: user.userData._id }));
-      // .then((response) => {
-      //   if (response.payload.length !== 0) {
-      //     // setRoutines(response.payload);
-      //   } else {
-      //   }
-      // });
       dispatch(getHistory({ writer: user.userData._id }));
     }
   }, [user]);

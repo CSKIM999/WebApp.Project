@@ -1,9 +1,8 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import MainPage from "./components/MainPage/MainPage";
 import LandingPage from "./components/LandingPage/LandingPage";
-import NavBar from "./components/NavBar/NavBar";
 import Auth from "./hoc/auth";
 
 function App() {

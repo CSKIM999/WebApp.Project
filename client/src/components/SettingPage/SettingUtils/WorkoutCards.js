@@ -23,12 +23,16 @@ export default function WorkoutCards(props) {
     }
   };
   const handleWorkoutData = (item, data, index) => {
-    var body;
     switch (item[0]) {
       case "weight":
         const fontSize = "0.9rem";
         return (
-          <Grid container justifyContent="center" alignItems="center">
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            sx={{ px: 2 }}
+          >
             <Grid item xs={7}>
               <Typography>{index + 1} SET</Typography>
             </Grid>
@@ -42,7 +46,7 @@ export default function WorkoutCards(props) {
         );
       case "count":
         return (
-          <Grid container justifyContent="space-between">
+          <Grid container justifyContent="space-between" sx={{ px: 2 }}>
             <Grid item xs={4}>
               <Typography>{index + 1} SET</Typography>
             </Grid>
@@ -53,8 +57,8 @@ export default function WorkoutCards(props) {
         );
       case "time":
         return (
-          <Grid container justifyContent="space-between">
-            <Grid item xs={8}>
+          <Grid container justifyContent="space-between" sx={{ px: 2 }}>
+            <Grid item xs={7}>
               <Typography>{index + 1} SET</Typography>
             </Grid>
             <Grid item xs="auto">

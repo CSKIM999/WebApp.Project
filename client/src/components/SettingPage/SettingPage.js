@@ -7,7 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Build, Add, Save } from "@mui/icons-material";
 
 import DetailPage from "../DetailPage/DetailPage";
-import WorkoutCards from "./Sections/WorkoutCards";
+import WorkoutCards from "./SettingUtils/WorkoutCards";
 import {
   Box,
   Grid,

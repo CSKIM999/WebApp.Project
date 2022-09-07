@@ -163,7 +163,7 @@ export default function DetailPage(props) {
       {ButtonType()}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>
-          <Typography fontSize="1.5rem" variant="h5">
+          <Typography fontSize="1.5rem" variant="body2">
             운동 {props.data ? "수정" : "추가"}
           </Typography>
         </DialogTitle>

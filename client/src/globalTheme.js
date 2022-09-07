@@ -48,6 +48,9 @@ export const globalTheme = createTheme({
         body1: {
           color: ftColor.dark + "!important",
         },
+        body2: {
+          color: ftColor.light + "!important",
+        },
         button: {
           color: ftColor.main,
         },

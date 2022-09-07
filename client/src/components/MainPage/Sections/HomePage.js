@@ -2,7 +2,7 @@ import React from "react";
 import Settingpage from "../../SettingPage/SettingPage";
 import MyRoutine from "../../utils/MyRoutine";
 import { useSelector } from "react-redux";
-import Logout from "../../utils/Logout";
+import Logout from "./HomeUtils/Logout";
 import {
   Box,
   Grid,
