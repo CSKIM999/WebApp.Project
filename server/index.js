@@ -1,10 +1,12 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 const port = 5000;
 const config = require("./config/key");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+
+console.log("CONFIG IN PROD.js", config);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
