@@ -1,5 +1,6 @@
 /* eslint-disable no-lone-blocks */
 import * as React from "react";
+import * as Axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -55,6 +56,35 @@ export default function Login() {
       dispatch(loginUser(body)).then((response) => {
         if (response.payload.loginSuccess) {
           alert("로그인 성공!");
+          if (Email === "test@te.st") {
+            // only for test_ID
+            const body = {
+              writer: "631f4b63d7d78af1e32e571a",
+              date: new Date(),
+              name: "클릭해보세요!",
+              runtime: [1, 30, 0],
+              execute: [
+                {
+                  name: "샘플 기록입니다",
+                  progress: [1, 1],
+                },
+                {
+                  name: "운동을 끝내면",
+                  progress: [1, 1],
+                },
+                {
+                  name: "기록이 자동저장됩니다.",
+                  progress: [1, 1],
+                },
+              ],
+            };
+            Axios.post("/api/history/", body).then((response) => {
+              if (response.data.success) {
+              } else {
+                console.log("test history Save Fail");
+              }
+            });
+          }
           navigate("/");
         } else {
           alert("로그인 실패");

@@ -28,3 +28,26 @@ password bcrypt 로 암호화
 현재 사용되는 웹표준 인증방식.
 
 |||||||||||||||||||||||||
+
+
+OCI ssh 접속방법
+현재 window terminals 의 기본위치는 user.cskim 으로 되어있음.
+따라서 그 안에있는 my_key.key (프라이빗키) 를 사용해서 다음 명령어 실행
+ssh -i my_key.key ubuntu@MY-ubuntu-IPADRESS
+
+위를통해 ubuntu@mysecond... : 에 접속한다면 성공한 것. 이미 node-module 등은 설치해두었음.
+하지만 server/config/prod.js 를 받아오는 경우의 실행프로세스가 틀렸다고 함 고쳐야함.
+
+vim /env/profile
+내에 export 를 추가해주는것으로 환경변수 MONGO_URI 추가 성공
+instance access IP MONGODB whitelist 에 추가해주고
+
+오라클 클라우드 방화벽과 우분투 터미널 내 방화벽 iptable 의 5000번 포트 꺼주는것으로 작동 확인
+
+터미널에서의 npm run 은 성공했으나, 터미널을 끄면 서버도 꺼지는 문제
+
+pm2 를 통해 서버 24시간 구동 성공
+
+자꾸 proxy error 발생. 혹시 시간문제인가 해서 npt 사용 시간동기화
+
+찾아보니 proxy-middleware 와 body-parser 의 충돌문제

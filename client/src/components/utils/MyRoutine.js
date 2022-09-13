@@ -104,7 +104,7 @@ export default function MyRoutine(props) {
             </CardActionArea>
             <Grid container justifyContent="space-evenly" direction="row">
               <Grid item sx={{ px: 1.5, pb: 1 }}>
-                <RemoveBtn evemt={() => handleDelete(item)} />
+                <RemoveBtn event={() => handleDelete(item)} />
               </Grid>
               <Grid item sx={{ px: 1.5, pb: 1 }}>
                 <SettingPage data={item} />

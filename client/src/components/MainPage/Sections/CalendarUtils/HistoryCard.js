@@ -47,6 +47,7 @@ export default function HistoryCard(props) {
     } else {
       unit = `${arr[2]} 초`;
     }
+
     return (
       <Typography variant="subtitle1" component="div">
         {unit}

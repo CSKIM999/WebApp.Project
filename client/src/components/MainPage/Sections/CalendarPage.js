@@ -64,7 +64,6 @@ export default function Calendar() {
 
   React.useEffect(() => {
     fetchHighlightedDays(initialValue);
-    // return requestAbortController.current?.abort();
   }, [Record]);
 
   const handleMonthChange = (date) => {
@@ -127,7 +126,6 @@ export default function Calendar() {
         <Grid item sx={{ pt: 2 }}>
           <AdjustHistory date={value} />
         </Grid>
-        {/* <CalendarParts /> */}
       </Grid>
     </Box>
   );

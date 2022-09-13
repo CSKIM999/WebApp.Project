@@ -27,7 +27,7 @@ function LandingPage() {
       </Grid>
       <Grid item container direction="column" alignItems="center">
         <Stack>
-          <Typography>SAMPLE ID : 찰스@cs.kim</Typography>
+          <Typography>SAMPLE ID : test@te.st</Typography>
           <Typography>SAMPLE PW :1234</Typography>
         </Stack>
         <Stack sx={{ p: 2 }} direction="row" spacing={3}>
