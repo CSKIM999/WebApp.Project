@@ -32,7 +32,7 @@ router.post("/login", (req, res) => {
       user.genToken((err, user) => {
         if (err) return res.status(400).send(err);
         res
-          .cookie("x_auth", user.token)
+          .cookie("x_auth", user.token, { sameSite: "none", secure: true })
           .status(200)
           .json({ loginSuccess: true, userId: user._id });
       });
