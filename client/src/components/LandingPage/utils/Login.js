@@ -85,7 +85,7 @@ export default function Login() {
               }
             });
           }
-          navigate("/");
+          navigate("/front");
         } else {
           alert("로그인 실패");
         }

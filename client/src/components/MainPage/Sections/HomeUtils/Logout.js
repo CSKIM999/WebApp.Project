@@ -11,7 +11,7 @@ export default function Logout() {
   const onClickHandler = () => {
     axios.get(`/api/user/logout`).then((response) => {
       if (response.data.success) {
-        navigate("/front");
+        navigate("/");
       } else {
         alert("로그아웃 실패");
         console.log(response);

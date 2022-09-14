@@ -51,3 +51,8 @@ pm2 를 통해 서버 24시간 구동 성공
 자꾸 proxy error 발생. 혹시 시간문제인가 해서 npt 사용 시간동기화
 
 찾아보니 proxy-middleware 와 body-parser 의 충돌문제
+
+
+npm run build 시 build index.html 의 정적요소들은 적용되었으나, 그 외의것은 전혀 없음.
+https://sangmin802.github.io/Study/Think/cra-build/
+내 문제와 가장 가까워보이는 문제를 다루는 곳.

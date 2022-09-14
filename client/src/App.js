@@ -1,5 +1,6 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// before BrowserRouter => HashRouter
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 import MainPage from "./components/MainPage/MainPage";
 import LandingPage from "./components/LandingPage/LandingPage";
@@ -12,8 +13,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<AuthMainPage />} />
-        <Route exact path="/front" element={<AuthLandingPage />} />
+        <Route exact path="/front" element={<AuthMainPage />} />
+        <Route exact path="/" element={<AuthLandingPage />} />
       </Routes>
     </Router>
   );

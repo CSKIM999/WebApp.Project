@@ -15,16 +15,16 @@ export default function (SpecificComponent, option, adminRoute = null) {
       dispatch(auth()).then((response) => {
         if (!response.payload.isAuth) {
           if (option) {
-            navigate("/front");
+            navigate("/");
             alert("잘못 된 접근입니다");
           }
         } else {
           if (adminRoute && !response.payload.isAdmin) {
-            navigate("/front");
+            navigate("/");
             alert("관리자 권한이 필요합니다");
           } else {
             if (option === false) {
-              navigate("/");
+              navigate("/front");
               alert("이미 로그인되어있습니다");
             }
           }
