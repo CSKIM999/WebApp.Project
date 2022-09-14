@@ -9,14 +9,16 @@ export default function Logout() {
   const navigate = useNavigate();
 
   const onClickHandler = () => {
-    axios.get(`/user/logout`, { withCredentials: true }).then((response) => {
-      if (response.data.success) {
-        navigate("/");
-      } else {
-        alert("로그아웃 실패");
-        console.log(response);
-      }
-    });
+    axios
+      .get(`/api/user/logout`, { withCredentials: true })
+      .then((response) => {
+        if (response.data.success) {
+          navigate("/");
+        } else {
+          alert("로그아웃 실패");
+          console.log(response);
+        }
+      });
   };
   return (
     <Stack direction="row" alignItems="center" onClick={onClickHandler}>
