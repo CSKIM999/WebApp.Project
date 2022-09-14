@@ -3,7 +3,9 @@ import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./types";
 
 export function loginUser(dataToSubmit) {
   const request = axios
-    .post(process.env.REACT_APP_HOST + "/api/user/login", dataToSubmit)
+    .post(process.env.REACT_APP_HOST + "/api/user/login", dataToSubmit, {
+      withCredentials: true,
+    })
     .then((response) => response.data);
 
   return {
@@ -14,7 +16,9 @@ export function loginUser(dataToSubmit) {
 
 export function registerUser(dataToSubmit) {
   const request = axios
-    .post(process.env.REACT_APP_HOST + "/api/user/register", dataToSubmit)
+    .post(process.env.REACT_APP_HOST + "/api/user/register", dataToSubmit, {
+      withCredentials: true,
+    })
     .then((response) => response.data);
 
   return {
@@ -25,7 +29,9 @@ export function registerUser(dataToSubmit) {
 
 export function auth() {
   const request = axios
-    .get(process.env.REACT_APP_HOST + "/api/user/auth")
+    .get(process.env.REACT_APP_HOST + "/api/user/auth", {
+      withCredentials: true,
+    })
     .then((response) => response.data);
 
   return {

@@ -8,7 +8,6 @@ export default function (SpecificComponent, option, adminRoute = null) {
   // option : null/아무나 true/로그인한 자 false/로그인하지 않은 자
   function AuthenticationCheck(props) {
     let user = useSelector((state) => state.user);
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {

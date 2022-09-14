@@ -5,25 +5,19 @@ const port = 5000;
 const config = require("./config/key");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-
-if (process.env.MONGO_URI) {
-  const options = {
-    ca: fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN_NAME}/fullchain.pem`),
-    key: fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN_NAME}/privkey.pem`),
-    cert: fs.readFileSync(`/etc/letsencrypt/live/${DOMAIN_NAME}/cert.pem`),
-  };
-  https.createServer(options, app).listen(443, () => {
-    console.log("443번 포트에서 대기중입니다.");
-  });
-} else {
-  app.listen(port, () => {
-    console.log(`DEV MODE ON! App listening on port ${port}!`);
-  });
-}
+const fs = require("fs");
+const https = require("https");
+const cors = require("cors");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: ["https://cskim999.github.io", "http://localhost:3000"],
+    credentials: true,
+  })
+);
 
 app.use("/api/user", require("./routes/user"));
 app.use("/api/routine", require("./routes/routine"));
@@ -38,4 +32,24 @@ app.get("/", (req, res) => {
   return res.send("hello~~ cskim speaking in ubuntu");
 });
 
+if (process.env.MONGO_URI) {
+  const options = {
+    ca: fs.readFileSync(
+      `/etc/letsencrypt/live/the-nest-of-cskim.kro.kr/fullchain.pem`
+    ),
+    key: fs.readFileSync(
+      `/etc/letsencrypt/live/the-nest-of-cskim.kro.kr/privkey.pem`
+    ),
+    cert: fs.readFileSync(
+      `/etc/letsencrypt/live/the-nest-of-cskim.kro.kr/cert.pem`
+    ),
+  };
+  https.createServer(options, app).listen(port, () => {
+    console.log("PROD MODE ON! App listening on port 5000.");
+  });
+} else {
+  app.listen(port, () => {
+    console.log(`DEV MODE ON! App listening on port ${port}!`);
+  });
+}
 // app.listen(port, () => console.log(`Example app listening on port ${port}!`));

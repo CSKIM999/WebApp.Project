@@ -64,3 +64,11 @@ https://sangmin802.github.io/Study/Think/cra-build/
 => 환경변수 설정으로 해결할수있었음
 
 해결하고나니까 이번엔 https / http Mixed Contents ERROR 를 뱉어냄 개가튼거
+무료 ssl 인증 certbot 은 IP주소는 ssl인증을 해주지 않아서 
+[내도메인.한국/] 에서 내 도메인을 만들어서 OCI 인스턴스와 연결해주었다.
+이후 prod/dev 에서 사용했던 환경변수 MONGO_URI 를 통해 dev모드인지 prod 모드인지 구분해서 hosting 해줌
+
+이번엔 또 cors 에러때문에 server side에서 cors 설정. 나는 서버에서 쿠키까지 사용하기에 credentials 도 넣어주어야함
+
+프론트에서의 cors 에러 // 서버에서만 Credentials 설정할것이 아니라 쿠키를 받아오는 프론트 요청에서도
+withCredentials : true 요소를 넘겨주어야만함

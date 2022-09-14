@@ -9,7 +9,7 @@ export default function Logout() {
   const navigate = useNavigate();
 
   const onClickHandler = () => {
-    axios.get(`/user/logout`).then((response) => {
+    axios.get(`/user/logout`, { withCredentials: true }).then((response) => {
       if (response.data.success) {
         navigate("/");
       } else {
