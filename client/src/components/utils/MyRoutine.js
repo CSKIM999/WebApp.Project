@@ -28,7 +28,9 @@ export default function MyRoutine(props) {
   };
 
   const handleDelete = (data) => {
-    Axios.post("/routine/remove", { _id: data }).then((response) => {
+    Axios.post(process.env.REACT_APP_HOST + "/api/routine/remove", {
+      _id: data,
+    }).then((response) => {
       if (response.data.success) {
         dispatch(getRoutine({ writer: user.userData._id }));
       }

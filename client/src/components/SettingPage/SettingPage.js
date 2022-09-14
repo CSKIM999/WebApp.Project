@@ -113,18 +113,22 @@ export default function SettingPage(props) {
     };
     if (IsAdjust !== false) {
       body._id = IsAdjust;
-      Axios.post("/routine/modify", body).then((response) => {
-        if (response.data.success) {
-          dispatchRoutine(body);
+      Axios.post(process.env.REACT_APP_HOST + "/api/routine/modify", body).then(
+        (response) => {
+          if (response.data.success) {
+            dispatchRoutine(body);
+          }
         }
-      });
+      );
     } else {
-      Axios.post("/routine/", body).then((response) => {
-        if (response.data.success) {
-          dispatchRoutine(body);
-        } else {
+      Axios.post(process.env.REACT_APP_HOST + "/api/routine/", body).then(
+        (response) => {
+          if (response.data.success) {
+            dispatchRoutine(body);
+          } else {
+          }
         }
-      });
+      );
     }
   };
 

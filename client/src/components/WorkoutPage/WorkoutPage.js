@@ -58,15 +58,17 @@ export default function WorkoutPage(props) {
       runtime: Timer,
       execute: exec,
     };
-    Axios.post("/history/", body).then((response) => {
-      if (response.data.success) {
-        dispatch(getHistory({ writer: userId }));
-        handleClose();
-        props.swipe();
-      } else {
-        alert("history Save Fail");
+    Axios.post(process.env.REACT_APP_HOST + "/api/history/", body).then(
+      (response) => {
+        if (response.data.success) {
+          dispatch(getHistory({ writer: userId }));
+          handleClose();
+          props.swipe();
+        } else {
+          alert("history Save Fail");
+        }
       }
-    });
+    );
   };
 
   return (
