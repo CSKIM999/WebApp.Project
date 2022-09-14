@@ -3,7 +3,7 @@ import { GET_ROUTINE } from "./types";
 
 export function getRoutine(dataToSubmit) {
   const request = axios
-    .post("/api/routine/routines", dataToSubmit)
+    .post(process.env.REACT_APP_HOST + "/api/routine/routines", dataToSubmit)
     .then((response) => response.data.info);
 
   return {

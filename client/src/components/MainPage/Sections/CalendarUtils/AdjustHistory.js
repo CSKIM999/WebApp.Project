@@ -242,23 +242,27 @@ export default function AdjustHistory(props) {
     };
     if (props.adj) {
       body._id = props.data._id;
-      Axios.post("/api/history/modify", body).then((response) => {
-        if (response.data.success) {
-          dispatch(getHistory({ writer: userId }));
-          handleClose();
-        } else {
-          alert("ERROR : HIST-MODIFY");
+      Axios.post(process.env.REACT_APP_HOST + "/api/history/modify", body).then(
+        (response) => {
+          if (response.data.success) {
+            dispatch(getHistory({ writer: userId }));
+            handleClose();
+          } else {
+            alert("ERROR : HIST-MODIFY");
+          }
         }
-      });
+      );
     } else {
-      Axios.post("/api/history/", body).then((response) => {
-        if (response.data.success) {
-          dispatch(getHistory({ writer: userId }));
-          handleClose();
-        } else {
-          alert("ERROR : HIST-SUBMIT");
+      Axios.post(process.env.REACT_APP_HOST + "/api/history/", body).then(
+        (response) => {
+          if (response.data.success) {
+            dispatch(getHistory({ writer: userId }));
+            handleClose();
+          } else {
+            alert("ERROR : HIST-SUBMIT");
+          }
         }
-      });
+      );
     }
   };
   const handleMenu = (props) => {

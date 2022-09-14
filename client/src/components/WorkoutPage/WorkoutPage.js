@@ -58,7 +58,7 @@ export default function WorkoutPage(props) {
       runtime: Timer,
       execute: exec,
     };
-    Axios.post("/api/history/", body).then((response) => {
+    Axios.post("/history/", body).then((response) => {
       if (response.data.success) {
         dispatch(getHistory({ writer: userId }));
         handleClose();

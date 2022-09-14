@@ -3,7 +3,7 @@ import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./types";
 
 export function loginUser(dataToSubmit) {
   const request = axios
-    .post("/api/user/login", dataToSubmit)
+    .post(process.env.REACT_APP_HOST + "/api/user/login", dataToSubmit)
     .then((response) => response.data);
 
   return {
@@ -14,7 +14,7 @@ export function loginUser(dataToSubmit) {
 
 export function registerUser(dataToSubmit) {
   const request = axios
-    .post("/api/user/register", dataToSubmit)
+    .post(process.env.REACT_APP_HOST + "/api/user/register", dataToSubmit)
     .then((response) => response.data);
 
   return {
@@ -24,7 +24,9 @@ export function registerUser(dataToSubmit) {
 }
 
 export function auth() {
-  const request = axios.get("/api/user/auth").then((response) => response.data);
+  const request = axios
+    .get(process.env.REACT_APP_HOST + "/api/user/auth")
+    .then((response) => response.data);
 
   return {
     type: AUTH_USER,

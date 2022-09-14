@@ -78,12 +78,14 @@ export default function Login() {
                 },
               ],
             };
-            Axios.post("/api/history/", body).then((response) => {
-              if (response.data.success) {
-              } else {
-                console.log("test history Save Fail");
+            Axios.post(process.env.REACT_APP_HOST + "/api/history/", body).then(
+              (response) => {
+                if (response.data.success) {
+                } else {
+                  console.log("test history Save Fail");
+                }
               }
-            });
+            );
           }
           navigate("/front");
         } else {

@@ -56,7 +56,7 @@ export default function HistoryCard(props) {
   };
 
   const handleDelete = (Contentid) => {
-    Axios.post("/api/history/remove", { _id: Contentid }).then((response) => {
+    Axios.post("/history/remove", { _id: Contentid }).then((response) => {
       if (response.data.success) {
         dispatch(getHistory({ writer: user.userData._id }));
       }

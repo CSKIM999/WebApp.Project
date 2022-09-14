@@ -20,7 +20,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
-  return res.send("hello~~");
+  return res.send("hello~~ cskim speaking in ubuntu");
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

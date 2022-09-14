@@ -56,3 +56,11 @@ pm2 를 통해 서버 24시간 구동 성공
 npm run build 시 build index.html 의 정적요소들은 적용되었으나, 그 외의것은 전혀 없음.
 https://sangmin802.github.io/Study/Think/cra-build/
 내 문제와 가장 가까워보이는 문제를 다루는 곳.
+=> 위 글에서 추측한대로 Router 를 인식하지 못한문제가 맞아보임
+=> client 의 app에서 BrowserRouter 를 HashRouter 로 바꿔줘서 해결완료.
+
+또 새로운 문제 배포단계에서의 proxy가 작동하지 않음.
+다만, 콘솔에 뜨는 오류가 직관적이어서 쉽게 알순있었음.
+=> 환경변수 설정으로 해결할수있었음
+
+해결하고나니까 이번엔 https / http Mixed Contents ERROR 를 뱉어냄 개가튼거

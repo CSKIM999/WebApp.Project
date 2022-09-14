@@ -3,7 +3,7 @@ import { GET_HISTORY } from "./types";
 
 export function getHistory(dataToSubmit) {
   const request = axios
-    .post("/api/history/mydocs", dataToSubmit)
+    .post(process.env.REACT_APP_HOST + "/api/history/mydocs", dataToSubmit)
     .then((response) => response.data.myRecs);
 
   return {

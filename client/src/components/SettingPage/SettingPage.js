@@ -113,13 +113,13 @@ export default function SettingPage(props) {
     };
     if (IsAdjust !== false) {
       body._id = IsAdjust;
-      Axios.post("/api/routine/modify", body).then((response) => {
+      Axios.post("/routine/modify", body).then((response) => {
         if (response.data.success) {
           dispatchRoutine(body);
         }
       });
     } else {
-      Axios.post("/api/routine/", body).then((response) => {
+      Axios.post("/routine/", body).then((response) => {
         if (response.data.success) {
           dispatchRoutine(body);
         } else {
