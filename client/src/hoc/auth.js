@@ -8,10 +8,16 @@ export default function (SpecificComponent, option, adminRoute = null) {
   // option : null/아무나 true/로그인한 자 false/로그인하지 않은 자
   function AuthenticationCheck(props) {
     let user = useSelector((state) => state.user);
+    const token = document.cookie
+      ? user.loginSuccess
+        ? user.loginSuccess.token
+        : false
+      : false;
+    const isNative = document.cookie ? false : token;
     const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {
-      dispatch(auth()).then((response) => {
+      dispatch(auth(isNative)).then((response) => {
         if (!response.payload.isAuth) {
           if (option) {
             navigate("/");

@@ -27,9 +27,11 @@ export function registerUser(dataToSubmit) {
   };
 }
 
-export function auth() {
+export function auth(prop) {
+  const token = !prop ? "" : prop;
   const request = axios
     .get(process.env.REACT_APP_HOST + "/api/user/auth", {
+      params: { token: token },
       withCredentials: true,
     })
     .then((response) => response.data);
