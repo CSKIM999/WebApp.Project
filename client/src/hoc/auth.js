@@ -3,17 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../_actions/user_action";
 import { useNavigate } from "react-router-dom";
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default function (SpecificComponent, option, adminRoute = null) {
+const PC = ["Win", "Mac", "Lin"];
+const userData = window.navigator.platform.slice(0, 3);
+const platform = PC.indexOf(userData) >= 0 ? "PC" : "MOBILE";
+export default function AUTH(SpecificComponent, option, adminRoute = null) {
   // option : null/아무나 true/로그인한 자 false/로그인하지 않은 자
   function AuthenticationCheck(props) {
     let user = useSelector((state) => state.user);
-    const token = document.cookie
-      ? user.loginSuccess
+    const token =
+      user.loginSuccess && user.loginSuccess.token
         ? user.loginSuccess.token
-        : false
-      : false;
-    const isNative = document.cookie ? false : token;
+        : false;
+    const isNative = platform === "PC" ? false : token;
     const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {

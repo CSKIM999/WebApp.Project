@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./types";
+import { LOGIN_USER, LOGOUT_USER, REGISTER_USER, AUTH_USER } from "./types";
 
 export function loginUser(dataToSubmit) {
   const request = axios
@@ -10,6 +10,29 @@ export function loginUser(dataToSubmit) {
 
   return {
     type: LOGIN_USER,
+    payload: request,
+  };
+}
+
+export function logoutUser(nativeToken) {
+  const token = !nativeToken ? "" : nativeToken;
+  const request = axios
+    .get(process.env.REACT_APP_HOST + `/api/user/logout`, {
+      params: { token: token },
+      withCredentials: true,
+    })
+    .then((response) => {
+      const body = response.data.success
+        ? {
+            loginSuccess: false,
+            userId: "",
+            token: "",
+          }
+        : {};
+      return { ...response.data, ...body };
+    });
+  return {
+    type: LOGOUT_USER,
     payload: request,
   };
 }
@@ -27,8 +50,8 @@ export function registerUser(dataToSubmit) {
   };
 }
 
-export function auth(prop) {
-  const token = !prop ? "" : prop;
+export function auth(nativeToken) {
+  const token = !nativeToken ? "" : nativeToken;
   const request = axios
     .get(process.env.REACT_APP_HOST + "/api/user/auth", {
       params: { token: token },
