@@ -50,15 +50,14 @@ export function registerUser(dataToSubmit) {
   };
 }
 
-export function auth(nativeToken) {
+export async function auth(nativeToken) {
   const token = !nativeToken ? "" : nativeToken;
-  const request = axios
+  const request = await axios
     .get(process.env.REACT_APP_HOST + "/api/user/auth", {
       params: { token: token },
       withCredentials: true,
     })
     .then((response) => response.data);
-
   return {
     type: AUTH_USER,
     payload: request,
