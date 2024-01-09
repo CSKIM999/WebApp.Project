@@ -87,7 +87,7 @@ export default function Login() {
               }
             );
           }
-          navigate("/front");
+          navigate("/home");
         } else {
           alert("로그인 실패");
         }
@@ -100,7 +100,7 @@ export default function Login() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         로그인
         <LoginOutlined sx={{ ml: 1 }} />
       </Button>

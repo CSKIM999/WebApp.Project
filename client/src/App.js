@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/front" element={<AuthMainPage />} />
+        <Route exact path="/home" element={<AuthMainPage />} />
         <Route exact path="/" element={<AuthLandingPage />} />
       </Routes>
     </Router>

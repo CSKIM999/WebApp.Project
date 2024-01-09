@@ -2,6 +2,7 @@ import { Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import Login from "./utils/Login";
 import Register from "./utils/Register";
+import SampleLogin from "./utils/SampleLogin";
 
 function LandingPage() {
   return (
@@ -26,13 +27,10 @@ function LandingPage() {
         </Stack>
       </Grid>
       <Grid item container direction="column" alignItems="center">
-        <Stack>
-          <Typography>SAMPLE ID : test@te.st</Typography>
-          <Typography>SAMPLE PW :1234</Typography>
-        </Stack>
+        <SampleLogin />
         <Stack sx={{ p: 2 }} direction="row" spacing={3}>
-          <Login></Login>
-          <Register></Register>
+          <Login />
+          <Register />
         </Stack>
       </Grid>
     </Grid>

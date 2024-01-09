@@ -30,7 +30,7 @@ export default function AUTH(SpecificComponent, option, adminRoute = null) {
             alert("관리자 권한이 필요합니다");
           } else {
             if (option === false) {
-              navigate("/front");
+              navigate("/home");
               alert("이미 로그인되어있습니다");
             }
           }
