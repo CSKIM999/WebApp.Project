@@ -1,4 +1,6 @@
 import * as React from "react";
+import "./MainPage.css";
+
 import { withStyles } from "@material-ui/core/styles";
 import SwipeableViews from "react-swipeable-views";
 import { useTheme } from "@mui/material/styles";
@@ -80,16 +82,12 @@ export default function MainPage() {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-      }}
-    >
+    <Box className="main">
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={value}
         onChangeIndex={handleChangeIndex}
-        style={{ paddingBottom: paddingBottom }}
+        style={{ paddingBottom: paddingBottom, flexGrow: 1 }}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Box>
@@ -103,23 +101,21 @@ export default function MainPage() {
           <CalendarPage />
         </TabPanel>
       </SwipeableViews>
-      <div style={{ position: "fixed", bottom: 0, width: "100%" }}>
-        <AppBar position="static">
-          <StyledTabs
-            value={value}
-            onChange={handleChange}
-            TabIndicatorProps={{ style: { background: "#42FF9F" } }}
-            textColor="inherit"
-            variant="fullWidth"
-            aria-label="full width tabs example"
-            style={{ height: paddingBottom }}
-          >
-            <Tab label="메인페이지" {...getId(0)} />
-            <Tab label="내 루틴" {...getId(1)} />
-            <Tab label="운동 기록" {...getId(2)} />
-          </StyledTabs>
-        </AppBar>
-      </div>
+      <AppBar position="static">
+        <StyledTabs
+          value={value}
+          onChange={handleChange}
+          TabIndicatorProps={{ style: { background: "#42FF9F" } }}
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+          style={{ height: paddingBottom }}
+        >
+          <Tab label="메인페이지" {...getId(0)} />
+          <Tab label="내 루틴" {...getId(1)} />
+          <Tab label="운동 기록" {...getId(2)} />
+        </StyledTabs>
+      </AppBar>
     </Box>
   );
 }

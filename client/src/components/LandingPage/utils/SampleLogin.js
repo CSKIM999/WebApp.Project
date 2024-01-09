@@ -49,11 +49,14 @@ function SampleLogin() {
     });
   };
   return (
-    <div>
-      <Button variant="outlined" size="small" onClick={onClickLogin}>
-        샘플아이디 로그인
-      </Button>
-    </div>
+    <Button
+      variant="outlined"
+      color="inherit"
+      size="small"
+      onClick={onClickLogin}
+    >
+      샘플아이디 로그인
+    </Button>
   );
 }
 

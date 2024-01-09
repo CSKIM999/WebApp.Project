@@ -1,0 +1,7 @@
+.main {
+  height: 100%;
+  width: 512px;
+  display: flex;
+  flex-direction: column;
+  background-color: #242424 !important;
+}

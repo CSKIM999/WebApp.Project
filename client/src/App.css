@@ -1,29 +1,29 @@
-
 .css-epd502 {
-    margin: 0 !important;
-    width: 90vw !important;
-    max-width: 500px;
-
+  margin: 0 !important;
+  width: 90vw !important;
+  max-width: 500px;
 }
-.css-19kzrtu{
-    padding-top: 1rem !important;
+.css-19kzrtu {
+  padding-top: 1rem !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 .MuiCalendarPicker-root {
-
-    margin: 0 !important;
-    width: 90vw !important;
-    max-width: 500px;
+  margin: 0 !important;
+  width: 90vw !important;
+  max-width: 500px;
 }
 .MuiCalendarPickerSkeleton-week {
-    /* date skeleton */
-    justify-content: space-evenly !important;
+  /* date skeleton */
+  justify-content: space-evenly !important;
 }
 
-.css-1n2mv2k { 
-    /* day text */
-    justify-content: space-evenly !important;
+.css-1n2mv2k {
+  /* day text */
+  justify-content: space-evenly !important;
 }
 .css-mvmu1r {
-    /* date grid */
-    justify-content: space-evenly !important;
+  /* date grid */
+  justify-content: space-evenly !important;
 }

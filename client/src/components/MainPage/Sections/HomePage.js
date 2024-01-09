@@ -42,9 +42,12 @@ function HomePage(props) {
       );
     }
   };
+  const BODY_STYLE = {
+    width: "90%",
+  };
   return (
     <Stack alignItems="center" direction="column" sx={{ pt: "0.5rem" }}>
-      <Stack sx={{ width: "80vw" }} spacing={1}>
+      <Stack sx={BODY_STYLE} spacing={1}>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item>
             <Typography variant="h5">MainPage</Typography>
@@ -80,7 +83,7 @@ function HomePage(props) {
         </Grid>
         <Grid item>{useHelper()}</Grid>
       </Stack>
-      <Stack>
+      <Stack sx={BODY_STYLE}>
         <MyRoutine swipe={props.swipe} />
       </Stack>
     </Stack>

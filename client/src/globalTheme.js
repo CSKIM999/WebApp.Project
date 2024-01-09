@@ -103,7 +103,7 @@ export const globalTheme = createTheme({
       dark: bgColor,
     },
     background: {
-      default: bgColor,
+      default: bgColor + "F0",
       paper: bgColor,
     },
     primary: {

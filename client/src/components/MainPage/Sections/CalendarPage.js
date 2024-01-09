@@ -76,7 +76,7 @@ export default function Calendar() {
   };
 
   return (
-    <Box sx={{ pt: 0, width: "100%" }}>
+    <Box>
       <Grid container alignItems="center" direction="column">
         <Grid item>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -120,7 +120,7 @@ export default function Calendar() {
             />
           </LocalizationProvider>
         </Grid>
-        <Grid item>
+        <Grid sx={{ width: "90%" }} item>
           <HistoryCard value={value} />
         </Grid>
         <Grid item sx={{ pt: 2 }}>

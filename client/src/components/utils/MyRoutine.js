@@ -38,7 +38,7 @@ export default function MyRoutine(props) {
   };
 
   return (
-    <Stack>
+    <Stack sx={{ width: "100%" }}>
       {myRoutine &&
         myRoutine.map((item, index) => (
           <Card
@@ -48,7 +48,6 @@ export default function MyRoutine(props) {
               minWidth: 275,
               my: 1,
               borderRadius: "0.5rem",
-              width: "80vw",
             }}
           >
             <CardActionArea
