@@ -54,6 +54,7 @@ export const globalTheme = createTheme({
         button: {
           color: ftColor.main,
         },
+        // eslint-disable-next-line no-dupe-keys
         caption: {
           color: complementaryColor,
         },

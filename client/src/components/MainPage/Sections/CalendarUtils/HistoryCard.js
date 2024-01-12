@@ -29,6 +29,7 @@ export default function HistoryCard(props) {
       Record &&
         Record.filter((x) => x.year === yyyy && x.month === mm && x.day === dd)
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   const handleExpandClick = (panel) => {

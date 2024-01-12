@@ -10,6 +10,7 @@ export default function Stopwatch(props) {
 
   useEffect(() => {
     props.timer(realTime(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Count]);
 
   const startHandler = () => {

@@ -64,6 +64,7 @@ export default function Calendar() {
 
   React.useEffect(() => {
     fetchHighlightedDays(initialValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Record]);
 
   const handleMonthChange = (date) => {

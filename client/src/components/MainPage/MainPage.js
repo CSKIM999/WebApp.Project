@@ -68,6 +68,7 @@ export default function MainPage() {
       dispatch(getRoutine({ writer: user.userData._id }));
       dispatch(getHistory({ writer: user.userData._id }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const handleChange = (event, newValue) => {

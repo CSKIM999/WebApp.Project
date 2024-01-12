@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LogoutOutlined } from "@mui/icons-material";
