@@ -20,7 +20,7 @@ jobs:
   
         - name: Install Client Dependencies
           working-directory: ./client
-          run: npm install
+          run: npm install --force
   
         - name: Build
           working-directory: ./client
