@@ -36,6 +36,7 @@ export default function AUTH(SpecificComponent, option, adminRoute = null) {
           }
         }
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return <SpecificComponent {...props} user={user} />;
