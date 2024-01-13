@@ -169,7 +169,7 @@ export default function AdjustHistory(props) {
         </Grid>
         <Grid item xs={3}>
           <Button sx={{ p: 0.3 }} onClick={() => handleFormation()}>
-            <Typography variant="caption">
+            <Typography sx={{ display: "flex" }} variant="caption">
               운동추가
               <KeyboardArrowDownIcon fontSize="small" />
             </Typography>

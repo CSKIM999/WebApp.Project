@@ -67,7 +67,7 @@ export default function HistoryCard(props) {
   };
 
   return (
-    <Stack direction="column" sx={{ width: "90%", maxWidth: 500 }}>
+    <Stack direction="column" sx={{ maxWidth: 500 }}>
       {Rendervalue &&
         Rendervalue.map((item, index) => (
           <Card key={index} style={{ marginBottom: 10 }} variant={"outlined"}>
