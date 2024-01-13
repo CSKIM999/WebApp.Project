@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Workout_WebApp.Project_2.0-With-React/static/css/main.334ae77d.css",
-    "main.js": "/Workout_WebApp.Project_2.0-With-React/static/js/main.ccc1ac9c.js",
+    "main.js": "/Workout_WebApp.Project_2.0-With-React/static/js/main.6bb8f368.js",
     "index.html": "/Workout_WebApp.Project_2.0-With-React/index.html",
     "main.334ae77d.css.map": "/Workout_WebApp.Project_2.0-With-React/static/css/main.334ae77d.css.map",
-    "main.ccc1ac9c.js.map": "/Workout_WebApp.Project_2.0-With-React/static/js/main.ccc1ac9c.js.map"
+    "main.6bb8f368.js.map": "/Workout_WebApp.Project_2.0-With-React/static/js/main.6bb8f368.js.map"
   },
   "entrypoints": [
     "static/css/main.334ae77d.css",
-    "static/js/main.ccc1ac9c.js"
+    "static/js/main.6bb8f368.js"
   ]
 }
